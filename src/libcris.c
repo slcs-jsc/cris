@@ -846,6 +846,52 @@ void noise(
 
 /*****************************************************************************/
 
+void noise_pert(
+  pert_t * pert,
+  int track0,
+  int track1,
+  double *mu,
+  double *sig) {
+
+  int track, xtrack, ifov, n = 0, okay;
+
+  /* Init... */
+  *mu = 0;
+  *sig = 0;
+
+  /* Estimate noise (Immerkaer, 1996)... */
+  for (track = track0; track < track1; track++)
+    for (xtrack = 0; xtrack < pert->nxtrack; xtrack++) {
+
+      /* Check data... */
+      okay = 1;
+      for (ifov = 0; ifov < pert->nfov; ifov++)
+	if (!gsl_finite(pert->bt[track][xtrack][ifov]))
+	  okay = 0;
+      if (!okay)
+	continue;
+
+      /* Get mean noise... */
+      n++;
+      *mu += pert->bt[track][xtrack][4];
+      *sig += gsl_pow_2(+4. / 6. * pert->bt[track][xtrack][4]
+			- 2. / 6. * (pert->bt[track][xtrack][1]
+				     + pert->bt[track][xtrack][3]
+				     + pert->bt[track][xtrack][5]
+				     + pert->bt[track][xtrack][7])
+			+ 1. / 6. * (pert->bt[track][xtrack][0]
+				     + pert->bt[track][xtrack][2]
+				     + pert->bt[track][xtrack][6]
+				     + pert->bt[track][xtrack][8]));
+    }
+
+  /* Normalize... */
+  *mu /= (double) n;
+  *sig = sqrt(*sig / (double) n);
+}
+
+/*****************************************************************************/
+
 void period(
   wave_t * wave,
   double lxymax,

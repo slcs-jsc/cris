@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------------
 
 # Executables...
-EXC = map_pert perturbation spec2tab
+EXC = map_pert noise_pert perturbation spec2tab
 
 # Installation directory...
 DESTDIR ?= ../bin

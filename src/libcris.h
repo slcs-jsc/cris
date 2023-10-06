@@ -369,6 +369,14 @@ void noise(
   double *mu,
   double *sig);
 
+/*! Estimate noise from perurbations. */
+void noise_pert(
+  pert_t * pert,
+  int track0,
+  int track1,
+  double *mu,
+  double *sig);
+
 /*! Compute periodogram. */
 void period(
   wave_t * wave,
