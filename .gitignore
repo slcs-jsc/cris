@@ -1,0 +1,6 @@
+libs/build/
+projects/
+src/*.o
+src/map_pert
+src/perturbation
+src/spec2tab
