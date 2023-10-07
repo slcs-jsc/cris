@@ -1134,6 +1134,8 @@ void read_cris_l1(
 
   int ncid, varid, dimid;
 
+  short qc[L1_NTRACK][L1_NXTRACK][L1_NFOV];
+
   size_t n;
 
   /* Open netCDF file... */
@@ -1198,6 +1200,42 @@ void read_cris_l1(
   NC(nc_get_var_double(ncid, varid, l1->nu_sw));
   NC(nc_inq_varid(ncid, "rad_sw", &varid));
   NC(nc_get_var_float(ncid, varid, l1->rad_sw[0][0][0]));
+
+  /* Read noise... */
+  NC(nc_inq_varid(ncid, "nedn_lw", &varid));
+  NC(nc_get_var_float(ncid, varid, l1->nedn_lw[0]));
+  NC(nc_inq_varid(ncid, "nedn_mw", &varid));
+  NC(nc_get_var_float(ncid, varid, l1->nedn_mw[0]));
+  NC(nc_inq_varid(ncid, "nedn_sw", &varid));
+  NC(nc_get_var_float(ncid, varid, l1->nedn_sw[0]));
+
+  /* Check quality flags... */
+  NC(nc_inq_varid(ncid, "rad_lw_qc", &varid));
+  NC(nc_get_var_short(ncid, varid, qc[0][0]));
+  for (int itrack = 0; itrack < L1_NTRACK; itrack++)
+    for (int ixtrack = 0; ixtrack < L1_NXTRACK; ixtrack++)
+      for (int ifov = 0; ifov < L1_NFOV; ifov++)
+	if (qc[itrack][ixtrack][ifov] != 0)
+	  for (int ichan = 0; ichan < L1_NCHAN_LW; ichan++)
+	    l1->rad_lw[itrack][ixtrack][ifov][ichan] = GSL_NAN;
+
+  NC(nc_inq_varid(ncid, "rad_mw_qc", &varid));
+  NC(nc_get_var_short(ncid, varid, qc[0][0]));
+  for (int itrack = 0; itrack < L1_NTRACK; itrack++)
+    for (int ixtrack = 0; ixtrack < L1_NXTRACK; ixtrack++)
+      for (int ifov = 0; ifov < L1_NFOV; ifov++)
+	if (qc[itrack][ixtrack][ifov] != 0)
+	  for (int ichan = 0; ichan < L1_NCHAN_MW; ichan++)
+	    l1->rad_mw[itrack][ixtrack][ifov][ichan] = GSL_NAN;
+
+  NC(nc_inq_varid(ncid, "rad_sw_qc", &varid));
+  NC(nc_get_var_short(ncid, varid, qc[0][0]));
+  for (int itrack = 0; itrack < L1_NTRACK; itrack++)
+    for (int ixtrack = 0; ixtrack < L1_NXTRACK; ixtrack++)
+      for (int ifov = 0; ifov < L1_NFOV; ifov++)
+	if (qc[itrack][ixtrack][ifov] != 0)
+	  for (int ichan = 0; ichan < L1_NCHAN_SW; ichan++)
+	    l1->rad_sw[itrack][ixtrack][ifov][ichan] = GSL_NAN;
 
   /* Close file... */
   NC(nc_close(ncid));

@@ -230,7 +230,7 @@ int main(
 		 pert_4mu->lat[track][xtrack][ifov], x0);
 
 	/* Init... */
-	n = 0;
+	int n_4mu = 0, n_15mu_low = 0, n_15mu_high = 0;
 	double mean_4mu = 0, mean_15mu_low = 0, mean_15mu_high = 0;
 	double var_4mu = 0, var_15mu_low = 0, var_15mu_high = 0;
 
@@ -249,30 +249,47 @@ int main(
 		  continue;
 
 		/* Calculate variance... */
-		mean_4mu += pert_4mu->pt[track2][xtrack2][ifov2];
-		mean_15mu_low += pert_15mu_low->pt[track2][xtrack2][ifov2];
-		mean_15mu_high += pert_15mu_high->pt[track2][xtrack2][ifov2];
-		var_4mu += gsl_pow_2(pert_4mu->pt[track2][xtrack2][ifov2]);
-		var_15mu_low +=
-		  gsl_pow_2(pert_15mu_low->pt[track2][xtrack2][ifov2]);
-		var_15mu_high +=
-		  gsl_pow_2(pert_15mu_high->pt[track2][xtrack2][ifov2]);
-		n++;
+		if (gsl_finite(pert_4mu->pt[track2][xtrack2][ifov2])) {
+		  mean_4mu += pert_4mu->pt[track2][xtrack2][ifov2];
+		  var_4mu += gsl_pow_2(pert_4mu->pt[track2][xtrack2][ifov2]);
+		  n_4mu++;
+		}
+
+		if (gsl_finite(pert_15mu_low->pt[track2][xtrack2][ifov2])) {
+		  mean_15mu_low += pert_15mu_low->pt[track2][xtrack2][ifov2];
+		  var_15mu_low +=
+		    gsl_pow_2(pert_15mu_low->pt[track2][xtrack2][ifov2]);
+		  n_15mu_low++;
+		}
+
+		if (gsl_finite(pert_15mu_high->pt[track2][xtrack2][ifov2])) {
+		  mean_15mu_high +=
+		    pert_15mu_high->pt[track2][xtrack2][ifov2];
+		  var_15mu_high +=
+		    gsl_pow_2(pert_15mu_high->pt[track2][xtrack2][ifov2]);
+		  n_15mu_high++;
+		}
 	      }
 
 	/* Save variance data... */
-	if (n > 1) {
+	if (n_4mu > 0)
 	  pert_4mu->var[track][xtrack][ifov] =
-	    var_4mu / n - gsl_pow_2(mean_4mu / n);
-	  pert_15mu_low->var[track][xtrack][ifov] =
-	    var_15mu_low / n - gsl_pow_2(mean_15mu_low / n);
-	  pert_15mu_high->var[track][xtrack][ifov] =
-	    var_15mu_high / n - gsl_pow_2(mean_15mu_high / n);
-	} else {
+	    var_4mu / n_4mu - gsl_pow_2(mean_4mu / n_4mu);
+	else
 	  pert_4mu->var[track][xtrack][ifov] = GSL_NAN;
+
+	if (n_15mu_low > 0)
+	  pert_15mu_low->var[track][xtrack][ifov] =
+	    var_15mu_low / n_15mu_low - gsl_pow_2(mean_15mu_low / n_15mu_low);
+	else
 	  pert_15mu_low->var[track][xtrack][ifov] = GSL_NAN;
+
+	if (n_15mu_high > 0)
+	  pert_15mu_high->var[track][xtrack][ifov] =
+	    var_15mu_high / n_15mu_high -
+	    gsl_pow_2(mean_15mu_high / n_15mu_high);
+	else
 	  pert_15mu_high->var[track][xtrack][ifov] = GSL_NAN;
-	}
       }
 
   /* ------------------------------------------------------------
