@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------------
 
 # Executables...
-EXC = map_pert noise_pert perturbation spec2tab
+EXC = day2doy doy2day map_pert noise_pert perturbation spec2tab
 
 # Installation directory...
 DESTDIR ?= ../bin

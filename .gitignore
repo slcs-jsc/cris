@@ -1,6 +1,8 @@
 libs/build/
 projects/
 src/*.o
+src/day2doy
+src/doy2day
 src/map_pert
 src/noise_pert
 src/perturbation
