@@ -1130,7 +1130,10 @@ void pert2wave(
 
 void read_cris_l1(
   char *filename,
-  cris_l1_t * l1) {
+  cris_l1_t * l1,
+  int apo) {
+
+  double help[L1_NCHAN_MW];
 
   int ncid, varid, dimid;
 
@@ -1215,7 +1218,7 @@ void read_cris_l1(
   for (int itrack = 0; itrack < L1_NTRACK; itrack++)
     for (int ixtrack = 0; ixtrack < L1_NXTRACK; ixtrack++)
       for (int ifov = 0; ifov < L1_NFOV; ifov++)
-	if (qc[itrack][ixtrack][ifov] != 0)
+	if (qc[itrack][ixtrack][ifov] > 1)
 	  for (int ichan = 0; ichan < L1_NCHAN_LW; ichan++)
 	    l1->rad_lw[itrack][ixtrack][ifov][ichan] = GSL_NAN;
 
@@ -1224,7 +1227,7 @@ void read_cris_l1(
   for (int itrack = 0; itrack < L1_NTRACK; itrack++)
     for (int ixtrack = 0; ixtrack < L1_NXTRACK; ixtrack++)
       for (int ifov = 0; ifov < L1_NFOV; ifov++)
-	if (qc[itrack][ixtrack][ifov] != 0)
+	if (qc[itrack][ixtrack][ifov] > 1)
 	  for (int ichan = 0; ichan < L1_NCHAN_MW; ichan++)
 	    l1->rad_mw[itrack][ixtrack][ifov][ichan] = GSL_NAN;
 
@@ -1233,9 +1236,52 @@ void read_cris_l1(
   for (int itrack = 0; itrack < L1_NTRACK; itrack++)
     for (int ixtrack = 0; ixtrack < L1_NXTRACK; ixtrack++)
       for (int ifov = 0; ifov < L1_NFOV; ifov++)
-	if (qc[itrack][ixtrack][ifov] != 0)
+	if (qc[itrack][ixtrack][ifov] > 1)
 	  for (int ichan = 0; ichan < L1_NCHAN_SW; ichan++)
 	    l1->rad_sw[itrack][ixtrack][ifov][ichan] = GSL_NAN;
+
+  /* Apodization... */
+  if (apo)
+    for (int itrack = 0; itrack < L1_NTRACK; itrack++)
+      for (int ixtrack = 0; ixtrack < L1_NXTRACK; ixtrack++)
+	for (int ifov = 0; ifov < L1_NFOV; ifov++) {
+
+	  for (int ichan = 0; ichan < L1_NCHAN_LW; ichan++)
+	    help[ichan] = 0;
+	  for (int ichan = 1; ichan < L1_NCHAN_LW - 1; ichan++)
+	    help[ichan]
+	      = 0.23 * l1->rad_lw[itrack][ixtrack][ifov][ichan - 1]
+	      + 0.54 * l1->rad_lw[itrack][ixtrack][ifov][ichan]
+	      + 0.23 * l1->rad_lw[itrack][ixtrack][ifov][ichan + 1];
+	  for (int ichan = 1; ichan < L1_NCHAN_LW - 1; ichan++)
+	    l1->rad_lw[itrack][ixtrack][ifov][ichan] = (float) help[ichan];
+	  l1->rad_lw[itrack][ixtrack][ifov][0] =
+	    l1->rad_lw[itrack][ixtrack][ifov][L1_NCHAN_LW - 1] = GSL_NAN;
+
+	  for (int ichan = 0; ichan < L1_NCHAN_MW; ichan++)
+	    help[ichan] = 0;
+	  for (int ichan = 1; ichan < L1_NCHAN_MW - 1; ichan++)
+	    help[ichan]
+	      = 0.23 * l1->rad_mw[itrack][ixtrack][ifov][ichan - 1]
+	      + 0.54 * l1->rad_mw[itrack][ixtrack][ifov][ichan]
+	      + 0.23 * l1->rad_mw[itrack][ixtrack][ifov][ichan + 1];
+	  for (int ichan = 1; ichan < L1_NCHAN_MW - 1; ichan++)
+	    l1->rad_mw[itrack][ixtrack][ifov][ichan] = (float) help[ichan];
+	  l1->rad_mw[itrack][ixtrack][ifov][0] =
+	    l1->rad_mw[itrack][ixtrack][ifov][L1_NCHAN_MW - 1] = GSL_NAN;
+
+	  for (int ichan = 0; ichan < L1_NCHAN_SW; ichan++)
+	    help[ichan] = 0;
+	  for (int ichan = 1; ichan < L1_NCHAN_SW - 1; ichan++)
+	    help[ichan]
+	      = 0.23 * l1->rad_sw[itrack][ixtrack][ifov][ichan - 1]
+	      + 0.54 * l1->rad_sw[itrack][ixtrack][ifov][ichan]
+	      + 0.23 * l1->rad_sw[itrack][ixtrack][ifov][ichan + 1];
+	  for (int ichan = 1; ichan < L1_NCHAN_SW - 1; ichan++)
+	    l1->rad_sw[itrack][ixtrack][ifov][ichan] = (float) help[ichan];
+	  l1->rad_sw[itrack][ixtrack][ifov][0] =
+	    l1->rad_sw[itrack][ixtrack][ifov][L1_NCHAN_SW - 1] = GSL_NAN;
+	}
 
   /* Close file... */
   NC(nc_close(ncid));

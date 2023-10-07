@@ -19,7 +19,7 @@ int main(
 
   /* Read CrIS data... */
   printf("Read CrIS Level-1B data file: %s\n", argv[1]);
-  read_cris_l1(argv[1], &l1);
+  read_cris_l1(argv[1], &l1, 0);
 
   /* Get indices... */
   if (argv[2][0] == 'i') {
@@ -86,9 +86,8 @@ int main(
 	  "# $7 = brightness temperature [K]\n"
 	  "# $8 = radiance [W/(m^2 sr cm^-1)]\n"
 	  "# $9 = noise [W/(m^2 sr cm^-1)]\n"
-	  "# $10 = waveband\n"
-	  "# $11 = channel number\n\n");
-  
+	  "# $10 = waveband\n" "# $11 = channel number\n\n");
+
   /* Write data... */
   for (ichan = 0; ichan < L1_NCHAN_LW; ichan++)
     fprintf(out, "%.2f %g %g %g %g %g %g %g %g LW %d\n",

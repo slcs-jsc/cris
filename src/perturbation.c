@@ -66,7 +66,7 @@ int main(
 
     /* Read CrIS data... */
     printf("Read CrIS Level-1B data file: %s\n", argv[iarg]);
-    read_cris_l1(argv[iarg], &l1);
+    read_cris_l1(argv[iarg], &l1, 0);
 
 #if 0
     /* Flag bad observations... */
