@@ -55,6 +55,8 @@ int main(
     ERRMSG("Along-track index out of range!");
   if (xtrack < 0 || xtrack >= L1_NXTRACK)
     ERRMSG("Across-track index out of range!");
+  if (ifov < 0 || ifov >= L1_NFOV)
+    ERRMSG("Field of view index out of range!");
 
 #if 0
   /* Flag bad observations... */
@@ -83,40 +85,45 @@ int main(
 	  "# $6 = wavenumber [cm^-1]\n"
 	  "# $7 = brightness temperature [K]\n"
 	  "# $8 = radiance [W/(m^2 sr cm^-1)]\n"
-	  "# $9 = waveband\n" "# $10 = channel number\n\n");
-
+	  "# $9 = noise [W/(m^2 sr cm^-1)]\n"
+	  "# $10 = waveband\n"
+	  "# $11 = channel number\n\n");
+  
   /* Write data... */
   for (ichan = 0; ichan < L1_NCHAN_LW; ichan++)
-    fprintf(out, "%.2f %g %g %g %g %g %g %g LW %d\n",
+    fprintf(out, "%.2f %g %g %g %g %g %g %g %g LW %d\n",
 	    l1.time[track][xtrack] - 220838400,
 	    l1.sat_lon[track], l1.sat_lat[track],
 	    l1.lon[track][xtrack][ifov], l1.lat[track][xtrack][ifov],
 	    l1.nu_lw[ichan],
 	    brightness(l1.rad_lw[track][xtrack][ifov][ichan] * 1e-3,
 		       l1.nu_lw[ichan]),
-	    l1.rad_lw[track][xtrack][ifov][ichan] * 1e-3, ichan);
+	    l1.rad_lw[track][xtrack][ifov][ichan] * 1e-3,
+	    l1.nedn_lw[ifov][ichan] * 1e-3, ichan);
 
   fprintf(out, "\n");
   for (ichan = 0; ichan < L1_NCHAN_MW; ichan++)
-    fprintf(out, "%.2f %g %g %g %g %g %g %g MW %d\n",
+    fprintf(out, "%.2f %g %g %g %g %g %g %g %g MW %d\n",
 	    l1.time[track][xtrack] - 220838400,
 	    l1.sat_lon[track], l1.sat_lat[track],
 	    l1.lon[track][xtrack][ifov], l1.lat[track][xtrack][ifov],
 	    l1.nu_mw[ichan],
 	    brightness(l1.rad_mw[track][xtrack][ifov][ichan] * 1e-3,
 		       l1.nu_mw[ichan]),
-	    l1.rad_mw[track][xtrack][ifov][ichan] * 1e-3, ichan);
+	    l1.rad_mw[track][xtrack][ifov][ichan] * 1e-3,
+	    l1.nedn_mw[ifov][ichan] * 1e-3, ichan);
 
   fprintf(out, "\n");
   for (ichan = 0; ichan < L1_NCHAN_SW; ichan++)
-    fprintf(out, "%.2f %g %g %g %g %g %g %g SW %d\n",
+    fprintf(out, "%.2f %g %g %g %g %g %g %g %g SW %d\n",
 	    l1.time[track][xtrack] - 220838400,
 	    l1.sat_lon[track], l1.sat_lat[track],
 	    l1.lon[track][xtrack][ifov], l1.lat[track][xtrack][ifov],
 	    l1.nu_sw[ichan],
 	    brightness(l1.rad_sw[track][xtrack][ifov][ichan] * 1e-3,
 		       l1.nu_sw[ichan]),
-	    l1.rad_sw[track][xtrack][ifov][ichan] * 1e-3, ichan);
+	    l1.rad_sw[track][xtrack][ifov][ichan] * 1e-3,
+	    l1.nedn_sw[ifov][ichan] * 1e-3, ichan);
 
   /* Close file... */
   fclose(out);
