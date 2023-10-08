@@ -18,7 +18,6 @@ int main(
 	   "[index <track> <xtrack> <ifov> | geo <lon> <lat> <dummy>] <spec.tab>");
 
   /* Read CrIS data... */
-  printf("Read CrIS Level-1B data file: %s\n", argv[1]);
   read_cris_l1(argv[1], &l1, 0);
 
   /* Get indices... */
@@ -45,9 +44,9 @@ int main(
 	}
     if (dmin > 2500)
       ERRMSG("Geolocation not covered by granule!");
-    printf("nearest footprint: lon= %g, lat= %g, track= %d, xtrack=%d\n",
-	   l1.lon[track][xtrack][ifov],
-	   l1.lat[track][xtrack][ifov], track, xtrack);
+    LOG(1, "nearest footprint: lon= %g, lat= %g, track= %d, xtrack=%d",
+	l1.lon[track][xtrack][ifov], l1.lat[track][xtrack][ifov],
+	track, xtrack);
   }
 
   /* Check indices... */
@@ -71,7 +70,7 @@ int main(
 #endif
 
   /* Create file... */
-  printf("Write spectrum: %s\n", argv[6]);
+  LOG(1, "Write spectrum: %s", argv[6]);
   if (!(out = fopen(argv[6], "w")))
     ERRMSG("Cannot create file!");
 

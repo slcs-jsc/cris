@@ -525,7 +525,7 @@ int main(
   if (output == 1) {
 
     /* Create file... */
-    printf("Write variance statistics: %s\n", argv[2]);
+    LOG(1, "Write variance statistics: %s", argv[2]);
     if (!(out = fopen(argv[2], "w")))
       ERRMSG("Cannot create file!");
 
@@ -571,7 +571,7 @@ int main(
   else if (output == 2) {
 
     /* Create netCDF file... */
-    printf("Write variance statistics: %s\n", argv[2]);
+    LOG(1, "Write variance statistics: %s", argv[2]);
     NC(nc_create(argv[2], NC_CLOBBER, &ncid));
 
     /* Set dimensions... */

@@ -38,7 +38,7 @@ int main(
   read_pert(argv[2], pertname, pert);
 
   /* Create output file... */
-  printf("Write perturbation data: %s\n", argv[3]);
+  LOG(1, "Write perturbation data: %s", argv[3]);
   if (!(out = fopen(argv[3], "w")))
     ERRMSG("Cannot create file!");
 

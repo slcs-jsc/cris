@@ -34,7 +34,7 @@ int main(
     bsize = pert->nxtrack;
 
   /* Create file... */
-  printf("Write noise data: %s\n", argv[3]);
+  LOG(1, "Write noise data: %s", argv[3]);
   if (!(out = fopen(argv[3], "w")))
     ERRMSG("Cannot create file!");
 

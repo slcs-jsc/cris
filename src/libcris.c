@@ -531,7 +531,7 @@ void fft(
   if (filename != NULL) {
 
     /* Write info... */
-    printf("Write FFT data: %s\n", filename);
+    LOG(1, "Write FFT data: %s", filename);
 
     /* Create file... */
     if (!(out = fopen(filename, "w")))
@@ -1018,7 +1018,7 @@ void period(
   if (filename != NULL) {
 
     /* Write info... */
-    printf("Write periodogram data: %s\n", filename);
+    LOG(1, "Write periodogram data: %s", filename);
 
     /* Create file... */
     if (!(out = fopen(filename, "w")))
@@ -1141,8 +1141,10 @@ void read_cris_l1(
 
   size_t n;
 
+  /* Write info... */
+  LOG(1, "Read CrIS Level-1B file: %s", filename);
+
   /* Open netCDF file... */
-  printf("Read CrIS Level-1B file: %s\n", filename);
   NC(nc_open(filename, NC_NOWRITE, &ncid));
 
   /* Check dimensions... */
@@ -1302,7 +1304,7 @@ void read_pert(
     start[3] = { 0, 0, 0 }, count[3] = { 1, 1, 1 };
 
   /* Write info... */
-  printf("Read perturbation data: %s\n", filename);
+  LOG(1, "Read perturbation data: %s", filename);
 
   /* Open netCDF file... */
   NC(nc_open(filename, NC_NOWRITE, &ncid));
@@ -1412,7 +1414,7 @@ void read_retr(
   size_t itrack, ixtrack, nds, np, ntrack, nxtrack;
 
   /* Write info... */
-  printf("Read retrieval data: %s\n", filename);
+  LOG(1, "Read retrieval data: %s", filename);
 
   /* Open netCDF file... */
   NC(nc_open(filename, NC_NOWRITE, &ncid));
@@ -1598,7 +1600,7 @@ void read_wave(
   wave->ny = 0;
 
   /* Write info... */
-  printf("Read wave data: %s\n", filename);
+  LOG(1, "Read wave data: %s", filename);
 
   /* Open file... */
   if (!(in = fopen(filename, "r")))
@@ -1834,7 +1836,7 @@ void write_wave(
   int i, j;
 
   /* Write info... */
-  printf("Write wave data: %s\n", filename);
+  LOG(1, "Write wave data: %s", filename);
 
   /* Create file... */
   if (!(out = fopen(filename, "w")))

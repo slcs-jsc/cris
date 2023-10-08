@@ -49,8 +49,11 @@ int main(
     bt_15mu_high_pt_varid, bt_15mu_high_var_varid, dtrack = 3, dxtrack = 3;
 
   /* Check arguments... */
-  if (argc < 3)
-    ERRMSG("Give parameters: <out.nc> <l1b_file1> [<l1b_file2> ...]");
+  if (argc < 4)
+    ERRMSG("Give parameters: <ctl> <out.nc> <l1b_file1> [<l1b_file2> ...]");
+
+  /* Get control parameters... */
+  int apo = (int) scan_ctl(argc, argv, "APO", -1, "0", NULL);
 
   /* Allocate... */
   ALLOC(pert_4mu, pert_t, 1);
@@ -62,30 +65,10 @@ int main(
      ------------------------------------------------------------ */
 
   /* Loop over files... */
-  for (int iarg = 2; iarg < argc; iarg++) {
+  for (int iarg = 3; iarg < argc; iarg++) {
 
     /* Read CrIS data... */
-    printf("Read CrIS Level-1B data file: %s\n", argv[iarg]);
-    read_cris_l1(argv[iarg], &l1, 0);
-
-#if 0
-    /* Flag bad observations... */
-    for (track = 0; track < AIRS_RAD_GEOTRACK; track++)
-      for (xtrack = 0; xtrack < AIRS_RAD_GEOXTRACK; xtrack++)
-	for (i = 0; i < AIRS_RAD_CHANNEL; i++)
-	  if ((airs_rad_gran.state[track][xtrack] != 0)
-	      || (airs_rad_gran.ExcludedChans[i] > 2)
-	      || (airs_rad_gran.CalChanSummary[i] & 8)
-	      || (airs_rad_gran.CalChanSummary[i] & (32 + 64))
-	      || (airs_rad_gran.CalFlag[track][i] & 16)
-	      || (airs_rad_gran.Longitude[track][xtrack] < -180)
-	      || (airs_rad_gran.Longitude[track][xtrack] > 180)
-	      || (airs_rad_gran.Latitude[track][xtrack] < -90)
-	      || (airs_rad_gran.Latitude[track][xtrack] > 90))
-	    airs_rad_gran.radiances[track][xtrack][i] = GSL_NAN;
-	  else
-	    airs_rad_gran.radiances[track][xtrack][i] *= 0.001f;
-#endif
+    read_cris_l1(argv[iarg], &l1, apo);
 
     /* Save geolocation... */
     pert_4mu->ntrack += L1_NTRACK;
@@ -297,7 +280,7 @@ int main(
      ------------------------------------------------------------ */
 
   /* Create netCDF file... */
-  NC(nc_create(argv[1], NC_CLOBBER, &ncid));
+  NC(nc_create(argv[2], NC_CLOBBER, &ncid));
 
   /* Set dimensions... */
   NC(nc_def_dim(ncid, "NTRACK", (size_t) pert_4mu->ntrack, &dimid[0]));
