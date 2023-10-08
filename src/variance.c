@@ -272,15 +272,13 @@ int main(
     bt_8mu_max[NX][NY], dt[NX][NY], mtime[NX][NY], glat[NY], glon[NX],
     fdc[NX][NY], fwg[NX][NY], fgw[NX][NY], fcw[NX][NY],
     mean[NX][NY], min[NX][NY], max[NX][NY], var[NX][NY],
-    t_dc, t_gw, dt_trop, dc_hlat = 25, dc_tlim = 250, dt230,
-    nesr, nu, lon0, lon1, lat0, lat1, thresh_dc, thresh_gw, lt, help[NX * NY];
+    t_dc, t_gw, dc_hlat = 25, dc_tlim = 250, nesr, lt, help[NX * NY];
 
-  static int asc, ix, iy, nx, ny, iarg, n[NX][NY],
+  static int asc, ix, iy, iarg, n[NX][NY],
     ndc[NX][NY], ngw[NX][NY], ncw[NX][NY], nwg[NX][NY],
     det_gw, det_cw, det_dc, det_wg, ilat, imon, nmin = 10,
-    itrack, itrack2, ixtrack, ixtrack2, ifov, iradius =
-    30, output, ncid, varid, minid, maxid, lonid, latid, npid, dimid[10],
-    help2[NX * NY];
+    itrack, itrack2, ixtrack, ixtrack2, ifov, iradius = 30,
+    ncid, varid, minid, maxid, lonid, latid, npid, dimid[10], help2[NX * NY];
 
   /* Check arguments... */
   if (argc < 4)
@@ -289,18 +287,18 @@ int main(
   /* Get control parameters... */
   scan_ctl(argc, argv, "SET", -1, "full", set);
   scan_ctl(argc, argv, "PERTNAME", -1, "4mu", pertname);
-  nx = (int) scan_ctl(argc, argv, "NX", -1, "360", NULL);
-  lon0 = scan_ctl(argc, argv, "LON0", -1, "-180", NULL);
-  lon1 = scan_ctl(argc, argv, "LON1", -1, "180", NULL);
-  ny = (int) scan_ctl(argc, argv, "NY", -1, "180", NULL);
-  lat0 = scan_ctl(argc, argv, "LAT0", -1, "-90", NULL);
-  lat1 = scan_ctl(argc, argv, "LAT1", -1, "90", NULL);
-  thresh_gw = scan_ctl(argc, argv, "THRESH_GW", -1, "-999", NULL);
-  thresh_dc = scan_ctl(argc, argv, "THRESH_DC", -1, "-999", NULL);
-  dt_trop = scan_ctl(argc, argv, "DT_TROP", -1, "0", NULL);
-  dt230 = scan_ctl(argc, argv, "DT230", -1, "0.16", NULL);
-  nu = scan_ctl(argc, argv, "NU", -1, "2345.0", NULL);
-  output = (int) scan_ctl(argc, argv, "OUTPUT", -1, "1", NULL);
+  int nx = (int) scan_ctl(argc, argv, "NX", -1, "360", NULL);
+  double lon0 = scan_ctl(argc, argv, "LON0", -1, "-180", NULL);
+  double lon1 = scan_ctl(argc, argv, "LON1", -1, "180", NULL);
+  int ny = (int) scan_ctl(argc, argv, "NY", -1, "180", NULL);
+  double lat0 = scan_ctl(argc, argv, "LAT0", -1, "-90", NULL);
+  double lat1 = scan_ctl(argc, argv, "LAT1", -1, "90", NULL);
+  double thresh_gw = scan_ctl(argc, argv, "THRESH_GW", -1, "-999", NULL);
+  double thresh_dc = scan_ctl(argc, argv, "THRESH_DC", -1, "-999", NULL);
+  double dt_trop = scan_ctl(argc, argv, "DT_TROP", -1, "0", NULL);
+  double dt230 = scan_ctl(argc, argv, "DT230", -1, "-999", NULL);
+  double nu = scan_ctl(argc, argv, "NU", -1, "-999", NULL);
+  int output = (int) scan_ctl(argc, argv, "OUTPUT", -1, "1", NULL);
 
   /* Allocate... */
   ALLOC(pert, pert_t, 1);
@@ -509,7 +507,7 @@ int main(
       }
 
       /* Estimate noise... */
-      if (dt230 > 0) {
+      if (dt230 > 0 && nu > 0) {
 	nesr = planck(230.0 + dt230, nu) - planck(230.0, nu);
 	dt[ix][iy] =
 	  brightness(planck(bt[ix][iy], nu) + nesr, nu) - bt[ix][iy];

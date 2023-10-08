@@ -10,9 +10,9 @@ int main(
 
   char pertname[LEN];
 
-  double maxvar, mu, nedt = -1e99, nedt_old;
+  double mu, nedt = -1e99, nedt_old;
 
-  int bsize, itrack;
+  int itrack;
 
   /* Check arguments... */
   if (argc < 4)
@@ -20,8 +20,8 @@ int main(
 
   /* Read control parameters... */
   scan_ctl(argc, argv, "PERTNAME", -1, "4mu", pertname);
-  bsize = (int) scan_ctl(argc, argv, "BSIZE", -1, "-999", NULL);
-  maxvar = (int) scan_ctl(argc, argv, "MAXVAR", -1, "-999", NULL);
+  int bsize = (int) scan_ctl(argc, argv, "BSIZE", -1, "-999", NULL);
+  int maxvar = (int) scan_ctl(argc, argv, "MAXVAR", -1, "-999", NULL);
 
   /* Allocate... */
   ALLOC(pert, pert_t, 1);

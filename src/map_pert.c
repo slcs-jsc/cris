@@ -8,10 +8,9 @@ int main(
 
   char set[LEN], pertname[LEN];
 
-  double orblat, nu, t230 = 230.0, dt230, tbg, nesr, nedt = 0,
-    t0, t1, sza0, sza1, sza2 = 0;
+  double t230 = 230.0, tbg, nesr, nedt = 0, sza2 = 0;
 
-  int asc, itrack, ixtrack, ifov, orb = 0, orbit;
+  int asc, itrack, ixtrack, ifov, orb = 0;
 
   FILE *out;
 
@@ -22,14 +21,14 @@ int main(
   /* Get control parameters... */
   scan_ctl(argc, argv, "PERTNAME", -1, "4mu", pertname);
   scan_ctl(argc, argv, "SET", -1, "full", set);
-  orbit = (int) scan_ctl(argc, argv, "ORBIT", -1, "-999", NULL);
-  orblat = scan_ctl(argc, argv, "ORBLAT", -1, "0", NULL);
-  t0 = scan_ctl(argc, argv, "T0", -1, "-1e100", NULL);
-  t1 = scan_ctl(argc, argv, "T1", -1, "1e100", NULL);
-  sza0 = scan_ctl(argc, argv, "SZA0", -1, "-1e100", NULL);
-  sza1 = scan_ctl(argc, argv, "SZA1", -1, "1e100", NULL);
-  dt230 = scan_ctl(argc, argv, "DT230", -1, "0.16", NULL);
-  nu = scan_ctl(argc, argv, "NU", -1, "2345.0", NULL);
+  int orbit = (int) scan_ctl(argc, argv, "ORBIT", -1, "-999", NULL);
+  double orblat = scan_ctl(argc, argv, "ORBLAT", -1, "0", NULL);
+  double t0 = scan_ctl(argc, argv, "T0", -1, "-1e100", NULL);
+  double t1 = scan_ctl(argc, argv, "T1", -1, "1e100", NULL);
+  double sza0 = scan_ctl(argc, argv, "SZA0", -1, "-1e100", NULL);
+  double sza1 = scan_ctl(argc, argv, "SZA1", -1, "1e100", NULL);
+  double dt230 = scan_ctl(argc, argv, "DT230", -1, "-999", NULL);
+  double nu = scan_ctl(argc, argv, "NU", -1, "-999", NULL);
 
   /* Allocate... */
   ALLOC(pert, pert_t, 1);
@@ -95,7 +94,7 @@ int main(
 		     pert->lat[itrack][ixtrack][ifov]);
 
 	/* Estimate noise... */
-	if (dt230 > 0) {
+	if (dt230 > 0 && nu > 0) {
 	  nesr = planck(t230 + dt230, nu) - planck(t230, nu);
 	  tbg =
 	    pert->bt[itrack][ixtrack][ifov] - pert->pt[itrack][ixtrack][ifov];
