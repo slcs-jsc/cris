@@ -90,7 +90,7 @@ int main(
 
   /* Write data... */
   for (ichan = 0; ichan < L1_NCHAN_LW; ichan++)
-    fprintf(out, "%.2f %g %g %g %g %g %g %g %g LW %d\n",
+    fprintf(out, "%.2f %g %g %g %g %.4f %g %g %g LW %d\n",
 	    l1.time[track][xtrack] - 220838400,
 	    l1.sat_lon[track], l1.sat_lat[track],
 	    l1.lon[track][xtrack][ifov], l1.lat[track][xtrack][ifov],
@@ -102,7 +102,7 @@ int main(
 
   fprintf(out, "\n");
   for (ichan = 0; ichan < L1_NCHAN_MW; ichan++)
-    fprintf(out, "%.2f %g %g %g %g %g %g %g %g MW %d\n",
+    fprintf(out, "%.2f %g %g %g %g %.4f %g %g %g MW %d\n",
 	    l1.time[track][xtrack] - 220838400,
 	    l1.sat_lon[track], l1.sat_lat[track],
 	    l1.lon[track][xtrack][ifov], l1.lat[track][xtrack][ifov],
@@ -114,7 +114,7 @@ int main(
 
   fprintf(out, "\n");
   for (ichan = 0; ichan < L1_NCHAN_SW; ichan++)
-    fprintf(out, "%.2f %g %g %g %g %g %g %g %g SW %d\n",
+    fprintf(out, "%.2f %g %g %g %g %.4f %g %g %g SW %d\n",
 	    l1.time[track][xtrack] - 220838400,
 	    l1.sat_lon[track], l1.sat_lat[track],
 	    l1.lon[track][xtrack][ifov], l1.lat[track][xtrack][ifov],
