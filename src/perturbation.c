@@ -166,7 +166,7 @@ int main(
 
   /* Write info... */
   LOG(1, "Calculate perturbations...");
-  
+
   /* Loop over scans and field of views... */
   for (track = 0; track < pert_4mu->ntrack; track++)
     for (ifov = 0; ifov < L1_NFOV; ifov++) {
@@ -284,7 +284,7 @@ int main(
   /* ------------------------------------------------------------
      Write netCDF file...
      ------------------------------------------------------------ */
-  
+
   /* Write info... */
   LOG(1, "Write perturbation data file: %s", argv[2]);
 

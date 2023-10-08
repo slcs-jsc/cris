@@ -15,7 +15,7 @@ int main(
   /* Check arguments... */
   if (argc < 4)
     ERRMSG("Give parameters: <ctl> <l1b_file> <spec.tab>");
-  
+
   /* Get control parameters... */
   int apo = (int) scan_ctl(argc, argv, "APO", -1, "0", NULL);
   int track = (int) scan_ctl(argc, argv, "TRACK", -1, "0", NULL);
@@ -23,12 +23,12 @@ int main(
   int ifov = (int) scan_ctl(argc, argv, "IFOV", -1, "0", NULL);
   double lon = (int) scan_ctl(argc, argv, "LON", -1, "-999", NULL);
   double lat = (int) scan_ctl(argc, argv, "LAT", -1, "-999", NULL);
-  
+
   /* Read CrIS data... */
   read_cris_l1(argv[2], &l1, apo);
-  
+
   /* Find nearest footprint... */
-  if(lon>=-180 && lon<=180 && lat>=-90 && lat<=90) {
+  if (lon >= -180 && lon <= 180 && lat >= -90 && lat <= 90) {
     geo2cart(0, lon, lat, x0);
     for (track2 = 0; track2 < L1_NTRACK; track2++)
       for (xtrack2 = 0; xtrack2 < L1_NXTRACK; xtrack2++)
@@ -48,7 +48,7 @@ int main(
 	l1.lon[track][xtrack][ifov], l1.lat[track][xtrack][ifov],
 	track, xtrack);
   }
-  
+
   /* Check indices... */
   if (track < 0 || track >= L1_NTRACK)
     ERRMSG("Along-track index out of range!");
@@ -56,7 +56,7 @@ int main(
     ERRMSG("Across-track index out of range!");
   if (ifov < 0 || ifov >= L1_NFOV)
     ERRMSG("Field of view index out of range!");
-  
+
   /* Create file... */
   LOG(1, "Write spectrum: %s", argv[3]);
   if (!(out = fopen(argv[3], "w")))
@@ -72,12 +72,11 @@ int main(
 	  "# $6 = wavenumber [cm^-1]\n"
 	  "# $7 = brightness temperature [K]\n"
 	  "# $8 = radiance [W/(m^2 sr cm^-1)]\n"
-	  "# $9 = noise [W/(m^2 sr cm^-1)]\n"
-	  "# $10 = waveband\n" "# $11 = channel number\n\n");
+	  "# $9 = noise [W/(m^2 sr cm^-1)]\n" "# $10 = channel index\n\n");
 
   /* Write data... */
   for (ichan = 0; ichan < L1_NCHAN_LW; ichan++)
-    fprintf(out, "%.2f %g %g %g %g %.4f %g %g %g LW %d\n",
+    fprintf(out, "%.2f %g %g %g %g %.4f %g %g %g LW_%d\n",
 	    l1.time[track][xtrack] - 220838400,
 	    l1.sat_lon[track], l1.sat_lat[track],
 	    l1.lon[track][xtrack][ifov], l1.lat[track][xtrack][ifov],
@@ -89,7 +88,7 @@ int main(
 
   fprintf(out, "\n");
   for (ichan = 0; ichan < L1_NCHAN_MW; ichan++)
-    fprintf(out, "%.2f %g %g %g %g %.4f %g %g %g MW %d\n",
+    fprintf(out, "%.2f %g %g %g %g %.4f %g %g %g MW_%d\n",
 	    l1.time[track][xtrack] - 220838400,
 	    l1.sat_lon[track], l1.sat_lat[track],
 	    l1.lon[track][xtrack][ifov], l1.lat[track][xtrack][ifov],
@@ -101,7 +100,7 @@ int main(
 
   fprintf(out, "\n");
   for (ichan = 0; ichan < L1_NCHAN_SW; ichan++)
-    fprintf(out, "%.2f %g %g %g %g %.4f %g %g %g SW %d\n",
+    fprintf(out, "%.2f %g %g %g %g %.4f %g %g %g SW_%d\n",
 	    l1.time[track][xtrack] - 220838400,
 	    l1.sat_lon[track], l1.sat_lat[track],
 	    l1.lon[track][xtrack][ifov], l1.lat[track][xtrack][ifov],

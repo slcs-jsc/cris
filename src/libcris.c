@@ -1145,11 +1145,11 @@ int read_cris_l1(
   LOG(1, "Read CrIS Level-1B file: %s", filename);
 
   /* Open netCDF file... */
-  if(nc_open(filename, NC_NOWRITE, &ncid) != NC_NOERR) {
+  if (nc_open(filename, NC_NOWRITE, &ncid) != NC_NOERR) {
     WARN("Cannot open file!");
     return 0;
   }
-  
+
   /* Check dimensions... */
   NC(nc_inq_dimid(ncid, "atrack", &dimid));
   NC(nc_inq_dimlen(ncid, dimid, &n));
