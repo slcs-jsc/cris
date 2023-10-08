@@ -10,26 +10,26 @@ int main(
 
   double dmin = 1e100, x0[3], x1[3];
 
-  int ichan, track = -1, track2, xtrack = -1, xtrack2, ifov = -1, ifov2;
+  int ichan, track2, xtrack2, ifov2;
 
   /* Check arguments... */
-  if (argc != 7)
-    ERRMSG("Give parameters: <cris_l1b_file> "
-	   "[index <track> <xtrack> <ifov> | geo <lon> <lat> <dummy>] <spec.tab>");
-
+  if (argc < 4)
+    ERRMSG("Give parameters: <ctl> <l1b_file> <spec.tab>");
+  
+  /* Get control parameters... */
+  int apo = (int) scan_ctl(argc, argv, "APO", -1, "0", NULL);
+  int track = (int) scan_ctl(argc, argv, "TRACK", -1, "0", NULL);
+  int xtrack = (int) scan_ctl(argc, argv, "XTRACK", -1, "0", NULL);
+  int ifov = (int) scan_ctl(argc, argv, "IFOV", -1, "0", NULL);
+  double lon = (int) scan_ctl(argc, argv, "LON", -1, "-999", NULL);
+  double lat = (int) scan_ctl(argc, argv, "LAT", -1, "-999", NULL);
+  
   /* Read CrIS data... */
-  read_cris_l1(argv[1], &l1, 0);
-
-  /* Get indices... */
-  if (argv[2][0] == 'i') {
-    track = atoi(argv[3]);
-    xtrack = atoi(argv[4]);
-    ifov = atoi(argv[5]);
-  }
-
+  read_cris_l1(argv[2], &l1, apo);
+  
   /* Find nearest footprint... */
-  else {
-    geo2cart(0, atof(argv[3]), atof(argv[4]), x0);
+  if(lon>=-180 && lon<=180 && lat>=-90 && lat<=90) {
+    geo2cart(0, lon, lat, x0);
     for (track2 = 0; track2 < L1_NTRACK; track2++)
       for (xtrack2 = 0; xtrack2 < L1_NXTRACK; xtrack2++)
 	for (ifov2 = 0; ifov2 < L1_NFOV; ifov2++) {
@@ -48,7 +48,7 @@ int main(
 	l1.lon[track][xtrack][ifov], l1.lat[track][xtrack][ifov],
 	track, xtrack);
   }
-
+  
   /* Check indices... */
   if (track < 0 || track >= L1_NTRACK)
     ERRMSG("Along-track index out of range!");
@@ -56,22 +56,10 @@ int main(
     ERRMSG("Across-track index out of range!");
   if (ifov < 0 || ifov >= L1_NFOV)
     ERRMSG("Field of view index out of range!");
-
-#if 0
-  /* Flag bad observations... */
-  for (ichan = 0; ichan < AIRS_RAD_CHANNEL; ichan++)
-    if ((airs_rad_gran.state[track][xtrack] != 0)
-	|| (airs_rad_gran.ExcludedChans[ichan] > 2)
-	|| (airs_rad_gran.CalChanSummary[ichan] & 8)
-	|| (airs_rad_gran.CalChanSummary[ichan] & (32 + 64))
-	|| (airs_rad_gran.CalFlag[track][ichan] & 16))
-      airs_rad_gran.radiances[track][xtrack][ichan]
-	= (float) sqrt(-1.0);
-#endif
-
+  
   /* Create file... */
-  LOG(1, "Write spectrum: %s", argv[6]);
-  if (!(out = fopen(argv[6], "w")))
+  LOG(1, "Write spectrum: %s", argv[3]);
+  if (!(out = fopen(argv[3], "w")))
     ERRMSG("Cannot create file!");
 
   /* Write header... */

@@ -1128,7 +1128,7 @@ void pert2wave(
 
 /*****************************************************************************/
 
-void read_cris_l1(
+int read_cris_l1(
   char *filename,
   cris_l1_t * l1,
   int apo) {
@@ -1145,8 +1145,11 @@ void read_cris_l1(
   LOG(1, "Read CrIS Level-1B file: %s", filename);
 
   /* Open netCDF file... */
-  NC(nc_open(filename, NC_NOWRITE, &ncid));
-
+  if(nc_open(filename, NC_NOWRITE, &ncid) != NC_NOERR) {
+    WARN("Cannot open file!");
+    return 0;
+  }
+  
   /* Check dimensions... */
   NC(nc_inq_dimid(ncid, "atrack", &dimid));
   NC(nc_inq_dimlen(ncid, dimid, &n));
@@ -1287,6 +1290,9 @@ void read_cris_l1(
 
   /* Close file... */
   NC(nc_close(ncid));
+
+  /* Return success... */
+  return 1;
 }
 
 /*****************************************************************************/

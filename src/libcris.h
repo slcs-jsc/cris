@@ -410,11 +410,10 @@ void pert2wave(
   int xtrack1);
 
 /*! Read CrIS Level-1 data. */
-void read_cris_l1(
+int read_cris_l1(
   char *filename,
   cris_l1_t * l1,
   int apo);
-
 
 /*! Read radiance perturbation data. */
 void read_pert(

@@ -50,7 +50,7 @@ int main(
 
   /* Check arguments... */
   if (argc < 4)
-    ERRMSG("Give parameters: <ctl> <out.nc> <l1b_file1> [<l1b_file2> ...]");
+    ERRMSG("Give parameters: <ctl> <pert.nc> <l1b_file1> [<l1b_file2> ...]");
 
   /* Get control parameters... */
   int apo = (int) scan_ctl(argc, argv, "APO", -1, "0", NULL);
@@ -164,6 +164,9 @@ int main(
      Calculate perturbations...
      ------------------------------------------------------------ */
 
+  /* Write info... */
+  LOG(1, "Calculate perturbations...");
+  
   /* Loop over scans and field of views... */
   for (track = 0; track < pert_4mu->ntrack; track++)
     for (ifov = 0; ifov < L1_NFOV; ifov++) {
@@ -202,6 +205,9 @@ int main(
   /* ------------------------------------------------------------
      Calculate variances...
      ------------------------------------------------------------ */
+
+  /* Write info... */
+  LOG(1, "Calculate variances...");
 
   /* Loop over footprints... */
   for (track = 0; track < pert_4mu->ntrack; track++)
@@ -278,6 +284,9 @@ int main(
   /* ------------------------------------------------------------
      Write netCDF file...
      ------------------------------------------------------------ */
+  
+  /* Write info... */
+  LOG(1, "Write perturbation data file: %s", argv[2]);
 
   /* Create netCDF file... */
   NC(nc_create(argv[2], NC_CLOBBER, &ncid));
