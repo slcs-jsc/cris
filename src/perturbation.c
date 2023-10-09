@@ -43,7 +43,7 @@ int main(
   = { 30, 31 };
 
   static int dimid[3], i, n, ncid, track, track0, track2, xtrack, xtrack2,
-    ifov, ifov2, time_varid, lon_varid, lat_varid, bt_4mu_varid,
+    ifov, ifov2, time_varid, lon_varid, lat_varid, bt_4mu_varid, init,
     bt_4mu_pt_varid, bt_4mu_var_varid, bt_8mu_varid, bt_15mu_low_varid,
     bt_15mu_low_pt_varid, bt_15mu_low_var_varid, bt_15mu_high_varid,
     bt_15mu_high_pt_varid, bt_15mu_high_var_varid, dtrack = 3, dxtrack = 3;
@@ -68,7 +68,49 @@ int main(
   for (int iarg = 3; iarg < argc; iarg++) {
 
     /* Read CrIS data... */
-    read_cris_l1(argv[iarg], &l1, apo);
+    if (!read_cris_l1(argv[iarg], &l1, apo))
+      continue;
+
+    /* Write channel information... */
+    if (!init) {
+      init = 1;
+
+      /* 4.3 micron channels... */
+      LOG(2, "4.3 micron channels:");
+      n = 0;
+      nu = 0;
+      for (i = 0; i < N4; i++) {
+	nu += l1.nu_sw[list_4mu[i]];
+	n++;
+	LOG(2, "  count= %2d | channel index= SW_%03d | nu= %.4f", n,
+	    list_4mu[i], l1.nu_sw[list_4mu[i]]);
+      }
+      LOG(2, "  nu_mean= %.4f", nu / n);
+
+      /* 15 micron low channels... */
+      LOG(2, "15 micron low channels:");
+      n = 0;
+      nu = 0;
+      for (i = 0; i < N15_LOW; i++) {
+	nu += l1.nu_lw[list_15mu_low[i]];
+	n++;
+	LOG(2, "  count= %2d | channel index= LW_%03d | nu= %.4f", n,
+	    list_15mu_low[i], l1.nu_lw[list_15mu_low[i]]);
+      }
+      LOG(2, "  nu_mean= %.4f", nu / n);
+
+      /* 15 micron low channels... */
+      LOG(2, "15 micron high channels:");
+      n = 0;
+      nu = 0;
+      for (i = 0; i < N15_HIGH; i++) {
+	nu += l1.nu_lw[list_15mu_high[i]];
+	n++;
+	LOG(2, "  count= %2d | channel index= LW_%03d | nu= %.4f", n,
+	    list_15mu_high[i], l1.nu_lw[list_15mu_high[i]]);
+      }
+      LOG(2, "  nu_mean= %.4f", nu / n);
+    }
 
     /* Save geolocation... */
     pert_4mu->ntrack += L1_NTRACK;

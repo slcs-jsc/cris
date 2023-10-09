@@ -25,7 +25,8 @@ int main(
   double lat = (int) scan_ctl(argc, argv, "LAT", -1, "-999", NULL);
 
   /* Read CrIS data... */
-  read_cris_l1(argv[2], &l1, apo);
+  if (!read_cris_l1(argv[2], &l1, apo))
+    ERRMSG("Cannot read CrIS Level-1B file!");
 
   /* Find nearest footprint... */
   if (lon >= -180 && lon <= 180 && lat >= -90 && lat <= 90) {
@@ -76,7 +77,7 @@ int main(
 
   /* Write data... */
   for (ichan = 0; ichan < L1_NCHAN_LW; ichan++)
-    fprintf(out, "%.2f %g %g %g %g %.4f %g %g %g LW_%d\n",
+    fprintf(out, "%.2f %g %g %g %g %.4f %g %g %g LW_%03d\n",
 	    l1.time[track][xtrack] - 220838400,
 	    l1.sat_lon[track], l1.sat_lat[track],
 	    l1.lon[track][xtrack][ifov], l1.lat[track][xtrack][ifov],
@@ -88,7 +89,7 @@ int main(
 
   fprintf(out, "\n");
   for (ichan = 0; ichan < L1_NCHAN_MW; ichan++)
-    fprintf(out, "%.2f %g %g %g %g %.4f %g %g %g MW_%d\n",
+    fprintf(out, "%.2f %g %g %g %g %.4f %g %g %g MW_%03d\n",
 	    l1.time[track][xtrack] - 220838400,
 	    l1.sat_lon[track], l1.sat_lat[track],
 	    l1.lon[track][xtrack][ifov], l1.lat[track][xtrack][ifov],
@@ -100,7 +101,7 @@ int main(
 
   fprintf(out, "\n");
   for (ichan = 0; ichan < L1_NCHAN_SW; ichan++)
-    fprintf(out, "%.2f %g %g %g %g %.4f %g %g %g SW_%d\n",
+    fprintf(out, "%.2f %g %g %g %g %.4f %g %g %g SW_%03d\n",
 	    l1.time[track][xtrack] - 220838400,
 	    l1.sat_lon[track], l1.sat_lat[track],
 	    l1.lon[track][xtrack][ifov], l1.lat[track][xtrack][ifov],
