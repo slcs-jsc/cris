@@ -866,7 +866,8 @@ void noise_pert(
       /* Check data... */
       okay = 1;
       for (ifov = 0; ifov < pert->nfov; ifov++)
-	if (!gsl_finite(pert->bt[track][xtrack][ifov]))
+	if (!(gsl_finite(pert->bt[track][xtrack][ifov])
+	      && gsl_finite(pert->pt[track][xtrack][ifov])))
 	  okay = 0;
       if (!okay)
 	continue;
@@ -874,15 +875,15 @@ void noise_pert(
       /* Get mean noise... */
       n++;
       *mu += pert->bt[track][xtrack][4];
-      *sig += gsl_pow_2(+4. / 6. * pert->bt[track][xtrack][4]
-			- 2. / 6. * (pert->bt[track][xtrack][1]
-				     + pert->bt[track][xtrack][3]
-				     + pert->bt[track][xtrack][5]
-				     + pert->bt[track][xtrack][7])
-			+ 1. / 6. * (pert->bt[track][xtrack][0]
-				     + pert->bt[track][xtrack][2]
-				     + pert->bt[track][xtrack][6]
-				     + pert->bt[track][xtrack][8]));
+      *sig += gsl_pow_2(+4. / 6. * pert->pt[track][xtrack][4]
+			- 2. / 6. * (pert->pt[track][xtrack][1]
+				     + pert->pt[track][xtrack][3]
+				     + pert->pt[track][xtrack][5]
+				     + pert->pt[track][xtrack][7])
+			+ 1. / 6. * (pert->pt[track][xtrack][0]
+				     + pert->pt[track][xtrack][2]
+				     + pert->pt[track][xtrack][6]
+				     + pert->pt[track][xtrack][8]));
     }
 
   /* Normalize... */
