@@ -287,10 +287,10 @@ int main(
   /* Get control parameters... */
   scan_ctl(argc, argv, "SET", -1, "full", set);
   scan_ctl(argc, argv, "PERTNAME", -1, "4mu", pertname);
-  int nx = (int) scan_ctl(argc, argv, "NX", -1, "360", NULL);
+  int nx = (int) scan_ctl(argc, argv, "NX", -1, "90", NULL);
   double lon0 = scan_ctl(argc, argv, "LON0", -1, "-180", NULL);
   double lon1 = scan_ctl(argc, argv, "LON1", -1, "180", NULL);
-  int ny = (int) scan_ctl(argc, argv, "NY", -1, "180", NULL);
+  int ny = (int) scan_ctl(argc, argv, "NY", -1, "90", NULL);
   double lat0 = scan_ctl(argc, argv, "LAT0", -1, "-90", NULL);
   double lat1 = scan_ctl(argc, argv, "LAT1", -1, "90", NULL);
   double thresh_gw = scan_ctl(argc, argv, "THRESH_GW", -1, "-999", NULL);
