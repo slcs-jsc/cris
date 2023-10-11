@@ -1194,6 +1194,10 @@ int read_cris_l1(
   NC(nc_inq_varid(ncid, "subsat_lat", &varid));
   NC(nc_get_var_double(ncid, varid, l1->sat_lat));
 
+  /* Convert units... */
+  for (int itrack = 0; itrack < L1_NTRACK; itrack++)
+    l1->sat_z[itrack] /= 1e3;
+
   /* Read spectra... */
   NC(nc_inq_varid(ncid, "wnum_lw", &varid));
   NC(nc_get_var_double(ncid, varid, l1->nu_lw));
