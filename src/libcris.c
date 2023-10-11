@@ -1138,8 +1138,6 @@ int read_cris_l1(
 
   int ncid, varid, dimid;
 
-  short qc[L1_NTRACK][L1_NXTRACK][L1_NFOV];
-
   size_t n;
 
   /* Write info... */
@@ -1220,29 +1218,29 @@ int read_cris_l1(
 
   /* Check quality flags... */
   NC(nc_inq_varid(ncid, "rad_lw_qc", &varid));
-  NC(nc_get_var_short(ncid, varid, qc[0][0]));
+  NC(nc_get_var_short(ncid, varid, l1->qual_lw[0][0]));
   for (int itrack = 0; itrack < L1_NTRACK; itrack++)
     for (int ixtrack = 0; ixtrack < L1_NXTRACK; ixtrack++)
       for (int ifov = 0; ifov < L1_NFOV; ifov++)
-	if (qc[itrack][ixtrack][ifov] > 1)
+	if (l1->qual_lw[itrack][ixtrack][ifov] > 1)
 	  for (int ichan = 0; ichan < L1_NCHAN_LW; ichan++)
 	    l1->rad_lw[itrack][ixtrack][ifov][ichan] = GSL_NAN;
 
   NC(nc_inq_varid(ncid, "rad_mw_qc", &varid));
-  NC(nc_get_var_short(ncid, varid, qc[0][0]));
+  NC(nc_get_var_short(ncid, varid, l1->qual_mw[0][0]));
   for (int itrack = 0; itrack < L1_NTRACK; itrack++)
     for (int ixtrack = 0; ixtrack < L1_NXTRACK; ixtrack++)
       for (int ifov = 0; ifov < L1_NFOV; ifov++)
-	if (qc[itrack][ixtrack][ifov] > 1)
+	if (l1->qual_mw[itrack][ixtrack][ifov] > 1)
 	  for (int ichan = 0; ichan < L1_NCHAN_MW; ichan++)
 	    l1->rad_mw[itrack][ixtrack][ifov][ichan] = GSL_NAN;
 
   NC(nc_inq_varid(ncid, "rad_sw_qc", &varid));
-  NC(nc_get_var_short(ncid, varid, qc[0][0]));
+  NC(nc_get_var_short(ncid, varid, l1->qual_sw[0][0]));
   for (int itrack = 0; itrack < L1_NTRACK; itrack++)
     for (int ixtrack = 0; ixtrack < L1_NXTRACK; ixtrack++)
       for (int ifov = 0; ifov < L1_NFOV; ifov++)
-	if (qc[itrack][ixtrack][ifov] > 1)
+	if (l1->qual_sw[itrack][ixtrack][ifov] > 1)
 	  for (int ichan = 0; ichan < L1_NCHAN_SW; ichan++)
 	    l1->rad_sw[itrack][ixtrack][ifov][ichan] = GSL_NAN;
 

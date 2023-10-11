@@ -98,14 +98,20 @@ typedef struct {
   /*! Longwave radiance noise [W/(m^2 sr cm^-1)]. */
   float nedn_lw[L1_NFOV][L1_NCHAN_LW];
 
+  /*! Longwave quality flag (0=best, 1=good, 2=don't use). */
+  short qual_lw[L1_NTRACK][L1_NXTRACK][L1_NFOV];
+
   /*! Midwave channel frequencies [cm^-1]. */
   double nu_mw[L1_NCHAN_MW];
 
   /*! Midwave radiance [W/(m^2 sr cm^-1)]. */
   float rad_mw[L1_NTRACK][L1_NXTRACK][L1_NFOV][L1_NCHAN_MW];
 
-  /*! Longwave radiance noise [W/(m^2 sr cm^-1)]. */
+  /*! Midwave radiance noise [W/(m^2 sr cm^-1)]. */
   float nedn_mw[L1_NFOV][L1_NCHAN_MW];
+
+  /*! Midwave quality flag (0=best, 1=good, 2=don't use). */
+  short qual_mw[L1_NTRACK][L1_NXTRACK][L1_NFOV];
 
   /*! Shortwave channel frequencies [cm^-1]. */
   double nu_sw[L1_NCHAN_SW];
@@ -115,6 +121,9 @@ typedef struct {
 
   /*! Longwave radiance noise [W/(m^2 sr cm^-1)]. */
   float nedn_sw[L1_NFOV][L1_NCHAN_SW];
+
+  /*! Shortwave quality flag (0=best, 1=good, 2=don't use). */
+  short qual_sw[L1_NTRACK][L1_NXTRACK][L1_NFOV];
 
 } cris_l1_t;
 
