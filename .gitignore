@@ -4,6 +4,7 @@ src/*.o
 src/day2doy
 src/doy2day
 src/map_pert
+src/map_rad
 src/noise_pert
 src/perturbation
 src/spec2tab
