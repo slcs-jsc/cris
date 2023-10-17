@@ -22,6 +22,12 @@ int main(
   scan_ctl(argc, argv, "PERTNAME", -1, "4mu", pertname);
   scan_ctl(argc, argv, "SET", -1, "full", set);
   int orbit = (int) scan_ctl(argc, argv, "ORBIT", -1, "-999", NULL);
+  int track0 = (int) scan_ctl(argc, argv, "TRACK0", -1, "0", NULL);
+  int track1 = (int) scan_ctl(argc, argv, "TRACK1", -1, "100000", NULL);
+  int xtrack0 = (int) scan_ctl(argc, argv, "XTRACK0", -1, "0", NULL);
+  int xtrack1 = (int) scan_ctl(argc, argv, "XTRACK1", -1, "29", NULL);
+  int ifov0 = (int) scan_ctl(argc, argv, "IFOV0", -1, "0", NULL);
+  int ifov1 = (int) scan_ctl(argc, argv, "IFOV1", -1, "8", NULL);
   double orblat = scan_ctl(argc, argv, "ORBLAT", -1, "0", NULL);
   double t0 = scan_ctl(argc, argv, "T0", -1, "-1e100", NULL);
   double t1 = scan_ctl(argc, argv, "T1", -1, "1e100", NULL);
@@ -35,6 +41,14 @@ int main(
 
   /* Read perturbation data... */
   read_pert(argv[2], pertname, pert);
+
+  /* Check ranges... */
+  track0 = GSL_MIN(GSL_MAX(track0, 0), pert->ntrack - 1);
+  track1 = GSL_MIN(GSL_MAX(track1, 0), pert->ntrack - 1);
+  xtrack0 = GSL_MIN(GSL_MAX(xtrack0, 0), pert->nxtrack - 1);
+  xtrack1 = GSL_MIN(GSL_MAX(xtrack1, 0), pert->nxtrack - 1);
+  ifov0 = GSL_MIN(GSL_MAX(ifov0, 0), pert->nfov - 1);
+  ifov1 = GSL_MIN(GSL_MAX(ifov1, 0), pert->nfov - 1);
 
   /* Create output file... */
   LOG(1, "Write perturbation data: %s", argv[3]);
@@ -54,7 +68,7 @@ int main(
 	  pertname, pertname, pertname);
 
   /* Write data... */
-  for (itrack = 0; itrack < pert->ntrack; itrack++) {
+  for (itrack = track0; itrack <= track1; itrack++) {
 
     /* Count orbits... */
     if (itrack > 0)
@@ -71,8 +85,8 @@ int main(
       fprintf(out, "\n");
 
     /* Loop over scans and field of views... */
-    for (ixtrack = 0; ixtrack < pert->nxtrack; ixtrack++)
-      for (ifov = 0; ifov < pert->nfov; ifov++) {
+    for (ixtrack = xtrack0; ixtrack <= xtrack1; ixtrack++)
+      for (ifov = ifov0; ifov <= ifov1; ifov++) {
 
 	/* Check data... */
 	if (pert->lon[itrack][ixtrack][ifov] < -180
