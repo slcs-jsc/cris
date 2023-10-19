@@ -148,10 +148,10 @@ typedef struct {
   /*! Latitude [deg]. */
   double lat[PERT_NTRACK][PERT_NXTRACK][PERT_NFOV];
 
-  /*! Brightness temperature (8 micron) [K]. */
+  /*! Brightness temperature (8.1 micron) [K]. */
   double dc[PERT_NTRACK][PERT_NXTRACK][PERT_NFOV];
 
-  /*! Brightness temperature (4 or 15 micron) [K]. */
+  /*! Brightness temperature (4.3 or 15 micron) [K]. */
   double bt[PERT_NTRACK][PERT_NXTRACK][PERT_NFOV];
 
   /*! Brightness temperature perturbation (4 or 15 micron) [K]. */

@@ -4,14 +4,20 @@
    Constants...
    ------------------------------------------------------------ */
 
-/* Number of 4 micron channels: */
+/* Number of 4.3 micron channels: */
 #define N4 62
 
-/* Number of 15 micron channels (low altitudes): */
+/* Number of 15 micron low channels: */
 #define N15_LOW 15
 
-/* Number of 15 micron channels (high altitudes): */
+/* Number of 15 micron high channels: */
 #define N15_HIGH 1
+
+/* Number of 8.1 micron channels: */
+#define N8 1
+
+/* Number of 10.4 micron channels: */
+#define N10 1
 
 /* ------------------------------------------------------------
    Main...
@@ -39,14 +45,18 @@ int main(
   static int list_15mu_low[N15_LOW]
   = { 5, 8, 10, 13, 15, 17, 23, 34, 36, 39, 41, 44, 46, 49, 51 };
 
-  static int list_15mu_high[N15_HIGH]
-  = { 31 };
+  static int list_15mu_high[N15_HIGH] = { 31 };
+
+  static int list_8mu[N8] = { 36 };
+
+  static int list_10mu[N10] = { 502 };
 
   static int dimid[3], i, n, ncid, track, track0, track2, xtrack, xtrack2,
     ifov, ifov2, time_varid, lon_varid, lat_varid, bt_4mu_varid, init,
-    bt_4mu_pt_varid, bt_4mu_var_varid, bt_8mu_varid, bt_15mu_low_varid,
-    bt_15mu_low_pt_varid, bt_15mu_low_var_varid, bt_15mu_high_varid,
-    bt_15mu_high_pt_varid, bt_15mu_high_var_varid, dtrack = 3, dxtrack = 3;
+    bt_4mu_pt_varid, bt_4mu_var_varid, bt_8mu_varid, bt_10mu_varid,
+    bt_15mu_low_varid, bt_15mu_low_pt_varid, bt_15mu_low_var_varid,
+    bt_15mu_high_varid, bt_15mu_high_pt_varid, bt_15mu_high_var_varid,
+    dtrack = 3, dxtrack = 3;
 
   /* Check arguments... */
   if (argc < 4)
@@ -82,10 +92,10 @@ int main(
       for (i = 0; i < N4; i++) {
 	nu += l1.nu_sw[list_4mu[i]];
 	n++;
-	LOG(2, "  count= %2d | channel index= SW_%03d | nu= %.4f", n,
+	LOG(2, "  count= %2d | channel index= SW_%03d | nu= %.4f cm^-1", n,
 	    list_4mu[i], l1.nu_sw[list_4mu[i]]);
       }
-      LOG(2, "  nu_mean= %.4f", nu / n);
+      LOG(2, "  nu_mean= %.4f cm^-1", nu / n);
 
       /* 15 micron low channels... */
       LOG(2, "15 micron low channels:");
@@ -94,22 +104,46 @@ int main(
       for (i = 0; i < N15_LOW; i++) {
 	nu += l1.nu_lw[list_15mu_low[i]];
 	n++;
-	LOG(2, "  count= %2d | channel index= LW_%03d | nu= %.4f", n,
+	LOG(2, "  count= %2d | channel index= LW_%03d | nu= %.4f cm^-1", n,
 	    list_15mu_low[i], l1.nu_lw[list_15mu_low[i]]);
       }
-      LOG(2, "  nu_mean= %.4f", nu / n);
+      LOG(2, "  nu_mean= %.4f cm^-1", nu / n);
 
-      /* 15 micron low channels... */
+      /* 15 micron high channels... */
       LOG(2, "15 micron high channels:");
       n = 0;
       nu = 0;
       for (i = 0; i < N15_HIGH; i++) {
 	nu += l1.nu_lw[list_15mu_high[i]];
 	n++;
-	LOG(2, "  count= %2d | channel index= LW_%03d | nu= %.4f", n,
+	LOG(2, "  count= %2d | channel index= LW_%03d | nu= %.4f cm^-1", n,
 	    list_15mu_high[i], l1.nu_lw[list_15mu_high[i]]);
       }
-      LOG(2, "  nu_mean= %.4f", nu / n);
+      LOG(2, "  nu_mean= %.4f cm^-1", nu / n);
+
+      /* 8.1 micron channels... */
+      LOG(2, "8.1 micron channels:");
+      n = 0;
+      nu = 0;
+      for (i = 0; i < N8; i++) {
+	nu += l1.nu_mw[list_8mu[i]];
+	n++;
+	LOG(2, "  count= %2d | channel index= MW_%03d | nu= %.4f cm^-1", n,
+	    list_8mu[i], l1.nu_mw[list_8mu[i]]);
+      }
+      LOG(2, "  nu_mean= %.4f cm^-1", nu / n);
+
+      /* 10.4 micron channels... */
+      LOG(2, "10.4 micron channels:");
+      n = 0;
+      nu = 0;
+      for (i = 0; i < N10; i++) {
+	nu += l1.nu_lw[list_10mu[i]];
+	n++;
+	LOG(2, "  count= %2d | channel index= LW_%03d | nu= %.4f cm^-1", n,
+	    list_10mu[i], l1.nu_lw[list_10mu[i]]);
+      }
+      LOG(2, "  nu_mean= %.4f cm^-1", nu / n);
     }
 
     /* Save geolocation... */
@@ -138,8 +172,16 @@ int main(
       for (xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
 	for (ifov = 0; ifov < L1_NFOV; ifov++)
 	  pert_4mu->dc[track0 + track][xtrack][ifov]
-	    = brightness(l1.rad_mw[track][xtrack][ifov][36] * 1e-3,
-			 l1.nu_mw[36]);
+	    = brightness(l1.rad_mw[track][xtrack][ifov][list_8mu[0]] * 1e-3,
+			 l1.nu_mw[list_8mu[0]]);
+
+    /* Get 10.4 micron brightness temperature... */
+    for (track = 0; track < L1_NTRACK; track++)
+      for (xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
+	for (ifov = 0; ifov < L1_NFOV; ifov++)
+	  pert_15mu_high->dc[track0 + track][xtrack][ifov]
+	    = brightness(l1.rad_lw[track][xtrack][ifov][list_10mu[0]] * 1e-3,
+			 l1.nu_lw[list_10mu[0]]);
 
     /* Get 4.3 micron brightness temperature... */
     for (track = 0; track < L1_NTRACK; track++)
@@ -349,6 +391,9 @@ int main(
   NC(nc_def_var(ncid, "bt_8mu", NC_FLOAT, 3, dimid, &bt_8mu_varid));
   add_att(ncid, bt_8mu_varid, "K", "brightness temperature at 8.1 micron");
 
+  NC(nc_def_var(ncid, "bt_10mu", NC_FLOAT, 3, dimid, &bt_10mu_varid));
+  add_att(ncid, bt_10mu_varid, "K", "brightness temperature at 10.4 micron");
+
   NC(nc_def_var(ncid, "bt_4mu", NC_FLOAT, 3, dimid, &bt_4mu_varid));
   add_att(ncid, bt_4mu_varid, "K", "brightness temperature" " at 4.3 micron");
   NC(nc_def_var(ncid, "bt_4mu_pt", NC_FLOAT, 3, dimid, &bt_4mu_pt_varid));
@@ -416,6 +461,13 @@ int main(
       for (ifov = 0; ifov < L1_NFOV; ifov++)
 	help[n++] = pert_4mu->dc[track][xtrack][ifov];
   NC(nc_put_var_double(ncid, bt_8mu_varid, help));
+
+  n = 0;
+  for (track = 0; track < pert_4mu->ntrack; track++)
+    for (xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
+      for (ifov = 0; ifov < L1_NFOV; ifov++)
+	help[n++] = pert_15mu_high->dc[track][xtrack][ifov];
+  NC(nc_put_var_double(ncid, bt_10mu_varid, help));
 
   n = 0;
   for (track = 0; track < pert_4mu->ntrack; track++)
