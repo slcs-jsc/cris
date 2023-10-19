@@ -8,10 +8,10 @@
 #define N4 62
 
 /* Number of 15 micron channels (low altitudes): */
-#define N15_LOW 17
+#define N15_LOW 15
 
 /* Number of 15 micron channels (high altitudes): */
-#define N15_HIGH 2
+#define N15_HIGH 1
 
 /* ------------------------------------------------------------
    Main...
@@ -37,10 +37,10 @@ int main(
   };
 
   static int list_15mu_low[N15_LOW]
-  = { 3, 5, 8, 10, 13, 15, 17, 23, 34, 36, 39, 41, 42, 44, 46, 49, 51 };
+  = { 5, 8, 10, 13, 15, 17, 23, 34, 36, 39, 41, 44, 46, 49, 51 };
 
   static int list_15mu_high[N15_HIGH]
-  = { 30, 31 };
+  = { 31 };
 
   static int dimid[3], i, n, ncid, track, track0, track2, xtrack, xtrack2,
     ifov, ifov2, time_varid, lon_varid, lat_varid, bt_4mu_varid, init,
