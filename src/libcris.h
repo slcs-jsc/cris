@@ -148,7 +148,7 @@ typedef struct {
   /*! Latitude [deg]. */
   double lat[PERT_NTRACK][PERT_NXTRACK][PERT_NFOV];
 
-  /*! Brightness temperature (8.1 micron) [K]. */
+  /*! Brightness temperature (cloud channel) [K]. */
   double dc[PERT_NTRACK][PERT_NXTRACK][PERT_NFOV];
 
   /*! Brightness temperature (4.3 or 15 micron) [K]. */
@@ -428,6 +428,7 @@ int read_cris_l1(
 void read_pert(
   char *filename,
   char *pertname,
+  int dc,
   pert_t * pert);
 
 /*! Read CrIS retrieval data. */

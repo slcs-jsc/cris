@@ -1303,13 +1303,16 @@ int read_cris_l1(
 void read_pert(
   char *filename,
   char *pertname,
+  int dc,
   pert_t * pert) {
 
   static char varname[LEN];
 
+  static double help[PERT_NTRACK][PERT_NXTRACK][PERT_NFOV];
+
   static int dimid[3], ncid, varid;
 
-  static size_t itrack, ntrack, ixtrack, nxtrack, nfov,
+  static size_t itrack, ntrack, ixtrack, nxtrack, ifov, nfov,
     start[3] = { 0, 0, 0 }, count[3] = { 1, 1, 1 };
 
   /* Write info... */
@@ -1375,6 +1378,22 @@ void read_pert(
       NC(nc_get_vara_double
 	 (ncid, varid, start, count, pert->dc[itrack][ixtrack]));
     }
+
+  NC(nc_inq_varid(ncid, "bt_10mu", &varid));
+  for (itrack = 0; itrack < ntrack; itrack++)
+    for (ixtrack = 0; ixtrack < nxtrack; ixtrack++) {
+      start[0] = itrack;
+      start[1] = ixtrack;
+      NC(nc_get_vara_double
+	 (ncid, varid, start, count, help[itrack][ixtrack]));
+    }
+
+  for (itrack = 0; itrack < ntrack; itrack++)
+    for (ixtrack = 0; ixtrack < nxtrack; ixtrack++)
+      for (ifov = 0; ifov < nfov; ifov++)
+	if (dc == 2
+	    || (dc == 0 && !gsl_finite(pert->dc[itrack][ixtrack][ifov])))
+	  pert->dc[itrack][ixtrack][ifov] = help[itrack][ixtrack][ifov];
 
   sprintf(varname, "bt_%s", pertname);
   NC(nc_inq_varid(ncid, varname, &varid));

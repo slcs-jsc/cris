@@ -298,6 +298,7 @@ int main(
   double dt_trop = scan_ctl(argc, argv, "DT_TROP", -1, "0", NULL);
   double dt230 = scan_ctl(argc, argv, "DT230", -1, "-999", NULL);
   double nu = scan_ctl(argc, argv, "NU", -1, "-999", NULL);
+  int dc = (int) scan_ctl(argc, argv, "DC", -1, "0", NULL);
   int output = (int) scan_ctl(argc, argv, "OUTPUT", -1, "1", NULL);
 
   /* Allocate... */
@@ -317,7 +318,7 @@ int main(
       continue;
     else {
       fclose(in);
-      read_pert(argv[iarg], pertname, pert);
+      read_pert(argv[iarg], pertname, dc, pert);
     }
 
     /* Detection... */
@@ -410,7 +411,7 @@ int main(
 		   ixtrack2++) {
 		if (det_cw)
 		  break;
-		det_cw = (pert->dc[itrack2][ixtrack2][ifov] <= t_dc);
+		det_cw = (pert->dc[itrack2][ixtrack2][ifov] <= t_dc);	// TODO: use ifov2 ?
 	      }
 
 	  /* Detection of deep convection... */
@@ -451,10 +452,10 @@ int main(
 	  bt[ix][iy] += pert->bt[itrack][ixtrack][ifov];
 	  bt_8mu[ix][iy] += pert->dc[itrack][ixtrack][ifov];
 	  if (n[ix][iy] > 1) {
-	    bt_8mu_min[ix][iy]
-	      = GSL_MIN(bt_8mu_min[ix][iy], pert->dc[itrack][ixtrack][ifov]);
-	    bt_8mu_max[ix][iy]
-	      = GSL_MAX(bt_8mu_max[ix][iy], pert->dc[itrack][ixtrack][ifov]);
+	    bt_8mu_min[ix][iy] =
+	      GSL_MIN(bt_8mu_min[ix][iy], pert->dc[itrack][ixtrack][ifov]);
+	    bt_8mu_max[ix][iy] =
+	      GSL_MAX(bt_8mu_max[ix][iy], pert->dc[itrack][ixtrack][ifov]);
 	  } else {
 	    bt_8mu_min[ix][iy] = pert->dc[itrack][ixtrack][ifov];
 	    bt_8mu_max[ix][iy] = pert->dc[itrack][ixtrack][ifov];

@@ -22,12 +22,13 @@ int main(
   scan_ctl(argc, argv, "PERTNAME", -1, "4mu", pertname);
   int bsize = (int) scan_ctl(argc, argv, "BSIZE", -1, "-999", NULL);
   int maxvar = (int) scan_ctl(argc, argv, "MAXVAR", -1, "-999", NULL);
+  int dc = (int) scan_ctl(argc, argv, "DC", -1, "0", NULL);
 
   /* Allocate... */
   ALLOC(pert, pert_t, 1);
 
   /* Read perturbation data... */
-  read_pert(argv[2], pertname, pert);
+  read_pert(argv[2], pertname, dc, pert);
 
   /* Set block size... */
   if (bsize < 0)

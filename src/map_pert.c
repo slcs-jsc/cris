@@ -35,12 +35,13 @@ int main(
   double sza1 = scan_ctl(argc, argv, "SZA1", -1, "1e100", NULL);
   double dt230 = scan_ctl(argc, argv, "DT230", -1, "-999", NULL);
   double nu = scan_ctl(argc, argv, "NU", -1, "-999", NULL);
+  int dc = (int) scan_ctl(argc, argv, "DC", -1, "0", NULL);
 
   /* Allocate... */
   ALLOC(pert, pert_t, 1);
 
   /* Read perturbation data... */
-  read_pert(argv[2], pertname, pert);
+  read_pert(argv[2], pertname, dc, pert);
 
   /* Check ranges... */
   track0 = GSL_MIN(GSL_MAX(track0, 0), pert->ntrack - 1);
@@ -61,7 +62,7 @@ int main(
 	  "# $2 = along-track index\n"
 	  "# $3 = longitude [deg]\n"
 	  "# $4 = latitude [deg]\n"
-	  "# $5 = 8mu brightness temperature [K]\n"
+	  "# $5 = cloud channel brightness temperature [K]\n"
 	  "# $6 = %s brightness temperature [K]\n"
 	  "# $7 = %s brightness temperature perturbation [K]\n"
 	  "# $8 = %s brightness temperature variance [K^2]\n",
