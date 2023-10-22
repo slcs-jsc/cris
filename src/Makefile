@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------------
 
 # Executables...
-EXC = day2doy doy2day map_pert map_rad noise_pert perturbation spec2tab variance volcano
+EXC = day2doy doy2day map_pert map_rad noise_pert perturbation sampling spec2tab variance volcano
 
 # Installation directory...
 DESTDIR ?= ../bin

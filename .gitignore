@@ -7,6 +7,7 @@ src/map_pert
 src/map_rad
 src/noise_pert
 src/perturbation
+src/sampling
 src/spec2tab
 src/variance
 src/volcano
