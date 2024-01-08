@@ -201,7 +201,7 @@ int main(
 	    pert_4mu->bt[track0 + track][xtrack][ifov] = GSL_NAN;
 	}
 
-    /* Get 15 micron "low" brightness temperature... */
+    /* Get 15 micron low brightness temperature... */
     for (track = 0; track < L1_NTRACK; track++)
       for (xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
 	for (ifov = 0; ifov < L1_NFOV; ifov++) {
@@ -220,7 +220,7 @@ int main(
 	    pert_15mu_low->bt[track0 + track][xtrack][ifov] = GSL_NAN;
 	}
 
-    /* Get 15 micron "high" brightness temperature... */
+    /* Get 15 micron high brightness temperature... */
     for (track = 0; track < L1_NTRACK; track++)
       for (xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
 	for (ifov = 0; ifov < L1_NFOV; ifov++) {
@@ -274,7 +274,7 @@ int main(
 	pert_15mu_low->pt[track][xtrack][ifov] =
 	  pert_15mu_low->bt[track][xtrack][ifov] - y[xtrack];
 
-      /* Get 15 micron "high" perturbations... */
+      /* Get 15 micron high perturbations... */
       for (xtrack = 0; xtrack < L1_NXTRACK; xtrack++) {
 	x[xtrack] = (double) xtrack;
 	y[xtrack] = pert_15mu_high->bt[track][xtrack][ifov];
