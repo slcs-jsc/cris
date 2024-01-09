@@ -269,7 +269,7 @@ int main(
 	x[xtrack] = (double) xtrack;
 	y[xtrack] = pert_15mu_low->bt[track][xtrack][ifov];
       }
-      background_poly_help(x, y, L1_NXTRACK, 5);
+      background_poly_help(x, y, L1_NXTRACK, 7);
       for (xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
 	pert_15mu_low->pt[track][xtrack][ifov] =
 	  pert_15mu_low->bt[track][xtrack][ifov] - y[xtrack];
@@ -279,7 +279,7 @@ int main(
 	x[xtrack] = (double) xtrack;
 	y[xtrack] = pert_15mu_high->bt[track][xtrack][ifov];
       }
-      background_poly_help(x, y, L1_NXTRACK, 7);
+      background_poly_help(x, y, L1_NXTRACK, 5);
       for (xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
 	pert_15mu_high->pt[track][xtrack][ifov] =
 	  pert_15mu_high->bt[track][xtrack][ifov] - y[xtrack];
