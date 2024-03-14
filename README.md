@@ -1,7 +1,7 @@
 # CrIS Code Collection
 
 This repository provides a collection of codes for the analysis of
-observations of NASA's Cross Track Infrared Sounder (CrIS).
+observations of NOAA's Cross Track Infrared Sounder (CrIS).
 
 ## Installation
 
