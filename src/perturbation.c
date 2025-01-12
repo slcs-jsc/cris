@@ -177,14 +177,14 @@ int main(
     /* Get 8.1 micron brightness temperature... */
     LOOP_ALL(L1_NTRACK)
       pert_4mu->dc[track0 + track][xtrack][ifov]
-      = brightness(l1.rad_mw[track][xtrack][ifov][list_8mu[0]] * 1e-3,
-		   l1.nu_mw[list_8mu[0]]);
+      = BRIGHT(l1.rad_mw[track][xtrack][ifov][list_8mu[0]] * 1e-3,
+	       l1.nu_mw[list_8mu[0]]);
 
     /* Get 10.4 micron brightness temperature... */
     LOOP_ALL(L1_NTRACK)
       pert_15mu_high->dc[track0 + track][xtrack][ifov]
-      = brightness(l1.rad_lw[track][xtrack][ifov][list_10mu[0]] * 1e-3,
-		   l1.nu_lw[list_10mu[0]]);
+      = BRIGHT(l1.rad_lw[track][xtrack][ifov][list_10mu[0]] * 1e-3,
+	       l1.nu_lw[list_10mu[0]]);
 
     /* Get 4.3 micron brightness temperature... */
     LOOP_ALL(L1_NTRACK) {
@@ -197,8 +197,7 @@ int main(
 	  n++;
 	}
       if (n > 0.9 * N4)
-	pert_4mu->bt[track0 + track][xtrack][ifov] =
-	  brightness(rad / n, nu / n);
+	pert_4mu->bt[track0 + track][xtrack][ifov] = BRIGHT(rad / n, nu / n);
       else
 	pert_4mu->bt[track0 + track][xtrack][ifov] = GSL_NAN;
     }
@@ -215,7 +214,7 @@ int main(
 	}
       if (n > 0.9 * N15_LOW)
 	pert_15mu_low->bt[track0 + track][xtrack][ifov] =
-	  brightness(rad / n, nu / n);
+	  BRIGHT(rad / n, nu / n);
       else
 	pert_15mu_low->bt[track0 + track][xtrack][ifov] = GSL_NAN;
     }
@@ -232,7 +231,7 @@ int main(
 	}
       if (n > 0.9 * N15_HIGH)
 	pert_15mu_high->bt[track0 + track][xtrack][ifov] =
-	  brightness(rad / n, nu / n);
+	  BRIGHT(rad / n, nu / n);
       else
 	pert_15mu_high->bt[track0 + track][xtrack][ifov] = GSL_NAN;
     }

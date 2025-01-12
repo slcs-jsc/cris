@@ -102,7 +102,7 @@ void background_poly_help(
 /*****************************************************************************/
 
 void background_poly(
-  wave_t * wave,
+  wave_t *wave,
   int dim_x,
   int dim_y) {
 
@@ -154,7 +154,7 @@ void background_poly(
 /*****************************************************************************/
 
 void background_smooth(
-  wave_t * wave,
+  wave_t *wave,
   int npts_x,
   int npts_y) {
 
@@ -205,7 +205,7 @@ void background_smooth(
 /*****************************************************************************/
 
 void create_background(
-  wave_t * wave) {
+  wave_t *wave) {
 
   int ix, iy;
 
@@ -234,7 +234,7 @@ void create_background(
 /*****************************************************************************/
 
 void create_noise(
-  wave_t * wave,
+  wave_t *wave,
   double nedt) {
 
   gsl_rng *r;
@@ -259,7 +259,7 @@ void create_noise(
 /*****************************************************************************/
 
 void create_wave(
-  wave_t * wave,
+  wave_t *wave,
   double amp,
   double lx,
   double ly,
@@ -336,7 +336,7 @@ void doy2day(
 /*****************************************************************************/
 
 void fit_wave(
-  wave_t * wave,
+  wave_t *wave,
   double amp,
   double phi,
   double kx,
@@ -404,7 +404,7 @@ void fft_help(
 /*****************************************************************************/
 
 void fft(
-  wave_t * wave,
+  wave_t *wave,
   double *Amax,
   double *phimax,
   double *lhmax,
@@ -567,7 +567,7 @@ void fft(
 /*****************************************************************************/
 
 void gauss(
-  wave_t * wave,
+  wave_t *wave,
   double fwhm) {
 
   static double d2, help[WX][WY], sigma2, w, wsum;
@@ -609,7 +609,7 @@ void gauss(
 /*****************************************************************************/
 
 void hamming(
-  wave_t * wave,
+  wave_t *wave,
   int niter) {
 
   static double help[WX][WY];
@@ -640,7 +640,7 @@ void hamming(
 /*****************************************************************************/
 
 void intpol_x(
-  wave_t * wave,
+  wave_t *wave,
   int n) {
 
   gsl_interp_accel *acc;
@@ -722,7 +722,7 @@ void intpol_x(
 /*****************************************************************************/
 
 void median(
-  wave_t * wave,
+  wave_t *wave,
   int dx) {
 
   static double data[WX * WY], help[WX][WY];
@@ -765,8 +765,8 @@ void median(
 /*****************************************************************************/
 
 void merge_y(
-  wave_t * wave1,
-  wave_t * wave2) {
+  wave_t *wave1,
+  wave_t *wave2) {
 
   double y;
 
@@ -802,7 +802,7 @@ void merge_y(
 /*****************************************************************************/
 
 void noise(
-  wave_t * wave,
+  wave_t *wave,
   double *mu,
   double *sig) {
 
@@ -847,7 +847,7 @@ void noise(
 /*****************************************************************************/
 
 void noise_pert(
-  pert_t * pert,
+  pert_t *pert,
   int track0,
   int track1,
   double *mu,
@@ -894,7 +894,7 @@ void noise_pert(
 /*****************************************************************************/
 
 void period(
-  wave_t * wave,
+  wave_t *wave,
   double lxymax,
   double dlxy,
   double *Amax,
@@ -1053,8 +1053,8 @@ void period(
 
 #if 0
 void pert2wave(
-  pert_t * pert,
-  wave_t * wave,
+  pert_t *pert,
+  wave_t *wave,
   int track0,
   int track1,
   int xtrack0,
@@ -1131,7 +1131,7 @@ void pert2wave(
 
 int read_cris_l1(
   char *filename,
-  cris_l1_t * l1,
+  cris_l1_t *l1,
   int apo) {
 
   double help[L1_NCHAN_MW];
@@ -1304,7 +1304,7 @@ void read_pert(
   char *filename,
   char *pertname,
   int dc,
-  pert_t * pert) {
+  pert_t *pert) {
 
   static char varname[LEN];
 
@@ -1433,7 +1433,7 @@ void read_pert(
 
 void read_retr(
   char *filename,
-  ret_t * ret) {
+  ret_t *ret) {
 
   static double help[NDS * NPG];
 
@@ -1614,7 +1614,7 @@ void read_retr_help(
 
 void read_wave(
   char *filename,
-  wave_t * wave) {
+  wave_t *wave) {
 
   FILE *in;
 
@@ -1675,10 +1675,10 @@ void read_wave(
 
 #if 0
 void rad2wave(
-  cris_l1_t * gran,
+  cris_l1_t *gran,
   double *nu,
   int nd,
-  wave_t * wave) {
+  wave_t *wave) {
 
   double x0[3], x1[3];
 
@@ -1746,8 +1746,8 @@ void rad2wave(
 /*****************************************************************************/
 
 void ret2wave(
-  ret_t * ret,
-  wave_t * wave,
+  ret_t *ret,
+  wave_t *wave,
   int dataset,
   int ip) {
 
@@ -1802,7 +1802,7 @@ void ret2wave(
 /*****************************************************************************/
 
 void variance(
-  wave_t * wave,
+  wave_t *wave,
   double dh) {
 
   double dh2, mu, help;
@@ -1857,7 +1857,7 @@ void variance(
 
 void write_wave(
   char *filename,
-  wave_t * wave) {
+  wave_t *wave) {
 
   FILE *out;
 

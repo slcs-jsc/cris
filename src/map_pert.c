@@ -110,10 +110,10 @@ int main(
 
 	/* Estimate noise... */
 	if (dt230 > 0 && nu > 0) {
-	  nesr = planck(t230 + dt230, nu) - planck(t230, nu);
+	  nesr = PLANCK(t230 + dt230, nu) - PLANCK(t230, nu);
 	  tbg =
 	    pert->bt[itrack][ixtrack][ifov] - pert->pt[itrack][ixtrack][ifov];
-	  nedt = brightness(planck(tbg, nu) + nesr, nu) - tbg;
+	  nedt = BRIGHT(PLANCK(tbg, nu) + nesr, nu) - tbg;
 	}
 
 	/* Write data... */

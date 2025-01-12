@@ -51,8 +51,8 @@ int main(
 		      l1.sat_lon[track], l1.sat_lat[track],
 		      l1.lon[track][xtrack][ifov],
 		      l1.lat[track][xtrack][ifov], l1.nu_lw[ichan],
-		      brightness(l1.rad_lw[track][xtrack][ifov][ichan] * 1e-3,
-				 l1.nu_lw[ichan]),
+		      BRIGHT(l1.rad_lw[track][xtrack][ifov][ichan] * 1e-3,
+			     l1.nu_lw[ichan]),
 		      l1.rad_lw[track][xtrack][ifov][ichan] * 1e-3,
 		      l1.nedn_lw[ifov][ichan] * 1e-3, ichan);
 
@@ -66,8 +66,8 @@ int main(
 		      l1.sat_lon[track], l1.sat_lat[track],
 		      l1.lon[track][xtrack][ifov],
 		      l1.lat[track][xtrack][ifov], l1.nu_mw[ichan],
-		      brightness(l1.rad_mw[track][xtrack][ifov][ichan] * 1e-3,
-				 l1.nu_mw[ichan]),
+		      BRIGHT(l1.rad_mw[track][xtrack][ifov][ichan] * 1e-3,
+			     l1.nu_mw[ichan]),
 		      l1.rad_mw[track][xtrack][ifov][ichan] * 1e-3,
 		      l1.nedn_mw[ifov][ichan] * 1e-3, ichan);
 
@@ -81,8 +81,8 @@ int main(
 		      l1.sat_lon[track], l1.sat_lat[track],
 		      l1.lon[track][xtrack][ifov],
 		      l1.lat[track][xtrack][ifov], l1.nu_sw[ichan],
-		      brightness(l1.rad_sw[track][xtrack][ifov][ichan] * 1e-3,
-				 l1.nu_sw[ichan]),
+		      BRIGHT(l1.rad_sw[track][xtrack][ifov][ichan] * 1e-3,
+			     l1.nu_sw[ichan]),
 		      l1.rad_sw[track][xtrack][ifov][ichan] * 1e-3,
 		      l1.nedn_sw[ifov][ichan] * 1e-3, ichan);
   }
