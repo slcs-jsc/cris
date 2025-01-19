@@ -8,8 +8,6 @@ int main(
 
   char set[LEN], pertname[LEN];
 
-  const double t230 = 230.0;
-
   double nedt = 0, sza2 = 0;
 
   int orb = 0;
@@ -115,7 +113,7 @@ int main(
 
 	/* Estimate noise... */
 	if (dt230 > 0 && nu > 0) {
-	  const double nesr = PLANCK(t230 + dt230, nu) - PLANCK(t230, nu);
+	  const double nesr = PLANCK(230.0 + dt230, nu) - PLANCK(230.0, nu);
 	  const double tbg =
 	    pert->bt[itrack][ixtrack][ifov] - pert->pt[itrack][ixtrack][ifov];
 	  nedt = BRIGHT(PLANCK(tbg, nu) + nesr, nu) - tbg;

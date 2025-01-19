@@ -41,24 +41,26 @@ int main(
 
   static pert_t *pert_4mu, *pert_15mu_low, *pert_15mu_high;
 
-  static double help[PERT_NTRACK * PERT_NXTRACK * PERT_NFOV], rad, nu,
-    x[L1_NXTRACK], y[L1_NXTRACK], var_dh2 = 100. * 100., x0[3], x1[3];
+  const double var_dh2 = 100. * 100.;
 
-  static int list_4mu[N4]
+  static double help[PERT_NTRACK * PERT_NXTRACK * PERT_NFOV], rad, nu,
+    x[L1_NXTRACK], y[L1_NXTRACK], x0[3], x1[3];
+
+  const int list_4mu[N4]
     = { 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283,
     284, 285, 286, 288, 289, 291, 292, 294, 295, 296, 297, 298, 299, 300,
     302, 303, 304, 305, 306, 307, 318, 319, 321, 322, 323, 324, 325, 326,
     328, 330, 332, 333, 334, 335, 336, 337, 338, 339, 340, 341
   };
 
-  static int list_15mu_low[N15_LOW]
+  const int list_15mu_low[N15_LOW]
   = { 5, 8, 10, 13, 15, 17, 23, 34, 36, 39, 41, 44, 46, 49, 51 };
 
-  static int list_15mu_high[N15_HIGH] = { 31 };
+  const int list_15mu_high[N15_HIGH] = { 31 };
 
-  static int list_8mu[N8] = { 36 };
+  const int list_8mu[N8] = { 36 };
 
-  static int list_10mu[N10] = { 502 };
+  const int list_10mu[N10] = { 502 };
 
   const int dtrack = 3, dxtrack = 3;
 

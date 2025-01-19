@@ -272,16 +272,14 @@ int main(
 
   static double bt[NX][NY], bt_8mu[NX][NY], bt_8mu_min[NX][NY],
     bt_8mu_max[NX][NY], dt[NX][NY], mtime[NX][NY], glat[NY], glon[NX],
-    fdc[NX][NY], fwg[NX][NY], fgw[NX][NY], fcw[NX][NY],
-    mean[NX][NY], min[NX][NY], max[NX][NY], var[NX][NY],
-    t_dc, t_gw, help[NX * NY];
+    fdc[NX][NY], fwg[NX][NY], fgw[NX][NY], fcw[NX][NY], mean[NX][NY],
+    min[NX][NY], max[NX][NY], var[NX][NY], t_dc, t_gw, help[NX * NY];
 
   const int iradius = 30, nmin = 10;
 
-  static int n[NX][NY],
-    ndc[NX][NY], ngw[NX][NY], ncw[NX][NY], nwg[NX][NY],
-    det_gw, det_cw, det_dc, det_wg, ilat, imon,
-    ncid, varid, minid, maxid, lonid, latid, npid, dimid[10], help2[NX * NY];
+  static int n[NX][NY], ndc[NX][NY], ngw[NX][NY], ncw[NX][NY], nwg[NX][NY],
+    det_gw, det_cw, det_dc, det_wg, ilat, ncid, varid, minid, maxid, lonid,
+    latid, npid, dimid[10], help2[NX * NY];
 
   /* Check arguments... */
   if (argc < 4)
@@ -370,7 +368,7 @@ int main(
 	    continue;
 
 	  /* Get month index... */
-	  imon =
+	  int imon =
 	    (int) (fmod(pert->time[0][0][0] / 60. / 60. / 24. / 365.25, 1.) *
 		   NMON);
 	  if (imon < 0 || imon >= NMON)

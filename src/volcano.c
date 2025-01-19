@@ -33,7 +33,7 @@ int main(
     ERRMSG("Give parameters: <ctl> <out.tab> <l1b_file1> [<l1b_file2> ...]");
 
   /* Get control parameters... */
-  int apo = (int) scan_ctl(argc, argv, "APO", -1, "0", NULL);
+  const int apo = (int) scan_ctl(argc, argv, "APO", -1, "0", NULL);
 
   /* Create file... */
   printf("Write volcanic emission data: %s\n", argv[2]);
