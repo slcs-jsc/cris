@@ -13,8 +13,8 @@ int main(
     ERRMSG("Give parameters: <ctl> <map.tab> <l1b_file1> {<l1b_file2> ...]");
 
   /* Get control parameters... */
-  int apo = (int) scan_ctl(argc, argv, "APO", -1, "0", NULL);
-  double nu = scan_ctl(argc, argv, "NU", -1, "1231.2500", NULL);
+  const int apo = (int) scan_ctl(argc, argv, "APO", -1, "0", NULL);
+  const double nu = scan_ctl(argc, argv, "NU", -1, "1231.2500", NULL);
 
   /* Create file... */
   LOG(1, "Write map: %s", argv[2]);

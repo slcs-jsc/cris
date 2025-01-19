@@ -268,16 +268,19 @@ int main(
 
   static char pertname[LEN], set[LEN];
 
+  const double dc_hlat = 25, dc_tlim = 250;
+
   static double bt[NX][NY], bt_8mu[NX][NY], bt_8mu_min[NX][NY],
     bt_8mu_max[NX][NY], dt[NX][NY], mtime[NX][NY], glat[NY], glon[NX],
     fdc[NX][NY], fwg[NX][NY], fgw[NX][NY], fcw[NX][NY],
     mean[NX][NY], min[NX][NY], max[NX][NY], var[NX][NY],
-    t_dc, t_gw, dc_hlat = 25, dc_tlim = 250, nesr, lt, help[NX * NY];
+    t_dc, t_gw, help[NX * NY];
 
-  static int asc, ix, iy, iarg, n[NX][NY],
+  const int iradius = 30, nmin = 10;
+
+  static int n[NX][NY],
     ndc[NX][NY], ngw[NX][NY], ncw[NX][NY], nwg[NX][NY],
-    det_gw, det_cw, det_dc, det_wg, ilat, imon, nmin = 10,
-    itrack, itrack2, ixtrack, ixtrack2, ifov, iradius = 30,
+    det_gw, det_cw, det_dc, det_wg, ilat, imon,
     ncid, varid, minid, maxid, lonid, latid, npid, dimid[10], help2[NX * NY];
 
   /* Check arguments... */
@@ -287,19 +290,21 @@ int main(
   /* Get control parameters... */
   scan_ctl(argc, argv, "SET", -1, "full", set);
   scan_ctl(argc, argv, "PERTNAME", -1, "4mu", pertname);
-  int nx = (int) scan_ctl(argc, argv, "NX", -1, "90", NULL);
-  double lon0 = scan_ctl(argc, argv, "LON0", -1, "-180", NULL);
-  double lon1 = scan_ctl(argc, argv, "LON1", -1, "180", NULL);
-  int ny = (int) scan_ctl(argc, argv, "NY", -1, "90", NULL);
-  double lat0 = scan_ctl(argc, argv, "LAT0", -1, "-90", NULL);
-  double lat1 = scan_ctl(argc, argv, "LAT1", -1, "90", NULL);
-  double thresh_gw = scan_ctl(argc, argv, "THRESH_GW", -1, "-999", NULL);
-  double thresh_dc = scan_ctl(argc, argv, "THRESH_DC", -1, "-999", NULL);
-  double dt_trop = scan_ctl(argc, argv, "DT_TROP", -1, "0", NULL);
-  double dt230 = scan_ctl(argc, argv, "DT230", -1, "-999", NULL);
-  double nu = scan_ctl(argc, argv, "NU", -1, "-999", NULL);
-  int dc = (int) scan_ctl(argc, argv, "DC", -1, "0", NULL);
-  int output = (int) scan_ctl(argc, argv, "OUTPUT", -1, "1", NULL);
+  const int nx = (int) scan_ctl(argc, argv, "NX", -1, "90", NULL);
+  const double lon0 = scan_ctl(argc, argv, "LON0", -1, "-180", NULL);
+  const double lon1 = scan_ctl(argc, argv, "LON1", -1, "180", NULL);
+  const int ny = (int) scan_ctl(argc, argv, "NY", -1, "90", NULL);
+  const double lat0 = scan_ctl(argc, argv, "LAT0", -1, "-90", NULL);
+  const double lat1 = scan_ctl(argc, argv, "LAT1", -1, "90", NULL);
+  const double thresh_gw =
+    scan_ctl(argc, argv, "THRESH_GW", -1, "-999", NULL);
+  const double thresh_dc =
+    scan_ctl(argc, argv, "THRESH_DC", -1, "-999", NULL);
+  const double dt_trop = scan_ctl(argc, argv, "DT_TROP", -1, "0", NULL);
+  const double dt230 = scan_ctl(argc, argv, "DT230", -1, "-999", NULL);
+  const double nu = scan_ctl(argc, argv, "NU", -1, "-999", NULL);
+  const int dc = (int) scan_ctl(argc, argv, "DC", -1, "0", NULL);
+  const int output = (int) scan_ctl(argc, argv, "OUTPUT", -1, "1", NULL);
 
   /* Allocate... */
   ALLOC(pert, pert_t, 1);
@@ -311,7 +316,7 @@ int main(
     ERRMSG("Set 1 <= NY <= MAX!");
 
   /* Loop over perturbation files... */
-  for (iarg = 3; iarg < argc; iarg++) {
+  for (int iarg = 3; iarg < argc; iarg++) {
 
     /* Read perturbation data... */
     if (!(in = fopen(argv[iarg], "r")))
@@ -322,9 +327,9 @@ int main(
     }
 
     /* Detection... */
-    for (itrack = 0; itrack < pert->ntrack; itrack++)
-      for (ixtrack = 0; ixtrack < pert->nxtrack; ixtrack++)
-	for (ifov = 0; ifov < pert->nfov; ifov++) {
+    for (int itrack = 0; itrack < pert->ntrack; itrack++)
+      for (int ixtrack = 0; ixtrack < pert->nxtrack; ixtrack++)
+	for (int ifov = 0; ifov < pert->nfov; ifov++) {
 
 	  /* Check data... */
 	  if (pert->time[itrack][ixtrack][ifov] < 0
@@ -341,7 +346,7 @@ int main(
 	    continue;
 
 	  /* Get and check ascending/descending flag... */
-	  asc =
+	  const int asc =
 	    (pert->lat[itrack > 0 ? itrack : itrack + 1][pert->nxtrack / 2]
 	     > pert->lat[itrack >
 			 0 ? itrack - 1 : itrack][pert->nxtrack / 2]);
@@ -350,16 +355,17 @@ int main(
 	    continue;
 
 	  /* Check am/pm flag... */
-	  lt = fmod(pert->time[itrack][ixtrack][ifov], 86400.) / 3600.;
+	  const double lt =
+	    fmod(pert->time[itrack][ixtrack][ifov], 86400.) / 3600.;
 	  if (((set[0] == 'm' || set[0] == 'M') && lt > 12.)
 	      || ((set[0] == 'n' || set[0] == 'N') && lt < 12.))
 	    continue;
 
 	  /* Get grid indices... */
-	  ix = (int) ((pert->lon[itrack][ixtrack][ifov] - lon0)
-		      / (lon1 - lon0) * (double) nx);
-	  iy = (int) ((pert->lat[itrack][ixtrack][ifov] - lat0)
-		      / (lat1 - lat0) * (double) ny);
+	  int ix = (int) ((pert->lon[itrack][ixtrack][ifov] - lon0)
+			  / (lon1 - lon0) * (double) nx);
+	  int iy = (int) ((pert->lat[itrack][ixtrack][ifov] - lat0)
+			  / (lat1 - lat0) * (double) ny);
 	  if (ix < 0 || ix >= nx || iy < 0 || iy >= ny)
 	    continue;
 
@@ -403,10 +409,10 @@ int main(
 	  /* Detection of convective waves... */
 	  det_cw = 0;
 	  if (det_gw)
-	    for (itrack2 = GSL_MAX(itrack - iradius, 0);
+	    for (int itrack2 = GSL_MAX(itrack - iradius, 0);
 		 itrack2 <= GSL_MIN(itrack + iradius, pert->ntrack - 1);
 		 itrack2++)
-	      for (ixtrack2 = GSL_MAX(ixtrack - iradius, 0);
+	      for (int ixtrack2 = GSL_MAX(ixtrack - iradius, 0);
 		   ixtrack2 <= GSL_MIN(ixtrack + iradius, pert->nxtrack - 1);
 		   ixtrack2++) {
 		if (det_cw)
@@ -420,10 +426,10 @@ int main(
 	  /* Detection of wave generation... */
 	  det_wg = 0;
 	  if (det_dc)
-	    for (itrack2 = GSL_MAX(itrack - iradius, 0);
+	    for (int itrack2 = GSL_MAX(itrack - iradius, 0);
 		 itrack2 <= GSL_MIN(itrack + iradius, pert->ntrack - 1);
 		 itrack2++)
-	      for (ixtrack2 = GSL_MAX(ixtrack - iradius, 0);
+	      for (int ixtrack2 = GSL_MAX(ixtrack - iradius, 0);
 		   ixtrack2 <= GSL_MIN(ixtrack + iradius, pert->nxtrack - 1);
 		   ixtrack2++) {
 		if (det_wg)
@@ -467,8 +473,8 @@ int main(
   }
 
   /* Analyze results... */
-  for (ix = 0; ix < nx; ix++)
-    for (iy = 0; iy < ny; iy++) {
+  for (int ix = 0; ix < nx; ix++)
+    for (int iy = 0; iy < ny; iy++) {
 
       /* Get geolocation... */
       mtime[ix][iy] /= (double) n[ix][iy];
@@ -509,7 +515,7 @@ int main(
 
       /* Estimate noise... */
       if (dt230 > 0 && nu > 0) {
-	nesr = PLANCK(230.0 + dt230, nu) - PLANCK(230.0, nu);
+	const double nesr = PLANCK(230.0 + dt230, nu) - PLANCK(230.0, nu);
 	dt[ix][iy] = BRIGHT(PLANCK(bt[ix][iy], nu) + nesr, nu) - bt[ix][iy];
       }
 
@@ -549,10 +555,10 @@ int main(
 	    "# $17 = noise estimate [K]\n");
 
     /* Write results... */
-    for (iy = 0; iy < ny; iy++) {
+    for (int iy = 0; iy < ny; iy++) {
       if (iy == 0 || nx > 1)
 	fprintf(out, "\n");
-      for (ix = 0; ix < nx; ix++)
+      for (int ix = 0; ix < nx; ix++)
 	fprintf(out, "%.2f %g %g %d %g %g %g %g %g %g %g %g %g %g %g %g %g\n",
 		mtime[ix][iy], glon[ix], glat[iy], n[ix][iy],
 		fdc[ix][iy], fwg[ix][iy], fgw[ix][iy], fcw[ix][iy],
@@ -596,20 +602,20 @@ int main(
     /* Write data... */
     NC(nc_put_var_double(ncid, latid, glat));
     NC(nc_put_var_double(ncid, lonid, glon));
-    for (ix = 0; ix < nx; ix++)
-      for (iy = 0; iy < ny; iy++)
+    for (int ix = 0; ix < nx; ix++)
+      for (int iy = 0; iy < ny; iy++)
 	help[iy * nx + ix] = var[ix][iy] - POW2(dt[ix][iy]);
     NC(nc_put_var_double(ncid, varid, help));
-    for (ix = 0; ix < nx; ix++)
-      for (iy = 0; iy < ny; iy++)
+    for (int ix = 0; ix < nx; ix++)
+      for (int iy = 0; iy < ny; iy++)
 	help[iy * nx + ix] = min[ix][iy];
     NC(nc_put_var_double(ncid, minid, help));
-    for (ix = 0; ix < nx; ix++)
-      for (iy = 0; iy < ny; iy++)
+    for (int ix = 0; ix < nx; ix++)
+      for (int iy = 0; iy < ny; iy++)
 	help[iy * nx + ix] = max[ix][iy];
     NC(nc_put_var_double(ncid, maxid, help));
-    for (ix = 0; ix < nx; ix++)
-      for (iy = 0; iy < ny; iy++)
+    for (int ix = 0; ix < nx; ix++)
+      for (int iy = 0; iy < ny; iy++)
 	help2[iy * nx + ix] = n[ix][iy];
     NC(nc_put_var_int(ncid, npid, help2));
 

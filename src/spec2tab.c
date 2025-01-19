@@ -10,19 +10,17 @@ int main(
 
   double dmin = 1e100, x0[3], x1[3];
 
-  int ichan, track2, xtrack2, ifov2;
-
   /* Check arguments... */
   if (argc < 4)
     ERRMSG("Give parameters: <ctl> <l1b_file> <spec.tab>");
 
   /* Get control parameters... */
-  int apo = (int) scan_ctl(argc, argv, "APO", -1, "0", NULL);
+  const int apo = (int) scan_ctl(argc, argv, "APO", -1, "0", NULL);
   int track = (int) scan_ctl(argc, argv, "TRACK", -1, "0", NULL);
   int xtrack = (int) scan_ctl(argc, argv, "XTRACK", -1, "0", NULL);
   int ifov = (int) scan_ctl(argc, argv, "IFOV", -1, "0", NULL);
-  double lon = (int) scan_ctl(argc, argv, "LON", -1, "-999", NULL);
-  double lat = (int) scan_ctl(argc, argv, "LAT", -1, "-999", NULL);
+  const double lon = (int) scan_ctl(argc, argv, "LON", -1, "-999", NULL);
+  const double lat = (int) scan_ctl(argc, argv, "LAT", -1, "-999", NULL);
 
   /* Read CrIS data... */
   if (!read_cris_l1(argv[2], &l1, apo))
@@ -31,9 +29,9 @@ int main(
   /* Find nearest footprint... */
   if (lon >= -180 && lon <= 180 && lat >= -90 && lat <= 90) {
     geo2cart(0, lon, lat, x0);
-    for (track2 = 0; track2 < L1_NTRACK; track2++)
-      for (xtrack2 = 0; xtrack2 < L1_NXTRACK; xtrack2++)
-	for (ifov2 = 0; ifov2 < L1_NFOV; ifov2++) {
+    for (int track2 = 0; track2 < L1_NTRACK; track2++)
+      for (int xtrack2 = 0; xtrack2 < L1_NXTRACK; xtrack2++)
+	for (int ifov2 = 0; ifov2 < L1_NFOV; ifov2++) {
 	  geo2cart(0, l1.lon[track2][xtrack2][ifov2],
 		   l1.lat[track2][xtrack2][ifov2], x1);
 	  if (DIST2(x0, x1) < dmin) {
@@ -76,7 +74,7 @@ int main(
 	  "# $9 = noise [W/(m^2 sr cm^-1)]\n" "# $10 = channel index\n\n");
 
   /* Write data... */
-  for (ichan = 0; ichan < L1_NCHAN_LW; ichan++)
+  for (int ichan = 0; ichan < L1_NCHAN_LW; ichan++)
     fprintf(out, "%.2f %g %g %g %g %.4f %g %g %g LW_%03d\n",
 	    l1.time[track][xtrack] - 220838400,
 	    l1.sat_lon[track], l1.sat_lat[track],
@@ -88,7 +86,7 @@ int main(
 	    l1.nedn_lw[ifov][ichan] * 1e-3, ichan);
 
   fprintf(out, "\n");
-  for (ichan = 0; ichan < L1_NCHAN_MW; ichan++)
+  for (int ichan = 0; ichan < L1_NCHAN_MW; ichan++)
     fprintf(out, "%.2f %g %g %g %g %.4f %g %g %g MW_%03d\n",
 	    l1.time[track][xtrack] - 220838400,
 	    l1.sat_lon[track], l1.sat_lat[track],
@@ -100,7 +98,7 @@ int main(
 	    l1.nedn_mw[ifov][ichan] * 1e-3, ichan);
 
   fprintf(out, "\n");
-  for (ichan = 0; ichan < L1_NCHAN_SW; ichan++)
+  for (int ichan = 0; ichan < L1_NCHAN_SW; ichan++)
     fprintf(out, "%.2f %g %g %g %g %.4f %g %g %g SW_%03d\n",
 	    l1.time[track][xtrack] - 220838400,
 	    l1.sat_lon[track], l1.sat_lat[track],

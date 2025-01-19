@@ -6,9 +6,9 @@ int main(
 
   static pert_t *pert;
 
-  static double d, dmin, dmax, dmu, dx[L1_NXTRACK], x0[3], x1[3], x2[3];
+  static double dx[L1_NXTRACK], x0[3], x1[3], x2[3];
 
-  static int i, itrack, ixtrack, n, nx[L1_NXTRACK];
+  static int nx[L1_NXTRACK];
 
   /* Check arguments... */
   if (argc < 3)
@@ -21,17 +21,17 @@ int main(
   read_pert(argv[2], "4mu", 0, pert);
 
   /* Init... */
-  dmin = 1e100;
-  dmax = -1e100;
-  dmu = 0;
-  n = 0;
+  double dmin = 1e100;
+  double dmax = -1e100;
+  double dmu = 0;
+  int n = 0;
 
   /* Get swath width... */
-  for (itrack = 0; itrack < pert->ntrack; itrack++) {
+  for (int itrack = 0; itrack < pert->ntrack; itrack++) {
     geo2cart(0, pert->lon[itrack][0][4], pert->lat[itrack][0][4], x0);
     geo2cart(0, pert->lon[itrack][pert->nxtrack - 1][4],
 	     pert->lat[itrack][pert->nxtrack - 1][4], x1);
-    d = 2. * RE * asin(DIST(x0, x1) / (2. * RE));
+    const double d = 2. * RE * asin(DIST(x0, x1) / (2. * RE));
     dmin = GSL_MIN(dmin, d);
     dmax = GSL_MAX(dmax, d);
     dmu += d;
@@ -50,13 +50,13 @@ int main(
   n = 0;
 
   /* Get across-track sampling distances... */
-  for (itrack = 0; itrack < pert->ntrack; itrack++) {
-    for (ixtrack = 0; ixtrack < pert->nxtrack - 1; ixtrack++) {
+  for (int itrack = 0; itrack < pert->ntrack; itrack++) {
+    for (int ixtrack = 0; ixtrack < pert->nxtrack - 1; ixtrack++) {
       geo2cart(0, pert->lon[itrack][ixtrack][4],
 	       pert->lat[itrack][ixtrack][4], x0);
       geo2cart(0, pert->lon[itrack][ixtrack + 1][4],
 	       pert->lat[itrack][ixtrack + 1][4], x1);
-      d = 2. * RE * asin(DIST(x0, x1) / (2. * RE));
+      const double d = 2. * RE * asin(DIST(x0, x1) / (2. * RE));
       dmin = GSL_MIN(dmin, d);
       dmax = GSL_MAX(dmax, d);
       dmu += d;
@@ -79,13 +79,13 @@ int main(
   n = 0;
 
   /* Get along-track sampling distances... */
-  for (itrack = 0; itrack < pert->ntrack - 1; itrack++) {
-    for (ixtrack = 0; ixtrack < pert->nxtrack; ixtrack++) {
+  for (int itrack = 0; itrack < pert->ntrack - 1; itrack++) {
+    for (int ixtrack = 0; ixtrack < pert->nxtrack; ixtrack++) {
       geo2cart(0, pert->lon[itrack][ixtrack][4],
 	       pert->lat[itrack][ixtrack][4], x0);
       geo2cart(0, pert->lon[itrack + 1][ixtrack][4],
 	       pert->lat[itrack + 1][ixtrack][4], x1);
-      d = 2. * RE * asin(DIST(x0, x1) / (2. * RE));
+      const double d = 2. * RE * asin(DIST(x0, x1) / (2. * RE));
       dmin = GSL_MIN(dmin, d);
       dmax = GSL_MAX(dmax, d);
       dmu += d;
@@ -108,18 +108,18 @@ int main(
   n = 0;
 
   /* Get angle between along-track and across-track direction... */
-  for (itrack = 0; itrack < pert->ntrack - 1; itrack++) {
+  for (int itrack = 0; itrack < pert->ntrack - 1; itrack++) {
     geo2cart(0, pert->lon[itrack][pert->nxtrack / 2][4],
 	     pert->lat[itrack][pert->nxtrack / 2][4], x0);
     geo2cart(0, pert->lon[itrack][pert->nxtrack / 2 + 1][4],
 	     pert->lat[itrack][pert->nxtrack / 2 + 1][4], x1);
     geo2cart(0, pert->lon[itrack + 1][pert->nxtrack / 2][4],
 	     pert->lat[itrack + 1][pert->nxtrack / 2][4], x2);
-    for (i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++) {
       x1[i] -= x0[i];
       x2[i] -= x0[i];
     }
-    d = acos(DOTP(x1, x2) / (NORM(x1) * NORM(x2))) * 180. / M_PI;
+    const double d = acos(DOTP(x1, x2) / (NORM(x1) * NORM(x2))) * 180. / M_PI;
     dmin = GSL_MIN(dmin, d);
     dmax = GSL_MAX(dmax, d);
     dmu += d;
@@ -132,12 +132,12 @@ int main(
   printf("maximum_across_track_angle= %.1f deg\n", dmax);
 
   /* Get across-track distances... */
-  for (itrack = 0; itrack < pert->ntrack; itrack++) {
-    for (ixtrack = 0; ixtrack < pert->nxtrack; ixtrack++) {
+  for (int itrack = 0; itrack < pert->ntrack; itrack++) {
+    for (int ixtrack = 0; ixtrack < pert->nxtrack; ixtrack++) {
       geo2cart(0, pert->lon[itrack][0][4], pert->lat[itrack][0][4], x0);
       geo2cart(0, pert->lon[itrack][ixtrack][4],
 	       pert->lat[itrack][ixtrack][4], x1);
-      d = 2. * RE * asin(DIST(x0, x1) / (2. * RE));
+      const double d = 2. * RE * asin(DIST(x0, x1) / (2. * RE));
       dx[ixtrack] += d;
       nx[ixtrack]++;
     }
@@ -145,7 +145,7 @@ int main(
 
   /* Write output... */
   printf("\n");
-  for (ixtrack = 0; ixtrack < pert->nxtrack; ixtrack++)
+  for (int ixtrack = 0; ixtrack < pert->nxtrack; ixtrack++)
     printf("ixtrack= %2d | dx= %.1f km | cx= %.1f km\n", ixtrack,
 	   dx[ixtrack] / nx[ixtrack],
 	   0.5 * dx[pert->nxtrack - 1] / nx[pert->nxtrack - 1] -

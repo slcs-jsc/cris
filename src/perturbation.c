@@ -25,9 +25,9 @@
 
 /*! Loop over all footprints. */
 #define LOOP_ALL(ntrack)				\
-  for (track = 0; track < ntrack; track++)		\
-    for (xtrack = 0; xtrack < L1_NXTRACK; xtrack++)	\
-      for (ifov = 0; ifov < L1_NFOV; ifov++)
+  for (int track = 0; track < ntrack; track++)		\
+    for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++)	\
+      for (int ifov = 0; ifov < L1_NFOV; ifov++)
 
 /* ------------------------------------------------------------
    Main...
@@ -60,19 +60,20 @@ int main(
 
   static int list_10mu[N10] = { 502 };
 
-  static int dimid[3], i, n, ncid, track, track0, track2, xtrack, xtrack2,
-    ifov, ifov2, time_varid, lon_varid, lat_varid, bt_4mu_varid, init,
+  const int dtrack = 3, dxtrack = 3;
+
+  static int dimid[3], n, ncid, track0,
+    time_varid, lon_varid, lat_varid, bt_4mu_varid, init,
     bt_4mu_pt_varid, bt_4mu_var_varid, bt_8mu_varid, bt_10mu_varid,
     bt_15mu_low_varid, bt_15mu_low_pt_varid, bt_15mu_low_var_varid,
-    bt_15mu_high_varid, bt_15mu_high_pt_varid, bt_15mu_high_var_varid,
-    dtrack = 3, dxtrack = 3;
+    bt_15mu_high_varid, bt_15mu_high_pt_varid, bt_15mu_high_var_varid;
 
   /* Check arguments... */
   if (argc < 4)
     ERRMSG("Give parameters: <ctl> <pert.nc> <l1b_file1> [<l1b_file2> ...]");
 
   /* Get control parameters... */
-  int apo = (int) scan_ctl(argc, argv, "APO", -1, "0", NULL);
+  const int apo = (int) scan_ctl(argc, argv, "APO", -1, "0", NULL);
 
   /* Allocate... */
   ALLOC(pert_4mu, pert_t, 1);
@@ -98,7 +99,7 @@ int main(
       LOG(2, "4.3 micron channels:");
       n = 0;
       nu = 0;
-      for (i = 0; i < N4; i++) {
+      for (int i = 0; i < N4; i++) {
 	nu += l1.nu_sw[list_4mu[i]];
 	n++;
 	LOG(2, "  count= %2d | channel index= SW_%03d | nu= %.4f cm^-1", n,
@@ -110,7 +111,7 @@ int main(
       LOG(2, "15 micron low channels:");
       n = 0;
       nu = 0;
-      for (i = 0; i < N15_LOW; i++) {
+      for (int i = 0; i < N15_LOW; i++) {
 	nu += l1.nu_lw[list_15mu_low[i]];
 	n++;
 	LOG(2, "  count= %2d | channel index= LW_%03d | nu= %.4f cm^-1", n,
@@ -122,7 +123,7 @@ int main(
       LOG(2, "15 micron high channels:");
       n = 0;
       nu = 0;
-      for (i = 0; i < N15_HIGH; i++) {
+      for (int i = 0; i < N15_HIGH; i++) {
 	nu += l1.nu_lw[list_15mu_high[i]];
 	n++;
 	LOG(2, "  count= %2d | channel index= LW_%03d | nu= %.4f cm^-1", n,
@@ -134,7 +135,7 @@ int main(
       LOG(2, "8.1 micron channels:");
       n = 0;
       nu = 0;
-      for (i = 0; i < N8; i++) {
+      for (int i = 0; i < N8; i++) {
 	nu += l1.nu_mw[list_8mu[i]];
 	n++;
 	LOG(2, "  count= %2d | channel index= MW_%03d | nu= %.4f cm^-1", n,
@@ -146,7 +147,7 @@ int main(
       LOG(2, "10.4 micron channels:");
       n = 0;
       nu = 0;
-      for (i = 0; i < N10; i++) {
+      for (int i = 0; i < N10; i++) {
 	nu += l1.nu_lw[list_10mu[i]];
 	n++;
 	LOG(2, "  count= %2d | channel index= LW_%03d | nu= %.4f cm^-1", n,
@@ -190,7 +191,7 @@ int main(
     LOOP_ALL(L1_NTRACK) {
       n = 0;
       nu = rad = 0;
-      for (i = 0; i < N4; i++)
+      for (int i = 0; i < N4; i++)
 	if (gsl_finite(l1.rad_sw[track][xtrack][ifov][list_4mu[i]])) {
 	  rad += l1.rad_sw[track][xtrack][ifov][list_4mu[i]] * 1e-3;
 	  nu += l1.nu_sw[list_4mu[i]];
@@ -206,7 +207,7 @@ int main(
     LOOP_ALL(L1_NTRACK) {
       n = 0;
       nu = rad = 0;
-      for (i = 0; i < N15_LOW; i++)
+      for (int i = 0; i < N15_LOW; i++)
 	if (gsl_finite(l1.rad_lw[track][xtrack][ifov][list_15mu_low[i]])) {
 	  rad += l1.rad_lw[track][xtrack][ifov][list_15mu_low[i]] * 1e-3;
 	  nu += l1.nu_lw[list_15mu_low[i]];
@@ -223,7 +224,7 @@ int main(
     LOOP_ALL(L1_NTRACK) {
       n = 0;
       nu = rad = 0;
-      for (i = 0; i < N15_HIGH; i++)
+      for (int i = 0; i < N15_HIGH; i++)
 	if (gsl_finite(l1.rad_lw[track][xtrack][ifov][list_15mu_high[i]])) {
 	  rad += l1.rad_lw[track][xtrack][ifov][list_15mu_high[i]] * 1e-3;
 	  nu += l1.nu_lw[list_15mu_high[i]];
@@ -248,8 +249,8 @@ int main(
   LOG(1, "Calculate perturbations...");
 
   /* Loop over scans and field of views... */
-  for (track = 0; track < pert_4mu->ntrack; track++)
-    for (ifov = 0; ifov < L1_NFOV; ifov++) {
+  for (int track = 0; track < pert_4mu->ntrack; track++)
+    for (int ifov = 0; ifov < L1_NFOV; ifov++) {
 
       /* Skip scan edges... */
       pert_4mu->dc[track][0][ifov] = GSL_NAN;
@@ -264,32 +265,32 @@ int main(
       pert_15mu_high->bt[track][L1_NXTRACK - 1][ifov] = GSL_NAN;
 
       /* Get 4 micron perturbations... */
-      for (xtrack = 0; xtrack < L1_NXTRACK; xtrack++) {
+      for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++) {
 	x[xtrack] = (double) xtrack;
 	y[xtrack] = pert_4mu->bt[track][xtrack][ifov];
       }
       background_poly_help(x, y, L1_NXTRACK, 5);
-      for (xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
+      for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
 	pert_4mu->pt[track][xtrack][ifov] =
 	  pert_4mu->bt[track][xtrack][ifov] - y[xtrack];
 
       /* Get 15 micron low perturbations... */
-      for (xtrack = 0; xtrack < L1_NXTRACK; xtrack++) {
+      for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++) {
 	x[xtrack] = (double) xtrack;
 	y[xtrack] = pert_15mu_low->bt[track][xtrack][ifov];
       }
       background_poly_help(x, y, L1_NXTRACK, 7);
-      for (xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
+      for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
 	pert_15mu_low->pt[track][xtrack][ifov] =
 	  pert_15mu_low->bt[track][xtrack][ifov] - y[xtrack];
 
       /* Get 15 micron high perturbations... */
-      for (xtrack = 0; xtrack < L1_NXTRACK; xtrack++) {
+      for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++) {
 	x[xtrack] = (double) xtrack;
 	y[xtrack] = pert_15mu_high->bt[track][xtrack][ifov];
       }
       background_poly_help(x, y, L1_NXTRACK, 5);
-      for (xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
+      for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
 	pert_15mu_high->pt[track][xtrack][ifov] =
 	  pert_15mu_high->bt[track][xtrack][ifov] - y[xtrack];
     }
@@ -314,9 +315,10 @@ int main(
     double var_4mu = 0, var_15mu_low = 0, var_15mu_high = 0;
 
     /* Loop over neighbouring footprints... */
-    for (track2 = track - dtrack; track2 <= track + dtrack; track2++)
-      for (xtrack2 = xtrack - dxtrack; xtrack2 <= xtrack + dxtrack; xtrack2++)
-	for (ifov2 = 0; ifov2 < L1_NFOV; ifov2++)
+    for (int track2 = track - dtrack; track2 <= track + dtrack; track2++)
+      for (int xtrack2 = xtrack - dxtrack; xtrack2 <= xtrack + dxtrack;
+	   xtrack2++)
+	for (int ifov2 = 0; ifov2 < L1_NFOV; ifov2++)
 	  if (track2 >= 0 && track2 < pert_4mu->ntrack
 	      && xtrack2 >= 0 && xtrack2 < L1_NXTRACK) {
 

@@ -22,14 +22,7 @@ int main(
 
   static cris_l1_t l1;
 
-  static double ci, ci_err,
-    ai_low, ai_low_err, ai_low_bt1, ai_low_bt2, ai_high, ai_high_err,
-    ai_high_bt1, ai_high_bt2, ai_old, ai_old_err, ai_old_bt1, ai_old_bt2,
-    si_high, si_high_err, si_high_bt1, si_high_bt2, si_low, si_low_err,
-    si_low_bt1, si_low_bt2, si_old, si_old_err, si_old_bt1, si_old_bt2,
-    si_oper, si_oper_err, si_oper_bt1, si_oper_bt2;
-
-  static int iarg, ai_low_nu1 = 341, ai_low_nu2 = 499, ai_high_nu1 =
+  const int ai_low_nu1 = 341, ai_low_nu2 = 499, ai_high_nu1 =
     40, ai_high_nu2 = 698, ai_old_nu1 = 295, ai_old_nu2 = 499, ci_nu =
     36, si_low_nu1 = 326, si_low_nu2 = 260, si_high_nu1 = 328, si_high_nu2 =
     282, si_old_nu1 = 318, si_old_nu2 = 260, si_oper_nu1 = 359, si_oper_nu2 =
@@ -48,7 +41,7 @@ int main(
     ERRMSG("Cannot create file!");
 
   /* Loop over CrIS files... */
-  for (iarg = 3; iarg < argc; iarg++) {
+  for (int iarg = 3; iarg < argc; iarg++) {
 
     /* Read CrIS data... */
     if (!read_cris_l1(argv[iarg], &l1, apo))
@@ -104,21 +97,22 @@ int main(
 	for (int ifov = 0; ifov < L1_NFOV; ifov++) {
 
 	  /* cloud index... */
-	  ci = BRIGHT(l1.rad_mw[track][xtrack][ifov][ci_nu] * 0.001,
-		      l1.nu_mw[ci_nu]);
-	  ci_err = get_noise(l1.rad_mw[track][xtrack][ifov][ci_nu] * 0.001,
-			     l1.nedn_mw[ifov][ci_nu] * 0.001,
+	  double ci = BRIGHT(l1.rad_mw[track][xtrack][ifov][ci_nu] * 0.001,
 			     l1.nu_mw[ci_nu]);
+	  double ci_err =
+	    get_noise(l1.rad_mw[track][xtrack][ifov][ci_nu] * 0.001,
+		      l1.nedn_mw[ifov][ci_nu] * 0.001,
+		      l1.nu_mw[ci_nu]);
 
 	  /* ash index (low wavenumbers)... */
-	  ai_low_bt1 =
+	  double ai_low_bt1 =
 	    BRIGHT(l1.rad_lw[track][xtrack][ifov][ai_low_nu1] *
 		   0.001, l1.nu_lw[ai_low_nu1]);
-	  ai_low_bt2 =
+	  double ai_low_bt2 =
 	    BRIGHT(l1.rad_lw[track][xtrack][ifov][ai_low_nu2] *
 		   0.001, l1.nu_lw[ai_low_nu2]);
-	  ai_low = ai_low_bt1 - ai_low_bt2;
-	  ai_low_err =
+	  double ai_low = ai_low_bt1 - ai_low_bt2;
+	  double ai_low_err =
 	    sqrt(gsl_pow_2
 		 (get_noise
 		  (l1.rad_lw[track][xtrack][ifov][ai_low_nu1] * 0.001,
@@ -131,14 +125,14 @@ int main(
 			    l1.nu_lw[ai_low_nu2])));
 
 	  /* ash index (high wavenumbers)... */
-	  ai_high_bt1 =
+	  double ai_high_bt1 =
 	    BRIGHT(l1.rad_mw[track][xtrack][ifov][ai_high_nu1] *
 		   0.001, l1.nu_mw[ai_high_nu1]);
-	  ai_high_bt2 =
+	  double ai_high_bt2 =
 	    BRIGHT(l1.rad_lw[track][xtrack][ifov][ai_high_nu2] *
 		   0.001, l1.nu_lw[ai_high_nu2]);
-	  ai_high = ai_high_bt1 - ai_high_bt2;
-	  ai_high_err =
+	  double ai_high = ai_high_bt1 - ai_high_bt2;
+	  double ai_high_err =
 	    sqrt(gsl_pow_2
 		 (get_noise
 		  (l1.rad_mw[track][xtrack][ifov][ai_high_nu1] * 0.001,
@@ -151,14 +145,14 @@ int main(
 			    l1.nu_lw[ai_high_nu1])));
 
 	  /* ash index (old)... */
-	  ai_old_bt1 =
+	  double ai_old_bt1 =
 	    BRIGHT(l1.rad_lw[track][xtrack][ifov][ai_old_nu1] *
 		   0.001, l1.nu_lw[ai_old_nu1]);
-	  ai_old_bt2 =
+	  double ai_old_bt2 =
 	    BRIGHT(l1.rad_lw[track][xtrack][ifov][ai_old_nu2] *
 		   0.001, l1.nu_lw[ai_old_nu2]);
-	  ai_old = ai_old_bt1 - ai_old_bt2;
-	  ai_old_err =
+	  double ai_old = ai_old_bt1 - ai_old_bt2;
+	  double ai_old_err =
 	    sqrt(gsl_pow_2
 		 (get_noise
 		  (l1.rad_lw[track][xtrack][ifov][ai_old_nu1] * 0.001,
@@ -171,14 +165,14 @@ int main(
 			    l1.nu_lw[ai_old_nu2])));
 
 	  /* SO2 index (low concentrations)... */
-	  si_low_bt1 =
+	  double si_low_bt1 =
 	    BRIGHT(l1.rad_mw[track][xtrack][ifov][si_low_nu1] *
 		   0.001, l1.nu_mw[si_low_nu1]);
-	  si_low_bt2 =
+	  double si_low_bt2 =
 	    BRIGHT(l1.rad_mw[track][xtrack][ifov][si_low_nu2] *
 		   0.001, l1.nu_mw[si_low_nu2]);
-	  si_low = si_low_bt1 - si_low_bt2;
-	  si_low_err =
+	  double si_low = si_low_bt1 - si_low_bt2;
+	  double si_low_err =
 	    sqrt(gsl_pow_2
 		 (get_noise
 		  (l1.rad_mw[track][xtrack][ifov][si_low_nu1] * 0.001,
@@ -191,14 +185,14 @@ int main(
 			    l1.nu_mw[si_low_nu2])));
 
 	  /* SO2 index (high concentrations)... */
-	  si_high_bt1 =
+	  double si_high_bt1 =
 	    BRIGHT(l1.rad_mw[track][xtrack][ifov][si_high_nu1] *
 		   0.001, l1.nu_mw[si_high_nu1]);
-	  si_high_bt2 =
+	  double si_high_bt2 =
 	    BRIGHT(l1.rad_mw[track][xtrack][ifov][si_high_nu2] *
 		   0.001, l1.nu_mw[si_high_nu2]);
-	  si_high = si_high_bt1 - si_high_bt2;
-	  si_high_err =
+	  double si_high = si_high_bt1 - si_high_bt2;
+	  double si_high_err =
 	    sqrt(gsl_pow_2
 		 (get_noise
 		  (l1.rad_mw[track][xtrack][ifov][si_high_nu1] * 0.001,
@@ -211,14 +205,14 @@ int main(
 			    l1.nu_mw[si_high_nu2])));
 
 	  /* SO2 index (operational)... */
-	  si_oper_bt1 =
+	  double si_oper_bt1 =
 	    BRIGHT(l1.rad_mw[track][xtrack][ifov][si_oper_nu1] *
 		   0.001, l1.nu_mw[si_oper_nu1]);
-	  si_oper_bt2 =
+	  double si_oper_bt2 =
 	    BRIGHT(l1.rad_mw[track][xtrack][ifov][si_oper_nu2] *
 		   0.001, l1.nu_mw[si_oper_nu2]);
-	  si_oper = si_oper_bt1 - si_oper_bt2;
-	  si_oper_err =
+	  double si_oper = si_oper_bt1 - si_oper_bt2;
+	  double si_oper_err =
 	    sqrt(gsl_pow_2
 		 (get_noise
 		  (l1.rad_mw[track][xtrack][ifov][si_oper_nu1] * 0.001,
@@ -231,14 +225,14 @@ int main(
 			    l1.nu_mw[si_oper_nu2])));
 
 	  /* SO2 index (old)... */
-	  si_old_bt1 =
+	  double si_old_bt1 =
 	    BRIGHT(l1.rad_mw[track][xtrack][ifov][si_old_nu1] *
 		   0.001, l1.nu_mw[si_old_nu1]);
-	  si_old_bt2 =
+	  double si_old_bt2 =
 	    BRIGHT(l1.rad_mw[track][xtrack][ifov][si_old_nu2] *
 		   0.001, l1.nu_mw[si_old_nu2]);
-	  si_old = si_old_bt1 - si_old_bt2;
-	  si_old_err =
+	  double si_old = si_old_bt1 - si_old_bt2;
+	  double si_old_err =
 	    sqrt(gsl_pow_2
 		 (get_noise
 		  (l1.rad_mw[track][xtrack][ifov][si_old_nu1] * 0.001,

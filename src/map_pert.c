@@ -8,9 +8,11 @@ int main(
 
   char set[LEN], pertname[LEN];
 
-  double t230 = 230.0, tbg, nesr, nedt = 0, sza2 = 0;
+  const double t230 = 230.0;
 
-  int asc, itrack, ixtrack, ifov, orb = 0;
+  double nedt = 0, sza2 = 0;
+
+  int orb = 0;
 
   FILE *out;
 
@@ -21,21 +23,21 @@ int main(
   /* Get control parameters... */
   scan_ctl(argc, argv, "PERTNAME", -1, "4mu", pertname);
   scan_ctl(argc, argv, "SET", -1, "full", set);
-  int orbit = (int) scan_ctl(argc, argv, "ORBIT", -1, "-999", NULL);
+  const int orbit = (int) scan_ctl(argc, argv, "ORBIT", -1, "-999", NULL);
   int track0 = (int) scan_ctl(argc, argv, "TRACK0", -1, "0", NULL);
   int track1 = (int) scan_ctl(argc, argv, "TRACK1", -1, "100000", NULL);
   int xtrack0 = (int) scan_ctl(argc, argv, "XTRACK0", -1, "0", NULL);
   int xtrack1 = (int) scan_ctl(argc, argv, "XTRACK1", -1, "29", NULL);
   int ifov0 = (int) scan_ctl(argc, argv, "IFOV0", -1, "0", NULL);
   int ifov1 = (int) scan_ctl(argc, argv, "IFOV1", -1, "8", NULL);
-  double orblat = scan_ctl(argc, argv, "ORBLAT", -1, "0", NULL);
-  double t0 = scan_ctl(argc, argv, "T0", -1, "-1e100", NULL);
-  double t1 = scan_ctl(argc, argv, "T1", -1, "1e100", NULL);
-  double sza0 = scan_ctl(argc, argv, "SZA0", -1, "-1e100", NULL);
-  double sza1 = scan_ctl(argc, argv, "SZA1", -1, "1e100", NULL);
-  double dt230 = scan_ctl(argc, argv, "DT230", -1, "-999", NULL);
-  double nu = scan_ctl(argc, argv, "NU", -1, "-999", NULL);
-  int dc = (int) scan_ctl(argc, argv, "DC", -1, "0", NULL);
+  const double orblat = scan_ctl(argc, argv, "ORBLAT", -1, "0", NULL);
+  const double t0 = scan_ctl(argc, argv, "T0", -1, "-1e100", NULL);
+  const double t1 = scan_ctl(argc, argv, "T1", -1, "1e100", NULL);
+  const double sza0 = scan_ctl(argc, argv, "SZA0", -1, "-1e100", NULL);
+  const double sza1 = scan_ctl(argc, argv, "SZA1", -1, "1e100", NULL);
+  const double dt230 = scan_ctl(argc, argv, "DT230", -1, "-999", NULL);
+  const double nu = scan_ctl(argc, argv, "NU", -1, "-999", NULL);
+  const int dc = (int) scan_ctl(argc, argv, "DC", -1, "0", NULL);
 
   /* Allocate... */
   ALLOC(pert, pert_t, 1);
@@ -71,7 +73,7 @@ int main(
 	  "# $11 = field-of-view index\n", pertname, pertname, pertname);
 
   /* Write data... */
-  for (itrack = track0; itrack <= track1; itrack++) {
+  for (int itrack = track0; itrack <= track1; itrack++) {
 
     /* Count orbits... */
     if (itrack > 0)
@@ -88,8 +90,8 @@ int main(
       fprintf(out, "\n");
 
     /* Loop over scans and field of views... */
-    for (ixtrack = xtrack0; ixtrack <= xtrack1; ixtrack++)
-      for (ifov = ifov0; ifov <= ifov1; ifov++) {
+    for (int ixtrack = xtrack0; ixtrack <= xtrack1; ixtrack++)
+      for (int ifov = ifov0; ifov <= ifov1; ifov++) {
 
 	/* Check data... */
 	if (pert->lon[itrack][ixtrack][ifov] < -180
@@ -99,10 +101,11 @@ int main(
 	  continue;
 
 	/* Get ascending/descending flag... */
-	asc = (pert->lat[itrack > 0 ? itrack : itrack + 1][pert->nxtrack / 2]
-	       [ifov]
-	       > pert->lat[itrack >
-			   0 ? itrack - 1 : itrack][pert->nxtrack / 2][ifov]);
+	int asc =
+	  (pert->lat[itrack > 0 ? itrack : itrack + 1][pert->nxtrack / 2]
+	   [ifov] > pert->lat[itrack >
+			      0 ? itrack -
+			      1 : itrack][pert->nxtrack / 2][ifov]);
 
 	/* Calculate solar zenith angle... */
 	if (sza0 >= -1e10 && sza0 <= 1e10 && sza1 >= -1e10 && sza1 <= 1e10)
@@ -112,8 +115,8 @@ int main(
 
 	/* Estimate noise... */
 	if (dt230 > 0 && nu > 0) {
-	  nesr = PLANCK(t230 + dt230, nu) - PLANCK(t230, nu);
-	  tbg =
+	  const double nesr = PLANCK(t230 + dt230, nu) - PLANCK(t230, nu);
+	  const double tbg =
 	    pert->bt[itrack][ixtrack][ifov] - pert->pt[itrack][ixtrack][ifov];
 	  nedt = BRIGHT(PLANCK(tbg, nu) + nesr, nu) - tbg;
 	}
