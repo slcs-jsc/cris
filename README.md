@@ -3,6 +3,19 @@
 This repository provides a collection of codes for the analysis of
 observations of NASA's Cross Track Infrared Sounder (CrIS).
 
+[![release (latest by date)](https://img.shields.io/github/v/release/slcs-jsc/cris)](https://github.com/slcs-jsc/cris/releases)
+[![commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/slcs-jsc/cris/latest)](https://github.com/slcs-jsc/cris/commits/master)
+[![last commit](https://img.shields.io/github/last-commit/slcs-jsc/cris.svg)](https://github.com/slcs-jsc/cris/commits/master)
+[![top language](https://img.shields.io/github/languages/top/slcs-jsc/cris.svg)](https://github.com/slcs-jsc/cris/tree/master/src)
+[![code size](https://img.shields.io/github/languages/code-size/slcs-jsc/cris.svg)](https://github.com/slcs-jsc/cris/tree/master/src)
+[![repo size](https://img.shields.io/github/repo-size/slcs-jsc/cris.svg)](https://github.com/slcs-jsc/cris/tree/master/src)
+[![codacy](https://api.codacy.com/project/badge/Grade/a9de7b2239f843b884d2a4eb583726c9)](https://app.codacy.com/gh/slcs-jsc/cris?utm_source=github.com&utm_medium=referral&utm_content=slcs-jsc/cris&utm_campaign=Badge_Grade_Settings)
+[![codecov](https://codecov.io/gh/slcs-jsc/cris/branch/master/graph/badge.svg?token=4X6IEHWUBJ)](https://codecov.io/gh/slcs-jsc/cris)
+[![tests](https://img.shields.io/github/actions/workflow/status/slcs-jsc/cris/tests.yml?branch=master&label=tests)](https://github.com/slcs-jsc/cris/actions)
+[![docs](https://img.shields.io/github/actions/workflow/status/slcs-jsc/cris/docs.yml?branch=master&label=docs)](https://slcs-jsc.github.io/cris)
+[![license](https://img.shields.io/github/license/slcs-jsc/cris.svg)](https://github.com/slcs-jsc/cris/blob/master/COPYING)
+[![doi](https://zenodo.org/badge/DOI/10.5281/zenodo.4400597.svg)](https://doi.org/10.5281/zenodo.4400597)
+
 ## Installation
 
 This documentation describes the installation on a Linux system.
@@ -11,7 +24,7 @@ and 'make' are required for installation.
 
 Start by downloading the source code from the git repository:
 
-    git clone https://jugit.fz-juelich.de/slcs/cris
+    git clone https://github.com/slcs-jsc/cris.git
 
 Change to the directory cris/ which holds source codes,
 libraries, documentation, etc:
@@ -46,22 +59,20 @@ produced. This behavior is enforced by the flag '-Werror'.
 
 The binaries will remain in the src/ directory.
 
-## Contact
-
-We are interested in sharing the CrIS code for research applications.
-
-Please do not hesitate to contact us if you have any further questions:
-
-Dr. Lars Hoffmann  
-Forschungszentrum Jülich  
-Jülich Supercomputing Centre  
-52425 Jülich  
-Germany  
-
-e-mail: l.hoffmann@fz-juelich.de
-
 ## License
 
 The CrIS Code Collection is distributed under the GNU GPL v3.
 Software libraries distributed along with this software package may have
 their own licenses and copyrights, please see corresponding documentation.
+
+## Contact
+
+We are interested in sharing the CrIS Code Collection for research applications.
+
+Please do not hesitate to contact us if you have any further questions:
+
+Dr. Lars Hoffmann
+
+Jülich Supercomputing Centre, Forschungszentrum Jülich
+
+e-mail: l.hoffmann@fz-juelich.de
