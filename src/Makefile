@@ -8,11 +8,11 @@ EXC = day2doy doy2day map_pert map_rad noise_pert perturbation sampling spec2tab
 # Installation directory...
 DESTDIR ?= ../bin
 
-# Library directories...
-LIBDIR += -L ../libs/build/lib 
-
 # Include directories...
 INCDIR += -I ../libs/build/include
+
+# Library directories...
+LIBDIR += -L ../libs/build/lib 
 
 # Static compilation...
 STATIC ?= 1
@@ -43,9 +43,6 @@ CFLAGS ?= $(INCDIR) $(DEFINES) -DVERSION=\"$(VERSION)\" $(OPT) -DHAVE_INLINE -DG
 # LDFLAGS...
 LDFLAGS ?= $(LIBDIR) -lgsl -lgslcblas -lm -lnetcdf -lhdf5_hl -lhdf5 -lm -lz -lcurl
 
-# LDFLAGS for retrieval...
-LDFLAGS_RET ?= $(LIBDIR) -lgsl -lgslcblas -lm -lnetcdf -lm
-
 # Optimization information...
 ifeq ($(INFO),1)
   CFLAGS += -fopt-info
@@ -65,6 +62,8 @@ endif
 # Targets...
 # -----------------------------------------------------------------------------
 
+.PHONY : all check clean coverage cppcheck dist doxygen indent install lizard mkdocs strip uninstall
+
 all: $(EXC)
 	rm -f *~
 
@@ -77,29 +76,38 @@ libcris.o: libcris.c libcris.h Makefile
 jurassic.o: jurassic.c jurassic.h Makefile
 	$(CC) $(CFLAGS) -c -o jurassic.o jurassic.c
 
-nlte: nlte.c jurassic.o
-	$(MPICC) $(CFLAGS) -o nlte nlte.c jurassic.o $(LDFLAGS_RET)
-
-retrieval: retrieval.c jurassic.o
-	$(MPICC) $(CFLAGS) -o retrieval retrieval.c jurassic.o $(LDFLAGS_RET)
-
 clean:
-	rm -f $(EXC) nlte retrieval *.o *~
+	rm -rf $(EXC) *.o *.gcda *.gcno *.gcov coverage* *~
 
-check_cppcheck:
+coverage:
+	lcov --capture --directory . --output-file=coverage.info ; \
+	genhtml coverage.info --legend --frames --output-directory=coverage ; \
+	gcov -abcfu *.c || true
+
+cppcheck:
 	cppcheck --enable=all ./
 
-check_lizard:
-	lizard -s cyclomatic_complexity
-
 dist:
-	zip cris_`date +"%y%m%d%H%M"`.zip Doxyfile Makefile *.c *.h
+	cd ..  && tar cvfz cris_$(VERSION).tgz bin/* \
+          docs/Doxyfile example/* libs/build.sh libs/*gz src/*
 
-doc:
-	mkdir -p ../docs && doxygen && cd ../docs/latex && make && mv refman.pdf ..
+doxygen:
+	cd ../docs && doxygen
 
 indent:
 	indent -br -brf -brs -bfda -ce -cdw -lp -npcs -npsl *.c *.h
 
+install:
+	mkdir -p $(DESTDIR) && cp $(EXC) $(DESTDIR)
+
+lizard:
+	lizard -s cyclomatic_complexity
+
+mkdocs:
+	cd ../docs && mkdocs build
+
 strip:
-	strip $(EXC) nlte retrieval
+	strip $(EXC)
+
+uninstall:
+	cd $(DESTDIR) && rm $(EXC)
