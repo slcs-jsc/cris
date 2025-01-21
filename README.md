@@ -1,7 +1,6 @@
 # CrIS Code Collection
 
-This repository provides a collection of codes for the analysis of
-observations of NASA's Cross Track Infrared Sounder (CrIS).
+The CrIS Code Collection enables data processing and analysis for remote sensing observations captured by the Cross-track Infrared Sounder instruments.
 
 [![release (latest by date)](https://img.shields.io/github/v/release/slcs-jsc/cris)](https://github.com/slcs-jsc/cris/releases)
 [![commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/slcs-jsc/cris/latest)](https://github.com/slcs-jsc/cris/commits/master)
