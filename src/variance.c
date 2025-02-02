@@ -263,9 +263,7 @@ int main(
   char *argv[]) {
 
   static pert_t *pert;
-
-  static FILE *in, *out;
-
+  
   static char pertname[LEN], set[LEN];
 
   const double dc_hlat = 25, dc_tlim = 250;
@@ -317,6 +315,7 @@ int main(
   for (int iarg = 3; iarg < argc; iarg++) {
 
     /* Read perturbation data... */
+    FILE *in;
     if (!(in = fopen(argv[iarg], "r")))
       continue;
     else {
@@ -528,6 +527,7 @@ int main(
 
     /* Create file... */
     LOG(1, "Write variance statistics: %s", argv[2]);
+    FILE *out;
     if (!(out = fopen(argv[2], "w")))
       ERRMSG("Cannot create file!");
 
