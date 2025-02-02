@@ -879,8 +879,6 @@ void period(
   double *betamax,
   char *filename) {
 
-  FILE *out;
-
   static double kx[PMAX], ky[PMAX], A[PMAX][PMAX], phi[PMAX][PMAX],
     cx[PMAX][WX], cy[PMAX][WY], sx[PMAX][WX], sy[PMAX][WY], a, b, c;
 
@@ -994,6 +992,7 @@ void period(
     LOG(1, "Write periodogram data: %s", filename);
 
     /* Create file... */
+    FILE *out;
     if (!(out = fopen(filename, "w")))
       ERRMSG("Cannot create file!");
 

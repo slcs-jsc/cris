@@ -32,12 +32,12 @@ libraries, documentation, etc:
 
     cd cris
 
-The GNU Scientific Library (https://www.gnu.org/software/gsl) is
+The GNU Scientific Library (<https://www.gnu.org/software/gsl>) is
 required for numerical calculations and the Unidata netCDF library
-(http://www.unidata.ucar.edu/software/netcdf) is needed for file-I/O.
-Copies of these libraries can be found in the repository, if they are
-not available on your system. A script is provided to build the
-libraries:
+(<http://www.unidata.ucar.edu/software/netcdf>) is needed for
+file-I/O.  Copies of these libraries can be found in the repository,
+if they are not available on your system. A script is provided to
+build the libraries:
 
     cd lib
     ./build.sh
