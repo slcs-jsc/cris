@@ -13,7 +13,7 @@ The CrIS Code Collection enables data processing and analysis for remote sensing
 [![tests](https://img.shields.io/github/actions/workflow/status/slcs-jsc/cris/tests.yml?branch=master&label=tests)](https://github.com/slcs-jsc/cris/actions)
 [![docs](https://img.shields.io/github/actions/workflow/status/slcs-jsc/cris/docs.yml?branch=master&label=docs)](https://slcs-jsc.github.io/cris)
 [![license](https://img.shields.io/github/license/slcs-jsc/cris.svg)](https://github.com/slcs-jsc/cris/blob/master/COPYING)
-[![doi](https://zenodo.org/badge/DOI/10.5281/zenodo.4400597.svg)](https://doi.org/10.5281/zenodo.4400597)
+[![doi](https://zenodo.org/badge/DOI/10.5281/zenodo.14790896.svg)](https://doi.org/10.5281/zenodo.14790896)
 
 ## Installation
 
@@ -30,30 +30,31 @@ libraries, documentation, etc:
 
     cd cris
 
-The GNU Scientific Library (https://www.gnu.org/software/gsl)
-is required for numerical calculations and the Unidata netCDF library
+The GNU Scientific Library (https://www.gnu.org/software/gsl) is
+required for numerical calculations and the Unidata netCDF library
 (http://www.unidata.ucar.edu/software/netcdf) is needed for file-I/O.
 Copies of these libraries can be found in the repository, if they are
-not available on your system. A script is provided to build the libraries:
+not available on your system. A script is provided to build the
+libraries:
 
     cd lib
     ./build.sh
 
-Next, change to the source directory and edit the Makefile according to
-your needs. In particular, check the paths to the libraries
-(INCDIR and LIBDIR). Then try to compile the code:
+Next, change to the source directory and edit the Makefile according
+to your needs. In particular, check the paths to the libraries (INCDIR
+and LIBDIR). Then try to compile the code:
 
     cd ../src
     emacs Makefile
     make
 
-The binaries will be linked statically, i.e., they can be copied to other
-machines. Sometimes static compilations causes problems, in particular in
-combination with MPI. In this case remove the '-static' flag from the
-CFLAGS in the Makefile and compile again.
+The binaries will be linked statically, i.e., they can be copied to
+other machines. Sometimes static compilations causes problems, in
+particular in combination with MPI. In this case remove the '-static'
+flag from the CFLAGS in the Makefile and compile again.
 
-By default we use rather strict compiler warnings.
-All warning messages will be turned into errors and no binaries will be
+By default we use rather strict compiler warnings.  All warning
+messages will be turned into errors and no binaries will be
 produced. This behavior is enforced by the flag '-Werror'.
 
 The binaries will remain in the src/ directory.
@@ -61,8 +62,9 @@ The binaries will remain in the src/ directory.
 ## License
 
 The CrIS Code Collection is distributed under the GNU GPL v3.
-Software libraries distributed along with this software package may have
-their own licenses and copyrights, please see corresponding documentation.
+Software libraries distributed along with this software package may
+have their own licenses and copyrights, please see corresponding
+documentation.
 
 ## Contact
 
