@@ -1,6 +1,8 @@
 # CrIS Code Collection
 
-The CrIS Code Collection enables data processing and analysis for remote sensing observations captured by the Cross-track Infrared Sounder satellite instruments.
+The CrIS Code Collection enables data processing and analysis for
+remote sensing observations captured by the Cross-track Infrared
+Sounder satellite instruments.
 
 [![release (latest by date)](https://img.shields.io/github/v/release/slcs-jsc/cris)](https://github.com/slcs-jsc/cris/releases)
 [![commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/slcs-jsc/cris/latest)](https://github.com/slcs-jsc/cris/commits/master)
@@ -17,9 +19,9 @@ The CrIS Code Collection enables data processing and analysis for remote sensing
 
 ## Installation
 
-This documentation describes the installation on a Linux system.
-A number of standard tools such as the GNU Compiler Collection (gcc)
-and 'make' are required for installation.
+This documentation describes the installation on a Linux system.  A
+number of standard tools such as the GNU Compiler Collection (gcc) and
+'make' are required for installation.
 
 Start by downloading the source code from the git repository:
 
