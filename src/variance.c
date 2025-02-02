@@ -263,7 +263,7 @@ int main(
   char *argv[]) {
 
   static pert_t *pert;
-  
+
   static char pertname[LEN], set[LEN];
 
   const double dc_hlat = 25, dc_tlim = 250;

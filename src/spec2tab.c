@@ -8,8 +8,6 @@ int main(
 
   FILE *out;
 
-  double dmin = 1e100, x0[3], x1[3];
-
   /* Check arguments... */
   if (argc < 4)
     ERRMSG("Give parameters: <ctl> <l1b_file> <spec.tab>");
@@ -28,6 +26,7 @@ int main(
 
   /* Find nearest footprint... */
   if (lon >= -180 && lon <= 180 && lat >= -90 && lat <= 90) {
+    double dmin = 1e100, x0[3], x1[3];
     geo2cart(0, lon, lat, x0);
     for (int track2 = 0; track2 < L1_NTRACK; track2++)
       for (int xtrack2 = 0; xtrack2 < L1_NXTRACK; xtrack2++)

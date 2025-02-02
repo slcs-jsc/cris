@@ -10,7 +10,7 @@ int main(
 
   char pertname[LEN];
 
-  double mu, nedt = -1e99, nedt_old;
+  double mu, nedt = -1e99;
 
   /* Check arguments... */
   if (argc < 4)
@@ -48,7 +48,7 @@ int main(
   for (int itrack = 0; itrack < pert->ntrack - bsize; itrack += bsize) {
 
     /* Estimate noise... */
-    nedt_old = nedt;
+    double nedt_old = nedt;
     noise_pert(pert, itrack, itrack + bsize, &mu, &nedt);
 
     /* Write output... */

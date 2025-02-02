@@ -103,8 +103,6 @@ void background_poly(
   int dim_x,
   int dim_y) {
 
-  double x[WX], x2[WY], y[WX], y2[WY];
-
   /* Check parameters... */
   if (dim_x <= 0 && dim_y <= 0)
     return;
@@ -119,6 +117,7 @@ void background_poly(
   /* Compute fit in x-direction... */
   if (dim_x > 0)
     for (int iy = 0; iy < wave->ny; iy++) {
+      double x[WX], y[WX];
       for (int ix = 0; ix < wave->nx; ix++) {
 	x[ix] = (double) ix;
 	y[ix] = wave->bg[ix][iy];
@@ -131,13 +130,14 @@ void background_poly(
   /* Compute fit in y-direction... */
   if (dim_y > 0)
     for (int ix = 0; ix < wave->nx; ix++) {
+      double x[WX], y[WX];
       for (int iy = 0; iy < wave->ny; iy++) {
-	x2[iy] = (int) iy;
-	y2[iy] = wave->bg[ix][iy];
+	x[iy] = (int) iy;
+	y[iy] = wave->bg[ix][iy];
       }
-      background_poly_help(x2, y2, wave->ny, dim_y);
+      background_poly_help(x, y, wave->ny, dim_y);
       for (int iy = 0; iy < wave->ny; iy++)
-	wave->bg[ix][iy] = y2[iy];
+	wave->bg[ix][iy] = y[iy];
     }
 
   /* Recompute perturbations... */
@@ -405,8 +405,6 @@ void fft(
   static double A[PMAX][PMAX], phi[PMAX][PMAX], kx[PMAX], ky[PMAX],
     cutReal[PMAX], cutImag[PMAX], boxImag[PMAX][PMAX], boxReal[PMAX][PMAX];
 
-  FILE *out;
-
   int imin, imax, jmin, jmax;
 
   /* Find box... */
@@ -522,6 +520,7 @@ void fft(
     LOG(1, "Write FFT data: %s", filename);
 
     /* Create file... */
+    FILE *out;
     if (!(out = fopen(filename, "w")))
       ERRMSG("Cannot create file!");
 
@@ -1105,8 +1104,6 @@ int read_cris_l1(
   cris_l1_t *l1,
   int apo) {
 
-  double help[L1_NCHAN_MW];
-
   int ncid, varid, dimid;
 
   size_t n;
@@ -1225,6 +1222,7 @@ int read_cris_l1(
       for (int ixtrack = 0; ixtrack < L1_NXTRACK; ixtrack++)
 	for (int ifov = 0; ifov < L1_NFOV; ifov++) {
 
+	  double help[L1_NCHAN_MW];
 	  for (int ichan = 0; ichan < L1_NCHAN_LW; ichan++)
 	    help[ichan] = 0;
 	  for (int ichan = 1; ichan < L1_NCHAN_LW - 1; ichan++)
@@ -1408,7 +1406,7 @@ void read_retr(
 
   static double help[NDS * NPG];
 
-  int dimid, ids = 0, ncid, varid;
+  int dimid, ids, ncid, varid;
 
   size_t nds, np, ntrack, nxtrack;
 
