@@ -5,6 +5,9 @@
 # Executables...
 EXC = day2doy doy2day map_pert map_rad noise_pert perturbation sampling spec2tab variance volcano
 
+# Tests...
+TESTS = pert_test
+
 # Installation directory...
 DESTDIR ?= ../bin
 
@@ -25,6 +28,9 @@ INFO ?= 0
 
 # Compile for profiling...
 PROF ?= 0
+
+# Compile for coverage testing...
+COV ?= 0
 
 # -----------------------------------------------------------------------------
 # Set flags for GNU compiler...
@@ -53,6 +59,11 @@ ifeq ($(PROF),1)
   CFLAGS += -pg
 endif
 
+# Compile for coverage testing...
+ifeq ($(COV),1)
+  CFLAGS += --coverage
+endif
+
 # Static compilation...
 ifeq ($(STATIC),1)
   CFLAGS += -static
@@ -76,6 +87,14 @@ libcris.o: libcris.c libcris.h Makefile
 jurassic.o: jurassic.c jurassic.h Makefile
 	$(CC) $(CFLAGS) -c -o jurassic.o jurassic.c
 
+check: $(TESTS)
+
+$(TESTS): all
+	@(echo "\n===== Running \"$@\" ... =====") ; \
+	  cd ../tests/$@ ; ./run.sh \
+	  && (echo "\n===== Test \"$@\" passed! =====") \
+	  || (echo "\n===== Test \"$@\" failed! =====" ; exit 1)
+
 clean:
 	rm -rf $(EXC) *.o *.gcda *.gcno *.gcov coverage* *~
 
@@ -89,7 +108,7 @@ cppcheck:
 
 dist:
 	cd ..  && tar cvfz cris_$(VERSION).tgz bin/* \
-          docs/Doxyfile example/* libs/build.sh libs/*gz src/*
+          docs/Doxyfile example/* libs/build.sh libs/*gz src/* tests/*
 
 doxygen:
 	cd ../docs && doxygen

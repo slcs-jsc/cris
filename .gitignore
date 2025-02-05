@@ -12,3 +12,6 @@ src/sampling
 src/spec2tab
 src/variance
 src/volcano
+tests/data/SNDR*nc
+tests/data/cris_l1b_full.zip
+tests/pert_test/data/
