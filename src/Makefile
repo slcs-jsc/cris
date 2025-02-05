@@ -79,7 +79,7 @@ all: $(EXC)
 	rm -f *~
 
 $(EXC): %: %.c libcris.o jurassic.o
-	$(CC) $(CFLAGS) -o $@ $< libcris.o jurassic.o $(LDFLAGS) -static
+	$(CC) $(CFLAGS) -o $@ $< libcris.o jurassic.o $(LDFLAGS)
 
 libcris.o: libcris.c libcris.h Makefile
 	$(CC) $(CFLAGS) -c -o libcris.o libcris.c
