@@ -6,7 +6,7 @@
 EXC = day2doy doy2day map_pert map_rad noise_pert perturbation sampling spec2tab variance volcano
 
 # Tests...
-TESTS = pert_test
+TESTS = pert_test rad_test
 
 # Installation directory...
 DESTDIR ?= ../bin
