@@ -3,8 +3,8 @@
 /*****************************************************************************/
 
 void add_att(
-  int ncid,
-  int varid,
+  const int ncid,
+  const int varid,
   const char *unit,
   const char *long_name) {
 
@@ -18,7 +18,7 @@ void add_att(
 /*****************************************************************************/
 
 void add_var(
-  int ncid,
+  const int ncid,
   const char *varname,
   const char *unit,
   const char *longname,
@@ -277,15 +277,14 @@ void create_wave(
 /*****************************************************************************/
 
 void day2doy(
-  int year,
-  int mon,
-  int day,
+  const int year,
+  const int mon,
+  const int day,
   int *doy) {
 
-  const int d0[12] =
-    { 1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335 };
-  const int d0l[12] =
-    { 1, 32, 61, 92, 122, 153, 183, 214, 245, 275, 306, 336 };
+  const int
+    d0[12] = { 1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335 },
+    d0l[12] = { 1, 32, 61, 92, 122, 153, 183, 214, 245, 275, 306, 336 };
 
   /* Get day of year... */
   if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
@@ -297,26 +296,26 @@ void day2doy(
 /*****************************************************************************/
 
 void doy2day(
-  int year,
-  int doy,
+  const int year,
+  const int doy,
   int *mon,
   int *day) {
 
-  const int d0[12] =
-    { 1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335 };
-  const int d0l[12] =
-    { 1, 32, 61, 92, 122, 153, 183, 214, 245, 275, 306, 336 };
+  const int
+    d0[12] = { 1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335 },
+    d0l[12] = { 1, 32, 61, 92, 122, 153, 183, 214, 245, 275, 306, 336 };
+
   int i;
 
   /* Get month and day... */
   if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)) {
-    for (i = 11; i >= 0; i--)
+    for (i = 11; i > 0; i--)
       if (d0l[i] <= doy)
 	break;
     *mon = i + 1;
     *day = doy - d0l[i] + 1;
   } else {
-    for (i = 11; i >= 0; i--)
+    for (i = 11; i > 0; i--)
       if (d0[i] <= doy)
 	break;
     *mon = i + 1;

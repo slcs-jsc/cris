@@ -262,14 +262,14 @@ typedef struct {
 
 /*! Add variable attributes to netCDF file. */
 void add_att(
-  int ncid,
-  int varid,
+  const int ncid,
+  const int varid,
   const char *unit,
   const char *long_name);
 
 /*! Add variable to netCDF file. */
 void add_var(
-  int ncid,
+  const int ncid,
   const char *varname,
   const char *unit,
   const char *longname,
@@ -317,15 +317,15 @@ void create_wave(
 
 /*! Get day of year from date. */
 void day2doy(
-  int year,
-  int mon,
-  int day,
+  const int year,
+  const int mon,
+  const int day,
   int *doy);
 
 /*! Get date from day of year. */
 void doy2day(
-  int year,
-  int doy,
+  const int year,
+  const int doy,
   int *mon,
   int *day);
 
