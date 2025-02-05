@@ -286,10 +286,10 @@ void background_poly(
 
 /*! Get background based on polynomial fits. */
 void background_poly_help(
-  double *xx,
+  const double *xx,
   double *yy,
-  int n,
-  int dim);
+  const int n,
+  const int dim);
 
 /*! Smooth background. */
 void background_smooth(

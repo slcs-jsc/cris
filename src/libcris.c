@@ -45,10 +45,10 @@ void add_var(
 /*****************************************************************************/
 
 void background_poly_help(
-  double *xx,
+  const double *xx,
   double *yy,
-  int n,
-  int dim) {
+  const int n,
+  const int dim) {
 
   double chisq, xx2[WX > WY ? WX : WY], yy2[WX > WY ? WX : WY];
 
