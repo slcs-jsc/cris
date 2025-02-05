@@ -32,6 +32,9 @@ for pert in 4mu 15mu_low 15mu_high ; do
     # Get variance...
     $cris/variance - data/var_$pert.tab data/pert.nc PERTNAME $pert NX 60 NY 30
     
+    # Get variance...
+    $cris/sampling - data/pert.nc PERTNAME $pert > data/sampling_$pert.tab
+    
 done
 
 # Compare files...

@@ -1,0 +1,48 @@
+Read perturbation data: data/pert.nc
+
+mean_swath_width=    2114.4 km
+minimum_swath_width= 2105.9 km
+maximum_swath_width= 2120.7 km
+
+mean_across_track_sampling_distance=    72.9 km | 24.3 km
+minimum_across_track_sampling_distance= 49.2 km | 16.4 km
+maximum_across_track_sampling_distance= 140.1 km | 46.7 km
+
+mean_along_track_sampling_distance=    52.7 km | 17.6 km
+minimum_along_track_sampling_distance= 51.4 km | 17.1 km
+maximum_along_track_sampling_distance= 53.1 km | 17.7 km
+
+mean_across_track_angle=    86.6 deg
+minimum_across_track_angle= 86.0 deg
+maximum_across_track_angle= 87.2 deg
+
+ixtrack=  0 | dx= 0.0 km | cx= 1057.2 km
+ixtrack=  1 | dx= 138.8 km | cx= 918.4 km
+ixtrack=  2 | dx= 254.4 km | cx= 802.8 km
+ixtrack=  3 | dx= 353.4 km | cx= 703.8 km
+ixtrack=  4 | dx= 440.4 km | cx= 616.8 km
+ixtrack=  5 | dx= 518.2 km | cx= 539.0 km
+ixtrack=  6 | dx= 589.0 km | cx= 468.2 km
+ixtrack=  7 | dx= 654.3 km | cx= 402.9 km
+ixtrack=  8 | dx= 715.3 km | cx= 341.9 km
+ixtrack=  9 | dx= 772.7 km | cx= 284.5 km
+ixtrack= 10 | dx= 827.6 km | cx= 229.6 km
+ixtrack= 11 | dx= 880.4 km | cx= 176.8 km
+ixtrack= 12 | dx= 931.7 km | cx= 125.5 km
+ixtrack= 13 | dx= 981.8 km | cx= 75.4 km
+ixtrack= 14 | dx= 1031.4 km | cx= 25.8 km
+ixtrack= 15 | dx= 1080.8 km | cx= -23.6 km
+ixtrack= 16 | dx= 1130.4 km | cx= -73.2 km
+ixtrack= 17 | dx= 1180.6 km | cx= -123.4 km
+ixtrack= 18 | dx= 1231.9 km | cx= -174.7 km
+ixtrack= 19 | dx= 1284.6 km | cx= -227.5 km
+ixtrack= 20 | dx= 1339.6 km | cx= -282.4 km
+ixtrack= 21 | dx= 1397.2 km | cx= -340.0 km
+ixtrack= 22 | dx= 1458.2 km | cx= -401.0 km
+ixtrack= 23 | dx= 1523.5 km | cx= -466.3 km
+ixtrack= 24 | dx= 1594.5 km | cx= -537.3 km
+ixtrack= 25 | dx= 1672.6 km | cx= -615.4 km
+ixtrack= 26 | dx= 1759.8 km | cx= -702.6 km
+ixtrack= 27 | dx= 1859.0 km | cx= -801.8 km
+ixtrack= 28 | dx= 1974.9 km | cx= -917.7 km
+ixtrack= 29 | dx= 2114.4 km | cx= -1057.2 km
