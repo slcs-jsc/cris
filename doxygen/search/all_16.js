@@ -1,0 +1,16 @@
+var searchData=
+[
+  ['warn_0',['WARN',['../jurassic_8h.html#a8f75b971030a39ef811d3526a62b36b8',1,'jurassic.h']]],
+  ['wave_5ft_1',['wave_t',['../structwave__t.html',1,'']]],
+  ['window_2',['window',['../structctl__t.html#a6f1ec265b1a0c94431403038d6dbef00',1,'ctl_t']]],
+  ['write_5fatm_3',['write_atm',['../jurassic_8c.html#a26be12322766162766071e8cd3587515',1,'write_atm(const char *dirname, const char *filename, const ctl_t *ctl, const atm_t *atm):&#160;jurassic.c'],['../jurassic_8h.html#a26be12322766162766071e8cd3587515',1,'write_atm(const char *dirname, const char *filename, const ctl_t *ctl, const atm_t *atm):&#160;jurassic.c']]],
+  ['write_5fatm_5frfm_4',['write_atm_rfm',['../jurassic_8c.html#a675d14cbd1ae26f72e86f828d8367240',1,'write_atm_rfm(const char *filename, const ctl_t *ctl, const atm_t *atm):&#160;jurassic.c'],['../jurassic_8h.html#a675d14cbd1ae26f72e86f828d8367240',1,'write_atm_rfm(const char *filename, const ctl_t *ctl, const atm_t *atm):&#160;jurassic.c']]],
+  ['write_5fbbt_5',['write_bbt',['../structctl__t.html#af700a5fe670e013c550494cee733b60c',1,'ctl_t']]],
+  ['write_5fmatrix_6',['write_matrix',['../jurassic_8h.html#ae4d82cfc384f2845f2bd5ebbe66b6b26',1,'write_matrix(const char *dirname, const char *filename, const ctl_t *ctl, const gsl_matrix *matrix, const atm_t *atm, const obs_t *obs, const char *rowspace, const char *colspace, const char *sort):&#160;jurassic.c'],['../jurassic_8c.html#ae4d82cfc384f2845f2bd5ebbe66b6b26',1,'write_matrix(const char *dirname, const char *filename, const ctl_t *ctl, const gsl_matrix *matrix, const atm_t *atm, const obs_t *obs, const char *rowspace, const char *colspace, const char *sort):&#160;jurassic.c'],['../structctl__t.html#a090c906958cc2f98fff69d4cc7c0f40c',1,'ctl_t::write_matrix()']]],
+  ['write_5fobs_7',['write_obs',['../jurassic_8c.html#aaa92bd5536bbf6cb6b4f541e24dac461',1,'write_obs(const char *dirname, const char *filename, const ctl_t *ctl, const obs_t *obs):&#160;jurassic.c'],['../jurassic_8h.html#aaa92bd5536bbf6cb6b4f541e24dac461',1,'write_obs(const char *dirname, const char *filename, const ctl_t *ctl, const obs_t *obs):&#160;jurassic.c']]],
+  ['write_5fshape_8',['write_shape',['../jurassic_8c.html#abd649b0cdf3dc23af5ad95a0532c751b',1,'write_shape(const char *filename, const double *x, const double *y, const int n):&#160;jurassic.c'],['../jurassic_8h.html#abd649b0cdf3dc23af5ad95a0532c751b',1,'write_shape(const char *filename, const double *x, const double *y, const int n):&#160;jurassic.c']]],
+  ['write_5ftbl_9',['write_tbl',['../jurassic_8c.html#a78815bfc5643350a3b2d2c04782ad93d',1,'write_tbl(const ctl_t *ctl, const tbl_t *tbl):&#160;jurassic.c'],['../jurassic_8h.html#a78815bfc5643350a3b2d2c04782ad93d',1,'write_tbl(const ctl_t *ctl, const tbl_t *tbl):&#160;jurassic.c']]],
+  ['write_5fwave_10',['write_wave',['../libcris_8c.html#af7f155ab23aab051c6ea44e72b2923ca',1,'write_wave(char *filename, wave_t *wave):&#160;libcris.c'],['../libcris_8h.html#af7f155ab23aab051c6ea44e72b2923ca',1,'write_wave(char *filename, wave_t *wave):&#160;libcris.c']]],
+  ['wx_11',['WX',['../libcris_8h.html#a5a020d4efc7ed02a3cc6b771818e1cd4',1,'libcris.h']]],
+  ['wy_12',['WY',['../libcris_8h.html#add5c26517fdf364c8baca05e70005af5',1,'libcris.h']]]
+];
