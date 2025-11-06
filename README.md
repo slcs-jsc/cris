@@ -17,6 +17,7 @@ Sounder satellite instruments.
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/slcs-jsc/cris)
 [![license](https://img.shields.io/github/license/slcs-jsc/cris.svg)](https://github.com/slcs-jsc/cris/blob/master/COPYING)
 [![doi](https://zenodo.org/badge/DOI/10.5281/zenodo.14790896.svg)](https://doi.org/10.5281/zenodo.14790896)
+[![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/slcs-jsc/cris/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/slcs-jsc/cris)
 
 ## Installation
 
