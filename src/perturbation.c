@@ -29,6 +29,14 @@
     for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++)	\
       for (int ifov = 0; ifov < L1_NFOV; ifov++)
 
+/* Write a 3-D field to a netCDF variable. */
+#define WRITE_FIELD(expr, varid) do {              \
+    n = 0;                                         \
+    LOOP_ALL(pert_4mu->ntrack)                     \
+      help[n++] = (expr);                          \
+    NC(nc_put_var_double(ncid, (varid), help));    \
+  } while (0)
+
 /* ------------------------------------------------------------
    Main...
    ------------------------------------------------------------ */
@@ -70,21 +78,13 @@ int main(
     bt_15mu_low_varid, bt_15mu_low_pt_varid, bt_15mu_low_var_varid,
     bt_15mu_high_varid, bt_15mu_high_pt_varid, bt_15mu_high_var_varid;
 
-  static double count_4mu[PERT_NXTRACK][PERT_NFOV],
-    count_15mu_high[PERT_NXTRACK][PERT_NFOV],
-    count_15mu_low[PERT_NXTRACK][PERT_NFOV];
-
-  static double bias_4mu[PERT_NXTRACK][PERT_NFOV],
-    bias_15mu_high[PERT_NXTRACK][PERT_NFOV],
-    bias_15mu_low[PERT_NXTRACK][PERT_NFOV];
-
   /* Check arguments... */
   if (argc < 4)
     ERRMSG("Give parameters: <ctl> <pert.nc> <l1b_file1> [<l1b_file2> ...]");
 
   /* Get control parameters... */
   const int apo = (int) scan_ctl(argc, argv, "APO", -1, "0", NULL);
-  const int bias = (int) scan_ctl(argc, argv, "BIAS", -1, "0", NULL);
+  const int bias = (int) scan_ctl(argc, argv, "BIAS", -1, "1", NULL);
 
   /* Allocate... */
   ALLOC(pert_4mu, pert_t, 1);
@@ -316,65 +316,40 @@ int main(
     /* Write info... */
     LOG(1, "Calculate bias correction...");
 
-    /* Loop over scans and field of views... */
-    for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
-      for (int ifov = 0; ifov < L1_NFOV; ifov++) {
+    /* Radius of triangular filter, a value of +/- 25 pixels
+       corresponds to 50% sensitivity cut-off at 1000 km
+       (same as across-track polynomial detrending)... */
+    const int radius = 25;
 
-	for (int track = 0; track < pert_4mu->ntrack; track++)
-	  if (isfinite(pert_4mu->pt[track][xtrack][ifov])) {
-	    bias_4mu[xtrack][ifov] += pert_4mu->pt[track][xtrack][ifov];
-	    count_4mu[xtrack][ifov]++;
-	  }
+    /* Macro for bias correction... */
+#define APPLY_BIAS_CORR(pert)						\
+    do {								\
+      LOOP_ALL((pert)->ntrack) {					\
+	const int idx = (track * L1_NXTRACK + xtrack) * L1_NFOV + ifov;	\
+	help[idx] = 0.0;						\
+	double wsum = 0.0;						\
+	for (int dtrack2 = -radius; dtrack2 <= radius; ++dtrack2) {	\
+	  int t2 = track + dtrack2;					\
+	  if (t2 < 0 || t2 >= (pert)->ntrack)				\
+	    continue;							\
+	  if (!isfinite((pert)->pt[t2][xtrack][ifov]))			\
+	    continue;							\
+	  const double w = 1.0 - fabs((double)dtrack2 / (double)radius); \
+	  help[idx] += w * (pert)->pt[t2][xtrack][ifov];		\
+	  wsum      += w;						\
+	}								\
+	if (wsum > 0.0) help[idx] /= wsum;				\
+      }									\
+      LOOP_ALL((pert)->ntrack) {					\
+	const int idx = (track * L1_NXTRACK + xtrack) * L1_NFOV + ifov;	\
+	(pert)->pt[track][xtrack][ifov] -= help[idx];			\
+      }									\
+    } while (0)
 
-	for (int track = 0; track < pert_15mu_low->ntrack; track++)
-	  if (isfinite(pert_15mu_low->pt[track][xtrack][ifov])) {
-	    bias_15mu_low[xtrack][ifov] +=
-	      pert_15mu_low->pt[track][xtrack][ifov];
-	    count_15mu_low[xtrack][ifov]++;
-	  }
-
-	for (int track = 0; track < pert_15mu_high->ntrack; track++)
-	  if (isfinite(pert_15mu_high->pt[track][xtrack][ifov])) {
-	    bias_15mu_high[xtrack][ifov] +=
-	      pert_15mu_high->pt[track][xtrack][ifov];
-	    count_15mu_high[xtrack][ifov]++;
-	  }
-
-	bias_4mu[xtrack][ifov] /= count_4mu[xtrack][ifov];
-	bias_15mu_low[xtrack][ifov] /= count_15mu_low[xtrack][ifov];
-	bias_15mu_high[xtrack][ifov] /= count_15mu_high[xtrack][ifov];
-      }
-
-    /* Write log messages... */
-    LOG(2, "4.3 micron channels:");
-    for (int ifov = 0; ifov < L1_NFOV; ifov++)
-      for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
-	LOG(2, "  xtrack= %d | ifov= %d | bias_4mu= %g K", xtrack, ifov,
-	    bias_4mu[xtrack][ifov]);
-
-    LOG(2, "15 micron low channels:");
-    for (int ifov = 0; ifov < L1_NFOV; ifov++)
-      for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
-	LOG(2, "  xtrack= %d | ifov= %d | bias_15mu_low= %g K", xtrack, ifov,
-	    bias_15mu_low[xtrack][ifov]);
-
-    LOG(2, "15 micron high channels:");
-    for (int ifov = 0; ifov < L1_NFOV; ifov++)
-      for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
-	LOG(2, "  xtrack= %d | ifov= %d | bias_15mu_high= %g K", xtrack, ifov,
-	    bias_15mu_high[xtrack][ifov]);
-
-    /* Subtract bias... */
-    for (int track = 0; track < pert_4mu->ntrack; track++)
-      for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
-	for (int ifov = 0; ifov < L1_NFOV; ifov++) {
-	  pert_4mu->pt[track][xtrack][ifov]
-	    -= bias_4mu[xtrack][ifov];
-	  pert_15mu_low->pt[track][xtrack][ifov]
-	    -= bias_15mu_low[xtrack][ifov];
-	  pert_15mu_high->pt[track][xtrack][ifov]
-	    -= bias_15mu_high[xtrack][ifov];
-	}
+    /* Apply bias correction... */
+    APPLY_BIAS_CORR(pert_4mu);
+    APPLY_BIAS_CORR(pert_15mu_low);
+    APPLY_BIAS_CORR(pert_15mu_high);
   }
 
   /* ------------------------------------------------------------
@@ -521,75 +496,21 @@ int main(
   NC(nc_enddef(ncid));
 
   /* Write data... */
-  n = 0;
-  LOOP_ALL(pert_4mu->ntrack)
-    help[n++] = pert_4mu->time[track][xtrack][ifov];
-  NC(nc_put_var_double(ncid, time_varid, help));
-
-  n = 0;
-  LOOP_ALL(pert_4mu->ntrack)
-    help[n++] = pert_4mu->lon[track][xtrack][ifov];
-  NC(nc_put_var_double(ncid, lon_varid, help));
-
-  n = 0;
-  LOOP_ALL(pert_4mu->ntrack)
-    help[n++] = pert_4mu->lat[track][xtrack][ifov];
-  NC(nc_put_var_double(ncid, lat_varid, help));
-
-  n = 0;
-  LOOP_ALL(pert_4mu->ntrack)
-    help[n++] = pert_4mu->dc[track][xtrack][ifov];
-  NC(nc_put_var_double(ncid, bt_8mu_varid, help));
-
-  n = 0;
-  LOOP_ALL(pert_4mu->ntrack)
-    help[n++] = pert_15mu_high->dc[track][xtrack][ifov];
-  NC(nc_put_var_double(ncid, bt_10mu_varid, help));
-
-  n = 0;
-  LOOP_ALL(pert_4mu->ntrack)
-    help[n++] = pert_4mu->bt[track][xtrack][ifov];
-  NC(nc_put_var_double(ncid, bt_4mu_varid, help));
-
-  n = 0;
-  LOOP_ALL(pert_4mu->ntrack)
-    help[n++] = pert_4mu->pt[track][xtrack][ifov];
-  NC(nc_put_var_double(ncid, bt_4mu_pt_varid, help));
-
-  n = 0;
-  LOOP_ALL(pert_4mu->ntrack)
-    help[n++] = pert_4mu->var[track][xtrack][ifov];
-  NC(nc_put_var_double(ncid, bt_4mu_var_varid, help));
-
-  n = 0;
-  LOOP_ALL(pert_4mu->ntrack)
-    help[n++] = pert_15mu_low->bt[track][xtrack][ifov];
-  NC(nc_put_var_double(ncid, bt_15mu_low_varid, help));
-
-  n = 0;
-  LOOP_ALL(pert_4mu->ntrack)
-    help[n++] = pert_15mu_low->pt[track][xtrack][ifov];
-  NC(nc_put_var_double(ncid, bt_15mu_low_pt_varid, help));
-
-  n = 0;
-  LOOP_ALL(pert_4mu->ntrack)
-    help[n++] = pert_15mu_low->var[track][xtrack][ifov];
-  NC(nc_put_var_double(ncid, bt_15mu_low_var_varid, help));
-
-  n = 0;
-  LOOP_ALL(pert_4mu->ntrack)
-    help[n++] = pert_15mu_high->bt[track][xtrack][ifov];
-  NC(nc_put_var_double(ncid, bt_15mu_high_varid, help));
-
-  n = 0;
-  LOOP_ALL(pert_4mu->ntrack)
-    help[n++] = pert_15mu_high->pt[track][xtrack][ifov];
-  NC(nc_put_var_double(ncid, bt_15mu_high_pt_varid, help));
-
-  n = 0;
-  LOOP_ALL(pert_4mu->ntrack)
-    help[n++] = pert_15mu_high->var[track][xtrack][ifov];
-  NC(nc_put_var_double(ncid, bt_15mu_high_var_varid, help));
+  WRITE_FIELD(pert_4mu->time[track][xtrack][ifov], time_varid);
+  WRITE_FIELD(pert_4mu->lon[track][xtrack][ifov], lon_varid);
+  WRITE_FIELD(pert_4mu->lat[track][xtrack][ifov], lat_varid);
+  WRITE_FIELD(pert_4mu->dc[track][xtrack][ifov], bt_8mu_varid);
+  WRITE_FIELD(pert_15mu_high->dc[track][xtrack][ifov], bt_10mu_varid);
+  WRITE_FIELD(pert_4mu->bt[track][xtrack][ifov], bt_4mu_varid);
+  WRITE_FIELD(pert_4mu->pt[track][xtrack][ifov], bt_4mu_pt_varid);
+  WRITE_FIELD(pert_4mu->var[track][xtrack][ifov], bt_4mu_var_varid);
+  WRITE_FIELD(pert_15mu_low->bt[track][xtrack][ifov], bt_15mu_low_varid);
+  WRITE_FIELD(pert_15mu_low->pt[track][xtrack][ifov], bt_15mu_low_pt_varid);
+  WRITE_FIELD(pert_15mu_low->var[track][xtrack][ifov], bt_15mu_low_var_varid);
+  WRITE_FIELD(pert_15mu_high->bt[track][xtrack][ifov], bt_15mu_high_varid);
+  WRITE_FIELD(pert_15mu_high->pt[track][xtrack][ifov], bt_15mu_high_pt_varid);
+  WRITE_FIELD(pert_15mu_high->var[track][xtrack][ifov],
+	      bt_15mu_high_var_varid);
 
   /* Close file... */
   NC(nc_close(ncid));
