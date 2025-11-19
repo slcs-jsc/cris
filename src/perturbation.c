@@ -70,12 +70,17 @@ int main(
     bt_15mu_low_varid, bt_15mu_low_pt_varid, bt_15mu_low_var_varid,
     bt_15mu_high_varid, bt_15mu_high_pt_varid, bt_15mu_high_var_varid;
 
+  static double bias_4mu[PERT_NXTRACK][PERT_NFOV],
+    bias_15mu_high[PERT_NXTRACK][PERT_NFOV],
+    bias_15mu_low[PERT_NXTRACK][PERT_NFOV];
+
   /* Check arguments... */
   if (argc < 4)
     ERRMSG("Give parameters: <ctl> <pert.nc> <l1b_file1> [<l1b_file2> ...]");
 
   /* Get control parameters... */
   const int apo = (int) scan_ctl(argc, argv, "APO", -1, "0", NULL);
+  const int bias = (int) scan_ctl(argc, argv, "BIAS", -1, "0", NULL);
 
   /* Allocate... */
   ALLOC(pert_4mu, pert_t, 1);
@@ -296,6 +301,66 @@ int main(
 	pert_15mu_high->pt[track][xtrack][ifov] =
 	  pert_15mu_high->bt[track][xtrack][ifov] - y[xtrack];
     }
+
+  /* ------------------------------------------------------------
+     Bias correction...
+     ------------------------------------------------------------ */
+
+  /* Check flag... */
+  if (bias) {
+
+    /* Write info... */
+    LOG(1, "Calculate bias correction...");
+
+    /* Loop over scans and field of views... */
+    for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
+      for (int ifov = 0; ifov < L1_NFOV; ifov++) {
+
+	bias_4mu[xtrack][ifov] = 0;
+	bias_15mu_low[xtrack][ifov] = 0;
+	bias_15mu_high[xtrack][ifov] = 0;
+
+	for (int track = 0; track < pert_4mu->ntrack; track++) {
+	  bias_4mu[xtrack][ifov] +=
+	    pert_4mu->pt[track][xtrack][ifov] / pert_4mu->ntrack;
+	  bias_15mu_low[xtrack][ifov] +=
+	    pert_15mu_low->pt[track][xtrack][ifov] / pert_4mu->ntrack;
+	  bias_15mu_high[xtrack][ifov] +=
+	    pert_15mu_high->pt[track][xtrack][ifov] / pert_4mu->ntrack;
+	}
+      }
+
+    /* Write log messages... */
+    LOG(2, "4.3 micron channels:");
+    for (int ifov = 0; ifov < L1_NFOV; ifov++)
+      for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
+	LOG(2, "  xtrack= %d | ifov= %d | bias_4mu= %g K", xtrack, ifov,
+	    bias_4mu[xtrack][ifov]);
+
+    LOG(2, "15 micron low channels:");
+    for (int ifov = 0; ifov < L1_NFOV; ifov++)
+      for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
+	LOG(2, "  xtrack= %d | ifov= %d | bias_15mu_low= %g K", xtrack, ifov,
+	    bias_15mu_low[xtrack][ifov]);
+
+    LOG(2, "15 micron high channels:");
+    for (int ifov = 0; ifov < L1_NFOV; ifov++)
+      for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
+	LOG(2, "  xtrack= %d | ifov= %d | bias_15mu_high= %g K", xtrack, ifov,
+	    bias_15mu_high[xtrack][ifov]);
+
+    /* Subtract bias... */
+    for (int track = 0; track < pert_4mu->ntrack; track++)
+      for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
+	for (int ifov = 0; ifov < L1_NFOV; ifov++) {
+	  pert_4mu->pt[track][xtrack][ifov]
+	    -= bias_4mu[xtrack][ifov];
+	  pert_15mu_low->pt[track][xtrack][ifov]
+	    -= bias_15mu_low[xtrack][ifov];
+	  pert_15mu_high->pt[track][xtrack][ifov]
+	    -= bias_15mu_high[xtrack][ifov];
+	}
+  }
 
   /* ------------------------------------------------------------
      Calculate variances...
