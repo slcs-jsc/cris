@@ -70,6 +70,10 @@ int main(
     bt_15mu_low_varid, bt_15mu_low_pt_varid, bt_15mu_low_var_varid,
     bt_15mu_high_varid, bt_15mu_high_pt_varid, bt_15mu_high_var_varid;
 
+  static double count_4mu[PERT_NXTRACK][PERT_NFOV],
+    count_15mu_high[PERT_NXTRACK][PERT_NFOV],
+    count_15mu_low[PERT_NXTRACK][PERT_NFOV];
+
   static double bias_4mu[PERT_NXTRACK][PERT_NFOV],
     bias_15mu_high[PERT_NXTRACK][PERT_NFOV],
     bias_15mu_low[PERT_NXTRACK][PERT_NFOV];
@@ -316,18 +320,29 @@ int main(
     for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++)
       for (int ifov = 0; ifov < L1_NFOV; ifov++) {
 
-	bias_4mu[xtrack][ifov] = 0;
-	bias_15mu_low[xtrack][ifov] = 0;
-	bias_15mu_high[xtrack][ifov] = 0;
+	for (int track = 0; track < pert_4mu->ntrack; track++)
+	  if (isfinite(pert_4mu->pt[track][xtrack][ifov])) {
+	    bias_4mu[xtrack][ifov] += pert_4mu->pt[track][xtrack][ifov];
+	    count_4mu[xtrack][ifov]++;
+	  }
 
-	for (int track = 0; track < pert_4mu->ntrack; track++) {
-	  bias_4mu[xtrack][ifov] +=
-	    pert_4mu->pt[track][xtrack][ifov] / pert_4mu->ntrack;
-	  bias_15mu_low[xtrack][ifov] +=
-	    pert_15mu_low->pt[track][xtrack][ifov] / pert_4mu->ntrack;
-	  bias_15mu_high[xtrack][ifov] +=
-	    pert_15mu_high->pt[track][xtrack][ifov] / pert_4mu->ntrack;
-	}
+	for (int track = 0; track < pert_15mu_low->ntrack; track++)
+	  if (isfinite(pert_15mu_low->pt[track][xtrack][ifov])) {
+	    bias_15mu_low[xtrack][ifov] +=
+	      pert_15mu_low->pt[track][xtrack][ifov];
+	    count_15mu_low[xtrack][ifov]++;
+	  }
+
+	for (int track = 0; track < pert_15mu_high->ntrack; track++)
+	  if (isfinite(pert_15mu_high->pt[track][xtrack][ifov])) {
+	    bias_15mu_high[xtrack][ifov] +=
+	      pert_15mu_high->pt[track][xtrack][ifov];
+	    count_15mu_high[xtrack][ifov]++;
+	  }
+
+	bias_4mu[xtrack][ifov] /= count_4mu[xtrack][ifov];
+	bias_15mu_low[xtrack][ifov] /= count_15mu_low[xtrack][ifov];
+	bias_15mu_high[xtrack][ifov] /= count_15mu_high[xtrack][ifov];
       }
 
     /* Write log messages... */
