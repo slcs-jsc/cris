@@ -107,16 +107,16 @@ int main(
 
 	/* Calculate solar zenith angle... */
 	if (sza0 >= -1e10 && sza0 <= 1e10 && sza1 >= -1e10 && sza1 <= 1e10)
-	  sza2 = sza(pert->time[itrack][ixtrack][ifov],
-		     pert->lon[itrack][ixtrack][ifov],
-		     pert->lat[itrack][ixtrack][ifov]);
+	  sza2 = RAD2DEG(acos(cos_sza(pert->time[itrack][ixtrack][ifov],
+				      pert->lon[itrack][ixtrack][ifov],
+				      pert->lat[itrack][ixtrack][ifov])));
 
 	/* Estimate noise... */
 	if (dt230 > 0 && nu > 0) {
-	  const double nesr = PLANCK(230.0 + dt230, nu) - PLANCK(230.0, nu);
 	  const double tbg =
 	    pert->bt[itrack][ixtrack][ifov] - pert->pt[itrack][ixtrack][ifov];
-	  nedt = BRIGHT(PLANCK(tbg, nu) + nesr, nu) - tbg;
+	  const double nesr = NESR(230.0, dt230, nu);
+	  nedt = NEDT(tbg, nesr, nu);
 	}
 
 	/* Write data... */
@@ -128,9 +128,10 @@ int main(
 		&& sza2 >= sza0 && sza2 <= sza1)
 	      fprintf(out, "%.2f %g %g %g %g %g %g %g %d %d %d\n",
 		      pert->time[itrack][ixtrack][ifov],
-		      sza(pert->time[itrack][ixtrack][ifov],
-			  pert->lon[itrack][ixtrack][ifov],
-			  pert->lat[itrack][ixtrack][ifov]),
+		      RAD2DEG(acos(cos_sza(pert->time[itrack][ixtrack][ifov],
+					   pert->lon[itrack][ixtrack][ifov],
+					   pert->lat[itrack][ixtrack]
+					   [ifov]))),
 		      pert->lon[itrack][ixtrack][ifov],
 		      pert->lat[itrack][ixtrack][ifov],
 		      pert->dc[itrack][ixtrack][ifov],

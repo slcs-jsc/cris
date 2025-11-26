@@ -259,7 +259,7 @@ int main(
 
   /* Write info... */
   LOG(1, "Outlier filter...");
-  
+
   /* Define outlier filter... */
 #define OUTLIER_FILTER(BT, DTMED)					\
   do {									\
@@ -290,12 +290,12 @@ int main(
         }								\
       }									\
   } while (0)
-  
+
   /* Apply filter to each dataset... */
   OUTLIER_FILTER(pert_4mu, dtmed);
   OUTLIER_FILTER(pert_15mu_low, dtmed);
   OUTLIER_FILTER(pert_15mu_high, dtmed);
-  
+
   /* ------------------------------------------------------------
      Calculate perturbations...
      ------------------------------------------------------------ */
