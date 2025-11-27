@@ -256,46 +256,56 @@ int main(
   /* ------------------------------------------------------------
      Outlier filter...
      ------------------------------------------------------------ */
-
+  
   /* Write info... */
   LOG(1, "Outlier filter...");
-
+  
   /* Define outlier filter... */
 #define OUTLIER_FILTER(BT, DTMED)					\
   do {									\
     for (int track = 0; track < (BT)->ntrack; track++)			\
       for (int xtrack = 0; xtrack < L1_NXTRACK; xtrack++) {		\
 									\
-        size_t nf = 0;							\
-        double xf[9];							\
-        								\
-        for (int ifov = 0; ifov < L1_NFOV; ifov++) {			\
-          double v = (BT)->bt[track][xtrack][ifov];			\
-          if (isfinite(v)) xf[nf++] = v;				\
-        }								\
-        if (nf < 2) continue;						\
+	size_t nf = 0, outlier_count = 0;				\
+	double xf[L1_NFOV];						\
 									\
-        double median = gsl_stats_median(xf, 1, nf);			\
-        								\
+	/* Calculate median... */					\
+	for (int ifov = 0; ifov < L1_NFOV; ifov++) {			\
+	  double v = (BT)->bt[track][xtrack][ifov];			\
+	  if (isfinite(v)) xf[nf++] = v;				\
+	}								\
+	if (nf < 2) continue;						\
+	double median = gsl_stats_median(xf, 1, nf);			\
+									\
+        /* First pass: count potential outliers... */			\
         for (int ifov = 0; ifov < L1_NFOV; ifov++) {			\
           double v = (BT)->bt[track][xtrack][ifov];			\
           if (!isfinite(v)) continue;					\
-          								\
-          if (fabs(v - median) >= (DTMED)) {				\
-            LOG(2, "outlier: track=%d | xtrack=%d | ifov=%d | "		\
-		"bt_" #BT "=%g K | median=%g K",			\
-		track, xtrack, ifov, v, median);			\
-            (BT)->bt[track][xtrack][ifov] = NAN;			\
-          }								\
+          if (fabs(v - median) >= (DTMED))				\
+            outlier_count++;						\
+        }								\
+									\
+	/* Only apply filtering if 1 or 2 outliers exist... */		\
+        if (outlier_count > 0 && outlier_count <= 2) {			\
+	  for (int ifov = 0; ifov < L1_NFOV; ifov++) {			\
+	    double v = (BT)->bt[track][xtrack][ifov];			\
+	    if (!isfinite(v)) continue;					\
+	    if (fabs(v - median) >= (DTMED)) {				\
+	      LOG(2, "outlier: track=%d | xtrack=%d | ifov=%d | "	\
+		  "bt_" #BT "=%g K | median=%g K",			\
+		  track, xtrack, ifov, v, median);			\
+	      (BT)->bt[track][xtrack][ifov] = NAN;			\
+	    }								\
+	  }								\
         }								\
       }									\
   } while (0)
-
+  
   /* Apply filter to each dataset... */
   OUTLIER_FILTER(pert_4mu, dtmed);
   OUTLIER_FILTER(pert_15mu_low, dtmed);
   OUTLIER_FILTER(pert_15mu_high, dtmed);
-
+  
   /* ------------------------------------------------------------
      Calculate perturbations...
      ------------------------------------------------------------ */
