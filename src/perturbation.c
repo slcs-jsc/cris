@@ -256,10 +256,10 @@ int main(
   /* ------------------------------------------------------------
      Outlier filter...
      ------------------------------------------------------------ */
-  
+
   /* Write info... */
   LOG(1, "Outlier filter...");
-  
+
   /* Define outlier filter... */
 #define OUTLIER_FILTER(BT, DTMED)					\
   do {									\
@@ -300,12 +300,12 @@ int main(
         }								\
       }									\
   } while (0)
-  
+
   /* Apply filter to each dataset... */
   OUTLIER_FILTER(pert_4mu, dtmed);
   OUTLIER_FILTER(pert_15mu_low, dtmed);
   OUTLIER_FILTER(pert_15mu_high, dtmed);
-  
+
   /* ------------------------------------------------------------
      Calculate perturbations...
      ------------------------------------------------------------ */
@@ -369,34 +369,36 @@ int main(
 
     /* Write info... */
     LOG(1, "Calculate bias correction...");
-
-    /* Radius of triangular filter, a value of +/- 25 pixels
-       corresponds to 50% sensitivity cut-off at 1000 km
-       (same as across-track polynomial detrending)... */
+    
+    /* Radius of Gaussian filter... */
     const int radius = 25;
+    
+    /* Gaussian sigma chosen to yield 50% sensitivity cutoff over ~1000 km... */
+    const double sigma = 11.0;
+    const double inv2sigma2 = 1.0 / (2.0 * sigma * sigma);
 
-    /* Macro for bias correction... */
+    /* Macro for bias correction using Gaussian filter */
 #define APPLY_BIAS_CORR(pert)						\
     do {								\
       LOOP_ALL((pert)->ntrack) {					\
-	const int idx = (track * L1_NXTRACK + xtrack) * L1_NFOV + ifov;	\
-	help[idx] = 0.0;						\
-	double wsum = 0.0;						\
-	for (int dtrack2 = -radius; dtrack2 <= radius; ++dtrack2) {	\
-	  int t2 = track + dtrack2;					\
-	  if (t2 < 0 || t2 >= (pert)->ntrack)				\
-	    continue;							\
-	  if (!isfinite((pert)->pt[t2][xtrack][ifov]))			\
-	    continue;							\
-	  const double w = 1.0 - fabs((double)dtrack2 / (double)radius); \
-	  help[idx] += w * (pert)->pt[t2][xtrack][ifov];		\
-	  wsum      += w;						\
-	}								\
-	if (wsum > 0.0) help[idx] /= wsum;				\
+        const int idx = (track * L1_NXTRACK + xtrack) * L1_NFOV + ifov;	\
+        help[idx] = 0.0;						\
+        double wsum = 0.0;						\
+        for (int dtrack2 = -radius; dtrack2 <= radius; ++dtrack2) {	\
+          int t2 = track + dtrack2;					\
+          if (t2 < 0 || t2 >= (pert)->ntrack)				\
+            continue;							\
+          if (!isfinite((pert)->pt[t2][xtrack][ifov]))			\
+            continue;							\
+          const double w = exp(-(double)(dtrack2 * dtrack2) * inv2sigma2); \
+          help[idx] += w * (pert)->pt[t2][xtrack][ifov];		\
+          wsum      += w;						\
+        }								\
+        if (wsum > 0.0) help[idx] /= wsum;				\
       }									\
       LOOP_ALL((pert)->ntrack) {					\
-	const int idx = (track * L1_NXTRACK + xtrack) * L1_NFOV + ifov;	\
-	(pert)->pt[track][xtrack][ifov] -= help[idx];			\
+        const int idx = (track * L1_NXTRACK + xtrack) * L1_NFOV + ifov;	\
+        (pert)->pt[track][xtrack][ifov] -= help[idx];			\
       }									\
     } while (0)
 
