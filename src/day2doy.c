@@ -1,4 +1,4 @@
-#include "libcris.h"
+#include "jurassic.h"
 
 int main(
   int argc,

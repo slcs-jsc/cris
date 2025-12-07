@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------------
 
 # Executables...
-EXC = day2doy doy2day map_pert map_rad noise_pert perturbation sampling spec2tab variance volcano
+EXC = day2doy doy2day jsec2time map_pert map_rad noise_pert perturbation sampling spec2tab time2jsec variance volcano
 
 # Tests...
 TESTS = pert_test rad_test volc_test
@@ -18,7 +18,7 @@ INCDIR += -I ../libs/build/include
 LIBDIR += -L ../libs/build/lib 
 
 # Static compilation...
-STATIC ?= 1
+STATIC ?= 0
 
 # Optimization flags...
 OPT ?= -O3

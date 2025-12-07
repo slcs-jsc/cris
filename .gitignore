@@ -4,12 +4,14 @@ projects/
 src/*.o
 src/day2doy
 src/doy2day
+src/jsec2time
 src/map_pert
 src/map_rad
 src/noise_pert
 src/perturbation
 src/sampling
 src/spec2tab
+src/time2jsec
 src/variance
 src/volcano
 tests/data/SNDR*nc

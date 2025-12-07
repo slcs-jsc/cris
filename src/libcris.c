@@ -276,55 +276,6 @@ void create_wave(
 
 /*****************************************************************************/
 
-void day2doy(
-  const int year,
-  const int mon,
-  const int day,
-  int *doy) {
-
-  const int
-    d0[12] = { 1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335 },
-    d0l[12] = { 1, 32, 61, 92, 122, 153, 183, 214, 245, 275, 306, 336 };
-
-  /* Get day of year... */
-  if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
-    *doy = d0l[mon - 1] + day - 1;
-  else
-    *doy = d0[mon - 1] + day - 1;
-}
-
-/*****************************************************************************/
-
-void doy2day(
-  const int year,
-  const int doy,
-  int *mon,
-  int *day) {
-
-  const int
-    d0[12] = { 1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335 },
-    d0l[12] = { 1, 32, 61, 92, 122, 153, 183, 214, 245, 275, 306, 336 };
-
-  int i;
-
-  /* Get month and day... */
-  if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)) {
-    for (i = 11; i > 0; i--)
-      if (d0l[i] <= doy)
-	break;
-    *mon = i + 1;
-    *day = doy - d0l[i] + 1;
-  } else {
-    for (i = 11; i > 0; i--)
-      if (d0[i] <= doy)
-	break;
-    *mon = i + 1;
-    *day = doy - d0[i] + 1;
-  }
-}
-
-/*****************************************************************************/
-
 void fit_wave(
   wave_t *wave,
   double amp,

@@ -369,10 +369,10 @@ int main(
 
     /* Write info... */
     LOG(1, "Calculate bias correction...");
-    
+
     /* Radius of Gaussian filter... */
     const int radius = 25;
-    
+
     /* Gaussian sigma chosen to yield 50% sensitivity cutoff over ~1000 km... */
     const double sigma = 11.0;
     const double inv2sigma2 = 1.0 / (2.0 * sigma * sigma);

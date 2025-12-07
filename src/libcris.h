@@ -315,20 +315,6 @@ void create_wave(
   double phi,
   double fwhm);
 
-/*! Get day of year from date. */
-void day2doy(
-  const int year,
-  const int mon,
-  const int day,
-  int *doy);
-
-/*! Get date from day of year. */
-void doy2day(
-  const int year,
-  const int doy,
-  int *mon,
-  int *day);
-
 /*! Evaluate wave fit... */
 void fit_wave(
   wave_t * wave,
