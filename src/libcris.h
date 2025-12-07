@@ -434,13 +434,6 @@ void read_wave(
   char *filename,
   wave_t * wave);
 
-/*! Convert CrIS radiance data to wave analysis struct. */
-void rad2wave(
-  cris_l1_t * cris_l1,
-  double *nu,
-  int nd,
-  wave_t * wave);
-
 /*! Convert CrIS retrieval results to wave analysis struct. */
 void ret2wave(
   retr_t * ret,
