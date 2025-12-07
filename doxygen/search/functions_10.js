@@ -1,0 +1,7 @@
+var searchData=
+[
+  ['scan_5fctl_0',['scan_ctl',['../jurassic_8c.html#abb6ce9b0361afe11cb23b8ac1e0c7fa3',1,'scan_ctl(int argc, char *argv[], const char *varname, const int arridx, const char *defvalue, char *value):&#160;jurassic.c'],['../jurassic_8h.html#abb6ce9b0361afe11cb23b8ac1e0c7fa3',1,'scan_ctl(int argc, char *argv[], const char *varname, const int arridx, const char *defvalue, char *value):&#160;jurassic.c']]],
+  ['set_5fcov_5fapr_1',['set_cov_apr',['../jurassic_8c.html#ae9a11e5f03e0a307add4daf864977cec',1,'set_cov_apr(const ret_t *ret, const ctl_t *ctl, const atm_t *atm, const int *iqa, const int *ipa, gsl_matrix *s_a):&#160;jurassic.c'],['../jurassic_8h.html#ae9a11e5f03e0a307add4daf864977cec',1,'set_cov_apr(const ret_t *ret, const ctl_t *ctl, const atm_t *atm, const int *iqa, const int *ipa, gsl_matrix *s_a):&#160;jurassic.c']]],
+  ['set_5fcov_5fmeas_2',['set_cov_meas',['../jurassic_8c.html#a6bb69eac608c4019c689bf8280912c1f',1,'set_cov_meas(const ret_t *ret, const ctl_t *ctl, const obs_t *obs, gsl_vector *sig_noise, gsl_vector *sig_formod, gsl_vector *sig_eps_inv):&#160;jurassic.c'],['../jurassic_8h.html#a6bb69eac608c4019c689bf8280912c1f',1,'set_cov_meas(const ret_t *ret, const ctl_t *ctl, const obs_t *obs, gsl_vector *sig_noise, gsl_vector *sig_formod, gsl_vector *sig_eps_inv):&#160;jurassic.c']]],
+  ['sza_3',['sza',['../jurassic_8h.html#ad1500cc96441cf118acda392366397cc',1,'jurassic.h']]]
+];
