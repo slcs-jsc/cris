@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['fft_0',['fft',['../libcris_8c.html#a56d9d404910e5afb7c19e4522694bdbd',1,'fft(wave_t *wave, double *Amax, double *phimax, double *lhmax, double *kxmax, double *kymax, double *alphamax, double *betamax, char *filename):&#160;libcris.c'],['../libcris_8h.html#a56d9d404910e5afb7c19e4522694bdbd',1,'fft(wave_t *wave, double *Amax, double *phimax, double *lhmax, double *kxmax, double *kymax, double *alphamax, double *betamax, char *filename):&#160;libcris.c']]],
+  ['fft_5fhelp_1',['fft_help',['../libcris_8c.html#a48b5c3ccaf39126de8e504baeb032ab8',1,'fft_help(double *fcReal, double *fcImag, int n):&#160;libcris.c'],['../libcris_8h.html#a48b5c3ccaf39126de8e504baeb032ab8',1,'fft_help(double *fcReal, double *fcImag, int n):&#160;libcris.c']]],
+  ['find_5femitter_2',['find_emitter',['../jurassic_8h.html#a832e63c37527025311d1886a60dff605',1,'find_emitter(const ctl_t *ctl, const char *emitter):&#160;jurassic.c'],['../jurassic_8c.html#a832e63c37527025311d1886a60dff605',1,'find_emitter(const ctl_t *ctl, const char *emitter):&#160;jurassic.c']]],
+  ['fit_3',['fit',['../structwave__t.html#aeb3483eec1b41aff7291c20feef6a3b6',1,'wave_t']]],
+  ['fit_5fwave_4',['fit_wave',['../libcris_8h.html#a16c9f818dfaf0dd50659502fb980bf40',1,'fit_wave(wave_t *wave, double amp, double phi, double kx, double ky, double *chisq):&#160;libcris.c'],['../libcris_8c.html#a16c9f818dfaf0dd50659502fb980bf40',1,'fit_wave(wave_t *wave, double amp, double phi, double kx, double ky, double *chisq):&#160;libcris.c']]],
+  ['formod_5',['formod',['../structctl__t.html#a76702f4f08a76f29e138d97c7d2b1833',1,'ctl_t::formod()'],['../jurassic_8h.html#abe93da56294b380e322c18ca2838fd51',1,'formod(const ctl_t *ctl, const tbl_t *tbl, atm_t *atm, obs_t *obs):&#160;jurassic.c'],['../jurassic_8c.html#abe93da56294b380e322c18ca2838fd51',1,'formod(const ctl_t *ctl, const tbl_t *tbl, atm_t *atm, obs_t *obs):&#160;jurassic.c']]],
+  ['formod_5fcontinua_6',['formod_continua',['../jurassic_8c.html#a363f5205cd58d7a22133f704f1137181',1,'formod_continua(const ctl_t *ctl, const los_t *los, const int ip, double *beta):&#160;jurassic.c'],['../jurassic_8h.html#a363f5205cd58d7a22133f704f1137181',1,'formod_continua(const ctl_t *ctl, const los_t *los, const int ip, double *beta):&#160;jurassic.c']]],
+  ['formod_5ffov_7',['formod_fov',['../jurassic_8c.html#ab0c3109373d1d5edcf57840c288f6f53',1,'formod_fov(const ctl_t *ctl, obs_t *obs):&#160;jurassic.c'],['../jurassic_8h.html#ab0c3109373d1d5edcf57840c288f6f53',1,'formod_fov(const ctl_t *ctl, obs_t *obs):&#160;jurassic.c']]],
+  ['formod_5fpencil_8',['formod_pencil',['../jurassic_8c.html#a9727c4e0e5bc85384762b6ad81a8c3be',1,'formod_pencil(const ctl_t *ctl, const tbl_t *tbl, const atm_t *atm, obs_t *obs, const int ir):&#160;jurassic.c'],['../jurassic_8h.html#a9727c4e0e5bc85384762b6ad81a8c3be',1,'formod_pencil(const ctl_t *ctl, const tbl_t *tbl, const atm_t *atm, obs_t *obs, const int ir):&#160;jurassic.c']]],
+  ['formod_5frfm_9',['formod_rfm',['../jurassic_8c.html#a2caf20484e8e2f52ff3650321b7c704c',1,'formod_rfm(const ctl_t *ctl, const atm_t *atm, obs_t *obs):&#160;jurassic.c'],['../jurassic_8h.html#a2caf20484e8e2f52ff3650321b7c704c',1,'formod_rfm(const ctl_t *ctl, const atm_t *atm, obs_t *obs):&#160;jurassic.c']]],
+  ['formod_5fsrcfunc_10',['formod_srcfunc',['../jurassic_8h.html#ac7826de16feb2eb6730b661bf8deba90',1,'formod_srcfunc(const ctl_t *ctl, const tbl_t *tbl, const double t, double *src):&#160;jurassic.c'],['../jurassic_8c.html#ac7826de16feb2eb6730b661bf8deba90',1,'formod_srcfunc(const ctl_t *ctl, const tbl_t *tbl, const double t, double *src):&#160;jurassic.c']]],
+  ['fov_11',['fov',['../structctl__t.html#a6dd6b751109cac0ebf94f3bcae7a01e8',1,'ctl_t']]],
+  ['fov_5fdz_12',['fov_dz',['../structctl__t.html#ac995bb7e49db8132059101867cc00e38',1,'ctl_t']]],
+  ['fov_5fn_13',['fov_n',['../structctl__t.html#a8feb52a8c01e8348012c0f2f714f2f92',1,'ctl_t']]],
+  ['fov_5fw_14',['fov_w',['../structctl__t.html#af728c5c4b398624439a3a7d881476dd2',1,'ctl_t']]],
+  ['fp_15',['fp',['../structtbl__gas__t.html#a77a2f96cfd1070640367c4b9f2c1bffd',1,'tbl_gas_t']]],
+  ['fread_16',['FREAD',['../jurassic_8h.html#ae8c13542ca31cfbccfc436aabd8851f6',1,'jurassic.h']]],
+  ['freq_17',['freq',['../structtbl__gas__index__t.html#ae92df1b397eddf22dd991d6a9f5e4853',1,'tbl_gas_index_t']]],
+  ['fwrite_18',['FWRITE',['../jurassic_8h.html#a1e67562ddd8fb52548a4ca02d3640bac',1,'jurassic.h']]]
+];

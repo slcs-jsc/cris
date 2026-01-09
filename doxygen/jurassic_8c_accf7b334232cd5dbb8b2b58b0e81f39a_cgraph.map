@@ -1,0 +1,12 @@
+<map id="read_tbl" name="read_tbl">
+<area shape="rect" id="node1" title="Read all emissivity lookup tables for all gases and frequencies." alt="" coords="5,107,73,133"/>
+<area shape="rect" id="node2" href="$jurassic_8c.html#ab6852ec1675d0539a21df1fc4ecee1f0" title="Initialize the source&#45;function (Planck radiance) lookup table." alt="" coords="125,31,214,57"/>
+<area shape="rect" id="node5" href="$jurassic_8c.html#ac437f3db65946abc16a2e6776f2d9ce6" title="Read a single ASCII emissivity lookup table." alt="" coords="121,81,217,108"/>
+<area shape="rect" id="node6" href="$jurassic_8c.html#a059d22792e64add177ebc6f8ea0a90ed" title="Read a single binary emissivity lookup table." alt="" coords="123,132,215,159"/>
+<area shape="rect" id="node7" href="$jurassic_8c.html#a8270286cb1940c8001c373d0dd70442b" title="Read one frequency block from a per&#45;gas binary table file." alt="" coords="121,183,217,209"/>
+<area shape="rect" id="node3" href="$jurassic_8c.html#a4e1b87dc3c93a23c89f739adf10b60dc" title="Locate index for interpolation on an irregular grid." alt="" coords="297,5,371,32"/>
+<area shape="rect" id="node4" href="$jurassic_8c.html#ad6dc7f479ca53ad9866d0e1df8f5ffcd" title="Read a two&#45;column shape function from an ASCII file." alt="" coords="289,56,379,83"/>
+<area shape="rect" id="node8" href="$jurassic_8c.html#adad0096f4559d524126d7b849cee0fb7" title="Close a per&#45;gas binary table file and optionally rewrite metadata." alt="" coords="267,132,401,159"/>
+<area shape="rect" id="node9" href="$jurassic_8c.html#ae21efb7a5b4d98c52355ee78cd4d0df5" title="Open a per&#45;gas binary table file for reading and writing." alt="" coords="269,183,399,209"/>
+<area shape="rect" id="node10" href="$jurassic_8c.html#a3441d713489f5900d4d98235a9973653" title="Read one emissivity table block from a per&#45;gas table file." alt="" coords="265,233,403,260"/>
+</map>

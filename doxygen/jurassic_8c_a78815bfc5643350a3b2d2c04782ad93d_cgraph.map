@@ -1,0 +1,10 @@
+<map id="write_tbl" name="write_tbl">
+<area shape="rect" id="node1" title="Write all emissivity lookup tables in the format specified by the control structure." alt="" coords="5,56,76,83"/>
+<area shape="rect" id="node2" href="$jurassic_8c.html#a5557d36bbbd2cb91a1e1d69c7ea8ecc5" title="Write all lookup tables in human&#45;readable ASCII format." alt="" coords="124,5,223,32"/>
+<area shape="rect" id="node3" href="$jurassic_8c.html#a60b80f0d4d9036d4bf24f266258a86d0" title="Write all lookup tables in compact binary format." alt="" coords="126,56,221,83"/>
+<area shape="rect" id="node4" href="$jurassic_8c.html#a7dcdafceae19d83c22645217a4e765c7" title="Write lookup tables into per&#45;gas binary table files with indexed blocks." alt="" coords="124,107,223,133"/>
+<area shape="rect" id="node5" href="$jurassic_8c.html#adad0096f4559d524126d7b849cee0fb7" title="Close a per&#45;gas binary table file and optionally rewrite metadata." alt="" coords="275,31,409,57"/>
+<area shape="rect" id="node6" href="$jurassic_8c.html#ae21efb7a5b4d98c52355ee78cd4d0df5" title="Open a per&#45;gas binary table file for reading and writing." alt="" coords="277,81,407,108"/>
+<area shape="rect" id="node7" href="$jurassic_8c.html#affb6bd5214f6579580cf5882f5ed4a64" title="Create a new per&#45;gas table file with an empty index." alt="" coords="271,132,413,159"/>
+<area shape="rect" id="node8" href="$jurassic_8c.html#a323a3d7eb6a7c3ffe9736a4b66ff385f" title="Append or overwrite a single frequency&#45;table block in a per&#45;gas file." alt="" coords="272,183,412,209"/>
+</map>

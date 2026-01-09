@@ -1,0 +1,5 @@
+<map id="write_atm" name="write_atm">
+<area shape="rect" id="node1" title="Write atmospheric data to a file." alt="" coords="5,31,84,57"/>
+<area shape="rect" id="node2" href="$jurassic_8c.html#aedaa4b13833a182bbff8034a3b2edae0" title="Write atmospheric data to an ASCII file." alt="" coords="132,5,239,32"/>
+<area shape="rect" id="node3" href="$jurassic_8c.html#abb2306151e16b13ed93d84d379c8bb0e" title="Write atmospheric data to a binary file." alt="" coords="134,56,237,83"/>
+</map>

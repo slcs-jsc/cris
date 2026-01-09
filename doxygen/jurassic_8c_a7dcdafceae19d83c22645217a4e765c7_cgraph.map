@@ -1,0 +1,7 @@
+<map id="write_tbl_gas" name="write_tbl_gas">
+<area shape="rect" id="node1" title="Write lookup tables into per&#45;gas binary table files with indexed blocks." alt="" coords="5,81,104,108"/>
+<area shape="rect" id="node2" href="$jurassic_8c.html#adad0096f4559d524126d7b849cee0fb7" title="Close a per&#45;gas binary table file and optionally rewrite metadata." alt="" coords="156,5,291,32"/>
+<area shape="rect" id="node3" href="$jurassic_8c.html#ae21efb7a5b4d98c52355ee78cd4d0df5" title="Open a per&#45;gas binary table file for reading and writing." alt="" coords="158,56,289,83"/>
+<area shape="rect" id="node4" href="$jurassic_8c.html#affb6bd5214f6579580cf5882f5ed4a64" title="Create a new per&#45;gas table file with an empty index." alt="" coords="152,107,295,133"/>
+<area shape="rect" id="node5" href="$jurassic_8c.html#a323a3d7eb6a7c3ffe9736a4b66ff385f" title="Append or overwrite a single frequency&#45;table block in a per&#45;gas file." alt="" coords="153,157,293,184"/>
+</map>

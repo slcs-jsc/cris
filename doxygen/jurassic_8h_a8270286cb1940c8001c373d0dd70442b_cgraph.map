@@ -1,0 +1,6 @@
+<map id="read_tbl_gas" name="read_tbl_gas">
+<area shape="rect" id="node1" title="Read one frequency block from a per&#45;gas binary table file." alt="" coords="5,56,101,83"/>
+<area shape="rect" id="node2" href="$jurassic_8c.html#adad0096f4559d524126d7b849cee0fb7" title="Close a per&#45;gas binary table file and optionally rewrite metadata." alt="" coords="151,5,285,32"/>
+<area shape="rect" id="node3" href="$jurassic_8c.html#ae21efb7a5b4d98c52355ee78cd4d0df5" title="Open a per&#45;gas binary table file for reading and writing." alt="" coords="153,56,283,83"/>
+<area shape="rect" id="node4" href="$jurassic_8c.html#a3441d713489f5900d4d98235a9973653" title="Read one emissivity table block from a per&#45;gas table file." alt="" coords="149,107,287,133"/>
+</map>
