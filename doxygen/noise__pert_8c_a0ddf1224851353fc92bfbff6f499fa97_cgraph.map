@@ -1,0 +1,6 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title=" " alt="" coords="5,56,56,83"/>
+<area shape="rect" id="node2" href="$libcris_8c.html#a289f2a1caca359f5398a3ec87d573157" title="Estimate noise from perurbations." alt="" coords="104,5,187,32"/>
+<area shape="rect" id="node3" href="$libcris_8c.html#acaf6587894dca34db3b2aede00bc0cc6" title="Read radiance perturbation data." alt="" coords="107,56,183,83"/>
+<area shape="rect" id="node4" href="$jurassic_8c.html#abb6ce9b0361afe11cb23b8ac1e0c7fa3" title="Scan control file or command&#45;line arguments for a configuration variable." alt="" coords="110,107,181,133"/>
+</map>
