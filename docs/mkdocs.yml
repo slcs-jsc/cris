@@ -6,4 +6,7 @@ theme: material
 
 nav:
     - Home: index.md
+    - Installation: install.md
+    - Tools: tools.md
+    - Testing: testing.md
     - Links: links.md

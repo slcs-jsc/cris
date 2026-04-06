@@ -1,4 +1,5 @@
 docs/docs/
+docs/site/
 libs/build/
 projects/
 src/*.o
