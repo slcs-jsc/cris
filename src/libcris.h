@@ -1,3 +1,70 @@
+/*!
+  \file
+  CrIS library declarations.
+*/
+
+/*!
+  \mainpage
+
+  The CrIS Code Collection is a C-based toolkit for processing and analyzing
+  remote sensing observations from the Cross-track Infrared Sounder (CrIS)
+  instruments.
+
+  This Doxygen manual is the API-oriented reference for the CrIS source tree.
+  It documents the shared data structures, helper routines, and file-level
+  interfaces used by the command-line tools in `src/`.
+
+  \section overview Overview
+
+  The documented codebase includes routines for:
+
+  - reading CrIS Level-1B radiance granules
+  - representing radiance, perturbation, retrieval, and wave-analysis data
+  - extracting spectra and geolocated radiance maps
+  - generating perturbation products in netCDF format
+  - estimating perturbation noise and local variance
+  - deriving volcanic ash and SO2 indicator tables
+
+  \section start Getting Started
+
+  The main CrIS-specific declarations are defined in `libcris.h`, with the
+  corresponding implementations in `libcris.c`.
+
+  Useful entry points in this manual are:
+
+  - `libcris.h` for shared structs, macros, and function declarations
+  - `cris_l1_t` for the in-memory representation of CrIS Level-1 data
+  - `pert_t` for perturbation products
+  - `retr_t` for retrieval output tables
+  - `wave_t` for wave-analysis grids and derived fields
+
+  \section areas Functional Areas
+
+  Core I/O routines include `read_cris_l1` for Level-1B radiance granules and
+  `read_pert` for perturbation products.
+
+  Shared numerical routines include `background_poly`,
+  `background_smooth`, `create_wave`, `fft`, `noise_pert`, and `variance`.
+
+  The executable programs in `src/` build on these shared routines. The most
+  prominent tools are `spec2tab`, `map_rad`, `perturbation`, `map_pert`,
+  `noise_pert`, `variance`, and `volcano`.
+
+  \section layout Repository Layout
+
+  - `src/`: C sources, headers, and executable programs
+  - `tests/`: regression tests and reference outputs
+  - `docs/`: MkDocs and Doxygen sources
+  - `libs/`: bundled third-party library sources and local build helper
+
+  \section links Related Documentation
+
+  - Repository: https://github.com/slcs-jsc/cris
+  - MkDocs manual: https://slcs-jsc.github.io/cris/
+  - Citation metadata: https://github.com/slcs-jsc/cris/blob/master/CITATION.cff
+  - License: https://github.com/slcs-jsc/cris/blob/master/COPYING
+*/
+
 #include <netcdf.h>
 #include <gsl/gsl_randist.h>
 #include <gsl/gsl_fft_complex.h>
