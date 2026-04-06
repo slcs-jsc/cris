@@ -12,7 +12,7 @@
       
       
       
-        <link rel="next" href="links/">
+        <link rel="next" href="install/">
       
       
         
@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#welcome-to-the-cris-code-collection" class="md-skip">
+        <a href="#cris-code-collection" class="md-skip">
           Skip to content
         </a>
       
@@ -280,10 +280,54 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
+  <a href="#what-this-project-contains" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Features
+        What This Project Contains
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#repository-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repository Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typical-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typical Workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Tools
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation
       
     </span>
   </a>
@@ -305,6 +349,87 @@
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -363,10 +488,54 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
+  <a href="#what-this-project-contains" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Features
+        What This Project Contains
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#repository-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repository Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typical-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typical Workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Tools
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation
       
     </span>
   </a>
@@ -404,16 +573,58 @@
   
 
 
-<h1 id="welcome-to-the-cris-code-collection">Welcome to the CrIS Code Collection!</h1>
-<p>The CrIS Code Collection enables data processing and analysis for remote sensing observations captured by the Cross-track Infrared Sounder satellite instruments.</p>
-<h2 id="features">Features</h2>
-<p>tbd</p>
+<h1 id="cris-code-collection">CrIS Code Collection</h1>
+<p>The CrIS Code Collection provides command-line tools for processing and analyzing
+remote sensing observations from the Cross-track Infrared Sounder (CrIS)
+instruments.</p>
+<p>The repository is centered around a set of C executables in <code>src/</code> that read
+CrIS Level-1B granules, derive tabular products, and generate perturbation and
+variance fields for downstream analysis.</p>
+<h2 id="what-this-project-contains">What This Project Contains</h2>
+<p>The current codebase provides tools for:</p>
+<ul>
+<li>converting between calendar and mission time representations</li>
+<li>extracting spectra or geolocated radiance maps from CrIS Level-1B files</li>
+<li>generating perturbation products in netCDF format</li>
+<li>estimating perturbation noise and variance products</li>
+<li>deriving volcanic ash and SO2 indicator tables</li>
+</ul>
+<h2 id="repository-structure">Repository Structure</h2>
+<ul>
+<li><code>src/</code>: source files, headers, and the main build targets</li>
+<li><code>tests/</code>: regression tests and reference outputs</li>
+<li><code>libs/</code>: bundled third-party library sources and local build helper</li>
+<li><code>docs/</code>: MkDocs manual and Doxygen configuration</li>
+</ul>
+<h2 id="typical-workflow">Typical Workflow</h2>
+<ol>
+<li>Build the bundled libraries if system libraries are not already available.</li>
+<li>Compile the executables in <code>src/</code>.</li>
+<li>Run the regression tests in <code>tests/</code>.</li>
+<li>Use the command-line tools on one or more CrIS Level-1B input granules.</li>
+</ol>
+<h2 id="key-tools">Key Tools</h2>
+<p>The most commonly used programs are:</p>
+<ul>
+<li><code>spec2tab</code>: extract a single spectrum for one footprint</li>
+<li><code>map_rad</code>: extract a geolocated map for one wavenumber</li>
+<li><code>perturbation</code>: generate perturbation data products in netCDF format</li>
+<li><code>map_pert</code>: extract perturbation map data from a perturbation file</li>
+<li><code>noise_pert</code>: estimate perturbation noise</li>
+<li><code>variance</code>: compute gridded perturbation variance products</li>
+<li><code>volcano</code>: derive volcanic ash and SO2 indicator tables</li>
+</ul>
+<p>See the <a href="tools/">Tools</a> page for details and examples.</p>
+<h2 id="documentation">Documentation</h2>
+<ul>
+<li>Use this MkDocs manual for installation, workflow, and tool overviews.</li>
+<li>Use the Doxygen documentation for API-level details of the C code and data
+  structures.</li>
+</ul>
 <h2 id="contact">Contact</h2>
-<p>We are interested in sharing the CrIS Code Collection for research
-applications. Please do not hesitate to contact us, if you have any
-questions or need support.</p>
-<p>Dr. Lars Hoffmann, <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#46;&#104;&#111;&#102;&#102;&#109;&#97;&#110;&#110;&#64;&#102;&#122;&#45;&#106;&#117;&#101;&#108;&#105;&#99;&#104;&#46;&#100;&#101;">&#108;&#46;&#104;&#111;&#102;&#102;&#109;&#97;&#110;&#110;&#64;&#102;&#122;&#45;&#106;&#117;&#101;&#108;&#105;&#99;&#104;&#46;&#100;&#101;</a></p>
-<p>Jülich Supercomputing Centre, Forschungszentrum Jülich</p>
+<p>Research users who need support or want to discuss the software can contact:</p>
+<p>Dr. Lars Hoffmann, <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#46;&#104;&#111;&#102;&#102;&#109;&#97;&#110;&#110;&#64;&#102;&#122;&#45;&#106;&#117;&#101;&#108;&#105;&#99;&#104;&#46;&#100;&#101;">&#108;&#46;&#104;&#111;&#102;&#102;&#109;&#97;&#110;&#110;&#64;&#102;&#122;&#45;&#106;&#117;&#101;&#108;&#105;&#99;&#104;&#46;&#100;&#101;</a><br />
+Jülich Supercomputing Centre, Forschungszentrum Jülich</p>
 
 
 
