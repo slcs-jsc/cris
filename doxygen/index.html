@@ -72,33 +72,51 @@ $(function() {
   <div class="headertitle"><div class="title">CrIS Code Collection </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p >The Juelich Rapid Spectral Simulation Code (JURASSIC) is a fast infrared radiative transfer model for the analysis of atmospheric remote sensing measurements.</p>
-<h1><a class="anchor" id="Introduction"></a>
-Introduction</h1>
-<p >The source code of JURASSIC is available from the <a href="https://github.com/slcs-jsc/jurassic">git repository</a>. Please see the <a href="https://github.com/slcs-jsc/jurassic/blob/master/README.md">README.md</a> in the git repository for introductory information. More information can be found in the <a href="https://slcs-jsc.github.io/jurassic">user manual</a>.</p>
-<p >This doxygen manual contains information about the algorithms and data structures used in the code. Please refer to the &lsquo;<a class="el" href="jurassic_8h.html" title="JURASSIC library declarations.">jurassic.h</a>&rsquo; documentation for a first overview.</p>
-<h1><a class="anchor" id="References"></a>
-References</h1>
-<p >For citing the model in scientific publications, please see <a href="https://github.com/slcs-jsc/jurassic/blob/master/CITATION.cff">CITATION.cff</a> and refer to the following papers:</p>
-<p ><em>Baumeister, P. F. and Hoffmann, L.: Fast infrared radiative transfer calculations using graphics processing units: JURASSIC-GPU v2.0, Geosci. Model Dev., 15, 1855–1874, <a href="https://doi.org/10.5194/gmd-15-1855-2022">https://doi.org/10.5194/gmd-15-1855-2022</a>, 2022.</em></p>
-<p ><em>Hoffmann, L., and M. J. Alexander, Retrieval of stratospheric temperatures from Atmospheric Infrared Sounder radiance measurements for gravity wave studies, J. Geophys. Res., 114, D07105, <a href="https://doi.org/10.1029/2008JD011241">https://doi.org/10.1029/2008JD011241</a>, 2009.</em></p>
-<p ><em>Hoffmann, L., Kaufmann, M., Spang, R., Müller, R., Remedios, J. J., Moore, D. P., Volk, C. M., von Clarmann, T., and Riese, M.: Envisat MIPAS measurements of CFC-11: retrieval, validation, and climatology, Atmos. Chem. Phys., 8, 3671-3688, <a href="https://doi.org/10.5194/acp-8-3671-2008">https://doi.org/10.5194/acp-8-3671-2008</a>, 2008.</em></p>
-<p >Additional references are collected here: <a href="https://slcs-jsc.github.io/jurassic/references">https://slcs-jsc.github.io/jurassic/references</a></p>
-<h1><a class="anchor" id="License"></a>
-License</h1>
-<p >JURASSIC is being develop at the Jülich Supercomputing Centre, Forschungszentrum Jülich, Germany.</p>
-<p >JURASSIC is distributed under the terms of the <a href="https://github.com/slcs-jsc/jurassic/blob/master/COPYING">GNU General Public License v3.0</a>.</p>
-<h1><a class="anchor" id="Contributing"></a>
-Contributing</h1>
-<p >We are interested in supporting operational and research applications with JURASSIC.</p>
-<p >You can submit bug reports or feature requests on the <a href="https://github.com/slcs-jsc/jurassic/issues">issue tracker</a>.</p>
-<p >Proposed code changes and fixes can be submitted as <a href="https://github.com/slcs-jsc/jurassic/pulls">pull requests</a>.</p>
-<p >Please do not hesitate to contact us if you have any questions or need assistance.</p>
-<h1><a class="anchor" id="Contact"></a>
-Contact</h1>
-<p >Dr. Lars Hoffmann</p>
-<p >Jülich Supercomputing Centre, Forschungszentrum Jülich</p>
-<p >e-mail: <a href="#" onclick="location.href='mai'+'lto:'+'l.h'+'of'+'fma'+'nn'+'@fz'+'-j'+'uel'+'ic'+'h.d'+'e'; return false;">l.hof<span class="obfuscator">.nosp@m.</span>fman<span class="obfuscator">.nosp@m.</span>n@fz-<span class="obfuscator">.nosp@m.</span>juel<span class="obfuscator">.nosp@m.</span>ich.d<span class="obfuscator">.nosp@m.</span>e</a> </p>
+<div class="textblock"><p >The CrIS Code Collection is a C-based toolkit for processing and analyzing remote sensing observations from the Cross-track Infrared Sounder (CrIS) instruments.</p>
+<p >This Doxygen manual is the API-oriented reference for the CrIS source tree. It documents the shared data structures, helper routines, and file-level interfaces used by the command-line tools in <code>src/</code>.</p>
+<h1><a class="anchor" id="overview"></a>
+Overview</h1>
+<p >The documented codebase includes routines for:</p>
+<ul>
+<li>reading CrIS Level-1B radiance granules</li>
+<li>representing radiance, perturbation, retrieval, and wave-analysis data</li>
+<li>extracting spectra and geolocated radiance maps</li>
+<li>generating perturbation products in netCDF format</li>
+<li>estimating perturbation noise and local variance</li>
+<li>deriving volcanic ash and SO2 indicator tables</li>
+</ul>
+<h1><a class="anchor" id="start"></a>
+Getting Started</h1>
+<p >The main CrIS-specific declarations are defined in <code><a class="el" href="libcris_8h.html" title="CrIS library declarations.">libcris.h</a></code>, with the corresponding implementations in <code><a class="el" href="libcris_8c.html">libcris.c</a></code>.</p>
+<p >Useful entry points in this manual are:</p>
+<ul>
+<li><code><a class="el" href="libcris_8h.html" title="CrIS library declarations.">libcris.h</a></code> for shared structs, macros, and function declarations</li>
+<li><code><a class="el" href="structcris__l1__t.html" title="CrIS Level-1 data.">cris_l1_t</a></code> for the in-memory representation of CrIS Level-1 data</li>
+<li><code><a class="el" href="structpert__t.html" title="Perturbation data.">pert_t</a></code> for perturbation products</li>
+<li><code><a class="el" href="structretr__t.html" title="Retrieval results.">retr_t</a></code> for retrieval output tables</li>
+<li><code><a class="el" href="structwave__t.html" title="Wave analysis data.">wave_t</a></code> for wave-analysis grids and derived fields</li>
+</ul>
+<h1><a class="anchor" id="areas"></a>
+Functional Areas</h1>
+<p >Core I/O routines include <code>read_cris_l1</code> for Level-1B radiance granules and <code>read_pert</code> for perturbation products.</p>
+<p >Shared numerical routines include <code>background_poly</code>, <code>background_smooth</code>, <code>create_wave</code>, <code>fft</code>, <code>noise_pert</code>, and <code>variance</code>.</p>
+<p >The executable programs in <code>src/</code> build on these shared routines. The most prominent tools are <code>spec2tab</code>, <code>map_rad</code>, <code>perturbation</code>, <code>map_pert</code>, <code>noise_pert</code>, <code>variance</code>, and <code>volcano</code>.</p>
+<h1><a class="anchor" id="layout"></a>
+Repository Layout</h1>
+<ul>
+<li><code>src/</code>: C sources, headers, and executable programs</li>
+<li><code>tests/</code>: regression tests and reference outputs</li>
+<li><code>docs/</code>: MkDocs and Doxygen sources</li>
+<li><code>libs/</code>: bundled third-party library sources and local build helper</li>
+</ul>
+<h1><a class="anchor" id="links"></a>
+Related Documentation</h1>
+<ul>
+<li>Repository: <a href="https://github.com/slcs-jsc/cris">https://github.com/slcs-jsc/cris</a></li>
+<li>MkDocs manual: <a href="https://slcs-jsc.github.io/cris/">https://slcs-jsc.github.io/cris/</a></li>
+<li>Citation metadata: <a href="https://github.com/slcs-jsc/cris/blob/master/CITATION.cff">https://github.com/slcs-jsc/cris/blob/master/CITATION.cff</a></li>
+<li>License: <a href="https://github.com/slcs-jsc/cris/blob/master/COPYING">https://github.com/slcs-jsc/cris/blob/master/COPYING</a> </li>
+</ul>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->

@@ -1,8 +1,4 @@
 var searchData=
 [
-  ['obsfmt_0',['obsfmt',['../structctl__t.html#ab313bb0c5f05e01cdda367977c39f29a',1,'ctl_t']]],
-  ['obslat_1',['obslat',['../structobs__t.html#a8b9f2ae531c4d8693c7ce86f0387d290',1,'obs_t']]],
-  ['obslon_2',['obslon',['../structobs__t.html#a6623d4c4c139db8c86195751653ea716',1,'obs_t']]],
-  ['obsz_3',['obsz',['../structobs__t.html#a992d21aae832400874f3f6bc3e7d1981',1,'obs_t']]],
-  ['offset_4',['offset',['../structtbl__gas__index__t.html#a570ddd33828869a540ff5618c7d7efa7',1,'tbl_gas_index_t']]]
+  ['var_0',['var',['../structpert__t.html#a8c9b8e7d64b6df2c7acfa0f8a6c885ff',1,'pert_t::var()'],['../structwave__t.html#a380e6c66abb3e3d24cbac87250bed803',1,'wave_t::var()']]]
 ];

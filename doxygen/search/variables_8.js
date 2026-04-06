@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['k_0',['k',['../structatm__t.html#a18d3460f12bb187e3ae50e9f2547ede3',1,'atm_t::k()'],['../structlos__t.html#acba1f4bef3b96b5412b5fb9b8dea6cba',1,'los_t::k()']]],
-  ['kernel_5frecomp_1',['kernel_recomp',['../structret__t.html#a9f62c84930d539206014752d3e63b4d0',1,'ret_t']]]
+  ['rad_5flw_0',['rad_lw',['../structcris__l1__t.html#a96c00747f8f0b99b05dc8e5bac58ea92',1,'cris_l1_t']]],
+  ['rad_5fmw_1',['rad_mw',['../structcris__l1__t.html#a2d452024f27c42027722bb2566bc6fa3',1,'cris_l1_t']]],
+  ['rad_5fsw_2',['rad_sw',['../structcris__l1__t.html#a6f523c4bd665092a80953a9caff362f9',1,'cris_l1_t']]]
 ];

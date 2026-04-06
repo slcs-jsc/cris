@@ -95,7 +95,7 @@ $(function() {
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment">  Copyright (C) 2003-2025 Forschungszentrum Juelich GmbH</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">*/</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &quot;<a class="code" href="jurassic_8h.html">jurassic.h</a>&quot;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &quot;jurassic.h&quot;</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="jsec2time_8c.html#a0ddf1224851353fc92bfbff6f499fa97">   27</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="jsec2time_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <span class="keywordtype">int</span> argc,</div>
@@ -107,21 +107,18 @@ $(function() {
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  <span class="comment">/* Check arguments... */</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  <span class="keywordflow">if</span> (argc &lt; 2)</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <a class="code hl_define" href="jurassic_8h.html#a3e0ae69dee4a8bb2e616526b5ebe6875">ERRMSG</a>(<span class="stringliteral">&quot;Give parameters: &lt;jsec&gt;&quot;</span>);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    ERRMSG(<span class="stringliteral">&quot;Give parameters: &lt;jsec&gt;&quot;</span>);</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  <span class="comment">/* Read arguments... */</span></div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  <span class="keyword">const</span> <span class="keywordtype">double</span> jsec = atof(argv[1]);</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  <span class="comment">/* Convert time... */</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  <a class="code hl_function" href="jurassic_8c.html#acc0c1829ca7770d2dd6342f2cdf10bb9">jsec2time</a>(jsec, &amp;year, &amp;mon, &amp;day, &amp;hour, &amp;min, &amp;sec, &amp;remain);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  jsec2time(jsec, &amp;year, &amp;mon, &amp;day, &amp;hour, &amp;min, &amp;sec, &amp;remain);</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  printf(<span class="stringliteral">&quot;%d %d %d %d %d %d %g\n&quot;</span>, year, mon, day, hour, min, sec, remain);</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  <span class="keywordflow">return</span> EXIT_SUCCESS;</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>}</div>
 <div class="ttc" id="ajsec2time_8c_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="jsec2time_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdef"><b>Definition:</b> <a href="jsec2time_8c_source.html#l00027">jsec2time.c:27</a></div></div>
-<div class="ttc" id="ajurassic_8c_html_acc0c1829ca7770d2dd6342f2cdf10bb9"><div class="ttname"><a href="jurassic_8c.html#acc0c1829ca7770d2dd6342f2cdf10bb9">jsec2time</a></div><div class="ttdeci">void jsec2time(const double jsec, int *year, int *mon, int *day, int *hour, int *min, int *sec, double *remain)</div><div class="ttdoc">Converts Julian seconds to calendar date and time components.</div><div class="ttdef"><b>Definition:</b> <a href="jurassic_8c_source.html#l04300">jurassic.c:4300</a></div></div>
-<div class="ttc" id="ajurassic_8h_html"><div class="ttname"><a href="jurassic_8h.html">jurassic.h</a></div><div class="ttdoc">JURASSIC library declarations.</div></div>
-<div class="ttc" id="ajurassic_8h_html_a3e0ae69dee4a8bb2e616526b5ebe6875"><div class="ttname"><a href="jurassic_8h.html#a3e0ae69dee4a8bb2e616526b5ebe6875">ERRMSG</a></div><div class="ttdeci">#define ERRMSG(...)</div><div class="ttdoc">Print an error message with contextual information and terminate the program.</div><div class="ttdef"><b>Definition:</b> <a href="jurassic_8h_source.html#l00948">jurassic.h:948</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

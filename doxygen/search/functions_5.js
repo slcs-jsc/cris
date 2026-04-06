@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['gauss_0',['gauss',['../libcris_8c.html#ae19d3fecff331deab50112b7a1a3c0e7',1,'gauss(wave_t *wave, double fwhm):&#160;libcris.c'],['../libcris_8h.html#ae19d3fecff331deab50112b7a1a3c0e7',1,'gauss(wave_t *wave, double fwhm):&#160;libcris.c']]],
-  ['geo2cart_1',['geo2cart',['../jurassic_8c.html#ae3aea782dfca9019f3f2d169f8cc0f6d',1,'geo2cart(const double z, const double lon, const double lat, double *x):&#160;jurassic.c'],['../jurassic_8h.html#ae3aea782dfca9019f3f2d169f8cc0f6d',1,'geo2cart(const double z, const double lon, const double lat, double *x):&#160;jurassic.c']]],
-  ['get_5fnoise_2',['get_noise',['../volcano_8c.html#aa1a87532458d81cd7d834a0d2702fc57',1,'volcano.c']]]
+  ['hamming_0',['hamming',['../libcris_8c.html#a6db57b89de3bf98800cd88baf4817446',1,'hamming(wave_t *wave, int niter):&#160;libcris.c'],['../libcris_8h.html#a002820a53660b291711227fea4980d53',1,'hamming(wave_t *wave, int nit):&#160;libcris.c']]]
 ];

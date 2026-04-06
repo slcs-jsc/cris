@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['atmfmt_0',['atmfmt',['../structctl__t.html#a0ff333a479f441f6f356f60ab0eeb577',1,'ctl_t']]]
+  ['bg_0',['bg',['../structwave__t.html#acb5c9c5f8c013a2b945a6ec4147379d6',1,'wave_t']]],
+  ['bt_1',['bt',['../structpert__t.html#a961fb7cbfb3a916a34418eb345024154',1,'pert_t']]]
 ];

@@ -81,7 +81,7 @@ $(function() {
 
 <p>Convert date to Julian seconds.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="jurassic_8h_source.html">jurassic.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;jurassic.h&quot;</code><br />
 </div>
 <p><a href="time2jsec_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -128,7 +128,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   32</span> </div>
 <div class="line"><span class="lineno">   33</span>  <span class="comment">/* Check arguments... */</span></div>
 <div class="line"><span class="lineno">   34</span>  <span class="keywordflow">if</span> (argc &lt; 8)</div>
-<div class="line"><span class="lineno">   35</span>    <a class="code hl_define" href="jurassic_8h.html#a3e0ae69dee4a8bb2e616526b5ebe6875">ERRMSG</a>(<span class="stringliteral">&quot;Give parameters: &lt;year&gt; &lt;mon&gt; &lt;day&gt; &lt;hour&gt; &lt;min&gt; &lt;sec&gt; &lt;remain&gt;&quot;</span>);</div>
+<div class="line"><span class="lineno">   35</span>    ERRMSG(<span class="stringliteral">&quot;Give parameters: &lt;year&gt; &lt;mon&gt; &lt;day&gt; &lt;hour&gt; &lt;min&gt; &lt;sec&gt; &lt;remain&gt;&quot;</span>);</div>
 <div class="line"><span class="lineno">   36</span> </div>
 <div class="line"><span class="lineno">   37</span>  <span class="comment">/* Read arguments... */</span></div>
 <div class="line"><span class="lineno">   38</span>  <span class="keyword">const</span> <span class="keywordtype">int</span> year = atoi(argv[1]);</div>
@@ -140,23 +140,12 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   44</span>  <span class="keyword">const</span> <span class="keywordtype">double</span> remain = atof(argv[7]);</div>
 <div class="line"><span class="lineno">   45</span> </div>
 <div class="line"><span class="lineno">   46</span>  <span class="comment">/* Convert... */</span></div>
-<div class="line"><span class="lineno">   47</span>  <a class="code hl_function" href="jurassic_8c.html#a578e7ebaa62304182de8fe7ddf144b8f">time2jsec</a>(year, mon, day, hour, min, sec, remain, &amp;jsec);</div>
+<div class="line"><span class="lineno">   47</span>  time2jsec(year, mon, day, hour, min, sec, remain, &amp;jsec);</div>
 <div class="line"><span class="lineno">   48</span>  printf(<span class="stringliteral">&quot;%.2f\n&quot;</span>, jsec);</div>
 <div class="line"><span class="lineno">   49</span> </div>
 <div class="line"><span class="lineno">   50</span>  <span class="keywordflow">return</span> EXIT_SUCCESS;</div>
 <div class="line"><span class="lineno">   51</span>}</div>
-<div class="ttc" id="ajurassic_8c_html_a578e7ebaa62304182de8fe7ddf144b8f"><div class="ttname"><a href="jurassic_8c.html#a578e7ebaa62304182de8fe7ddf144b8f">time2jsec</a></div><div class="ttdeci">void time2jsec(const int year, const int mon, const int day, const int hour, const int min, const int sec, const double remain, double *jsec)</div><div class="ttdoc">Converts time components to seconds since January 1, 2000, 12:00:00 UTC.</div><div class="ttdef"><b>Definition:</b> <a href="jurassic_8c_source.html#l06535">jurassic.c:6535</a></div></div>
-<div class="ttc" id="ajurassic_8h_html_a3e0ae69dee4a8bb2e616526b5ebe6875"><div class="ttname"><a href="jurassic_8h.html#a3e0ae69dee4a8bb2e616526b5ebe6875">ERRMSG</a></div><div class="ttdeci">#define ERRMSG(...)</div><div class="ttdoc">Print an error message with contextual information and terminate the program.</div><div class="ttdef"><b>Definition:</b> <a href="jurassic_8h_source.html#l00948">jurassic.h:948</a></div></div>
-</div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="time2jsec_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph.png" border="0" usemap="#atime2jsec_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph" alt=""/></div>
-<map name="atime2jsec_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph" id="atime2jsec_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,56,32"/>
-<area shape="rect" href="jurassic_8c.html#a578e7ebaa62304182de8fe7ddf144b8f" title="Converts time components to seconds since January 1, 2000, 12:00:00 UTC." alt="" coords="104,5,183,32"/>
-</map>
-</div>
-
+</div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

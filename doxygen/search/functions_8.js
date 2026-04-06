@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['jsec2time_0',['jsec2time',['../jurassic_8c.html#acc0c1829ca7770d2dd6342f2cdf10bb9',1,'jsec2time(const double jsec, int *year, int *mon, int *day, int *hour, int *min, int *sec, double *remain):&#160;jurassic.c'],['../jurassic_8h.html#acc0c1829ca7770d2dd6342f2cdf10bb9',1,'jsec2time(const double jsec, int *year, int *mon, int *day, int *hour, int *min, int *sec, double *remain):&#160;jurassic.c']]]
+  ['noise_0',['noise',['../libcris_8c.html#a5f3805f7100e05e251c9964222080b73',1,'noise(wave_t *wave, double *mu, double *sig):&#160;libcris.c'],['../libcris_8h.html#a5f3805f7100e05e251c9964222080b73',1,'noise(wave_t *wave, double *mu, double *sig):&#160;libcris.c']]],
+  ['noise_5fpert_1',['noise_pert',['../libcris_8c.html#a289f2a1caca359f5398a3ec87d573157',1,'noise_pert(pert_t *pert, int track0, int track1, double *mu, double *sig):&#160;libcris.c'],['../libcris_8h.html#a289f2a1caca359f5398a3ec87d573157',1,'noise_pert(pert_t *pert, int track0, int track1, double *mu, double *sig):&#160;libcris.c']]]
 ];

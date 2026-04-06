@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['day2doy_0',['day2doy',['../jurassic_8c.html#a556279802ef57635f9e81a062d8b6ce1',1,'day2doy(int year, int mon, int day, int *doy):&#160;jurassic.c'],['../jurassic_8h.html#a556279802ef57635f9e81a062d8b6ce1',1,'day2doy(int year, int mon, int day, int *doy):&#160;jurassic.c']]],
-  ['doy2day_1',['doy2day',['../jurassic_8c.html#ab2b4738ae5b57d80da7a4c779c493f1a',1,'doy2day(int year, int doy, int *mon, int *day):&#160;jurassic.c'],['../jurassic_8h.html#ab2b4738ae5b57d80da7a4c779c493f1a',1,'doy2day(int year, int doy, int *mon, int *day):&#160;jurassic.c']]]
+  ['fft_0',['fft',['../libcris_8c.html#a56d9d404910e5afb7c19e4522694bdbd',1,'fft(wave_t *wave, double *Amax, double *phimax, double *lhmax, double *kxmax, double *kymax, double *alphamax, double *betamax, char *filename):&#160;libcris.c'],['../libcris_8h.html#a56d9d404910e5afb7c19e4522694bdbd',1,'fft(wave_t *wave, double *Amax, double *phimax, double *lhmax, double *kxmax, double *kymax, double *alphamax, double *betamax, char *filename):&#160;libcris.c']]],
+  ['fft_5fhelp_1',['fft_help',['../libcris_8c.html#a48b5c3ccaf39126de8e504baeb032ab8',1,'fft_help(double *fcReal, double *fcImag, int n):&#160;libcris.c'],['../libcris_8h.html#a48b5c3ccaf39126de8e504baeb032ab8',1,'fft_help(double *fcReal, double *fcImag, int n):&#160;libcris.c']]],
+  ['fit_5fwave_2',['fit_wave',['../libcris_8c.html#a16c9f818dfaf0dd50659502fb980bf40',1,'fit_wave(wave_t *wave, double amp, double phi, double kx, double ky, double *chisq):&#160;libcris.c'],['../libcris_8h.html#a16c9f818dfaf0dd50659502fb980bf40',1,'fit_wave(wave_t *wave, double amp, double phi, double kx, double ky, double *chisq):&#160;libcris.c']]]
 ];

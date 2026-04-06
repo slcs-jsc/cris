@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['ig_5fco2_0',['ig_co2',['../structctl__t.html#a253c2c449b1d7e2f0eeda2ed62c8a4fe',1,'ctl_t']]],
-  ['ig_5fh2o_1',['ig_h2o',['../structctl__t.html#ae2af3d94af749a1d5ca2ca2d2b92067c',1,'ctl_t']]],
-  ['ig_5fn2_2',['ig_n2',['../structctl__t.html#aad56428f3ab41bd9c3b28a84c970d3b9',1,'ctl_t']]],
-  ['ig_5fo2_3',['ig_o2',['../structctl__t.html#a8b568f9d63b3d40886e073290532a28d',1,'ctl_t']]],
-  ['index_4',['index',['../structtbl__gas__t.html#afa705677b8b06479da2ed90e900cdb91',1,'tbl_gas_t']]]
+  ['qual_5flw_0',['qual_lw',['../structcris__l1__t.html#af7d38f4728db5924d131b58f71251a4a',1,'cris_l1_t']]],
+  ['qual_5fmw_1',['qual_mw',['../structcris__l1__t.html#a89abd9d77cea1a6e2b5faa6e0c3f3b7b',1,'cris_l1_t']]],
+  ['qual_5fsw_2',['qual_sw',['../structcris__l1__t.html#abe559c0f60d5b6adf06db65b20766631',1,'cris_l1_t']]]
 ];
