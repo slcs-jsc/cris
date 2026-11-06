@@ -16,13 +16,15 @@ Agents working in this repository should prefer small, verifiable changes that p
 
 ## Build Workflow
 
-The main build happens in [`src/Makefile`](/home/lars/wrk/cris/src/Makefile).
+The main build happens in `src/Makefile`.
 
 - Build executables: `make -C src`
 - Run all tests: `make -C src check`
 - Run one test suite: `make -C src pert_test`, `make -C src rad_test`, or `make -C src volc_test`
 - Clean build artifacts: `make -C src clean`
 - Build docs: `make -C src doxygen` or `make -C src mkdocs`
+
+Run `make -C src clean` before rebuilding with changed compiler options; Make does not track command-line flag changes. Run `make -C src check` without `-j`.
 
 ## Dependencies
 
@@ -33,7 +35,7 @@ The code expects GSL and netCDF headers and libraries under `../libs/build` by d
 - If dependencies are missing, check whether they already exist on the system before changing the `Makefile`
 - Bundled library sources live in `libs/`, and `libs/build.sh` is the project-provided way to build local copies
 
-Do not casually change compiler flags, include paths, or linker settings in [`src/Makefile`](/home/lars/wrk/cris/src/Makefile) unless the task is specifically about build configuration.
+Do not casually change compiler flags, include paths, or linker settings in `src/Makefile` unless the task is specifically about build configuration.
 
 ## Test Behavior
 
@@ -56,17 +58,25 @@ Match the existing style in `src/`:
 - Prefer existing naming patterns such as `snake_case` for functions and short, domain-specific variable names
 - Keep comments brief and functional; many files use block separators and short inline comments ending with `...`
 - Avoid introducing new dependencies or large abstractions in this codebase
+- Before changing behavior, check existing callers, tests, and documented expectations; question assumptions and explain non-obvious choices
+- Reuse existing data structures where possible; check memory and affected data paths before adding a `struct`
+- Avoid new `static` helper functions; use a macro for a small operation when its arguments can be evaluated safely, or a regular function declared and documented in `src/libcris.h`
 - Keep public declarations synchronized between `.h` and `.c` files
+- Format C sources and headers from `src/` with `make indent` after a successful build; review the diff because the target rewrites all `*.c` and `*.h` files, including copied JURASSIC sources
 
 This project builds with strict warnings and `-Werror`, so any change should compile cleanly without new warnings.
 
 ## Change Guidelines
 
 - Prefer minimal diffs in numerics-heavy code
-- Do not change test reference files unless the task explicitly requires updating expected outputs
+- Investigate test failures before changing reference files; update only affected baselines after verifying and explaining the new results
 - Do not remove bundled libraries or large test assets
 - Be careful with memory usage: several structures allocate large static arrays
 - Preserve CLI compatibility for existing executables in `src/`
+
+## Documentation
+
+Keep the MkDocs manual in `docs/manual/` and Doxygen API documentation current with relevant code, build, and workflow changes. Build affected docs with `make -C src mkdocs` and/or `make -C src doxygen` when the tools are available. For new or revised API Doxygen comments, use a substantive description beyond `@brief`, document parameters and behavior where relevant, and include `@author` with the responsible author's name. Follow the detailed `/** ... */` examples in `src/jurassic.h` without editing that copied dependency for style alone; do not invent attribution.
 
 ## Verification Expectations
 
