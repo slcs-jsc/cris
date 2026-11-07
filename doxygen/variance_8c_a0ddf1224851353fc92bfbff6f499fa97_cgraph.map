@@ -1,4 +1,7 @@
 <map id="main" name="main">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,56,32"/>
-<area shape="rect" id="node2" href="$libcris_8c.html#acaf6587894dca34db3b2aede00bc0cc6" title="Read radiance perturbation data." alt="" coords="104,5,180,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,55,56"/>
+<area shape="rect" id="Node000002" href="$libcris_8c.html#aa0bffcd1b0955eba88df6bca0df7879c" title="Add variable attributes to netCDF file." alt="" coords="108,5,172,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="55,35,92,26,94,32,56,40"/>
+<area shape="rect" id="Node000003" href="$libcris_8c.html#acaf6587894dca34db3b2aede00bc0cc6" title="Read radiance perturbation data." alt="" coords="103,55,178,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="56,46,88,53,87,59,55,51"/>
 </map>

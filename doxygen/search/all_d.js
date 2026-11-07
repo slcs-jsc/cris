@@ -9,5 +9,5 @@ var searchData=
   ['pert_5ft_6',['pert_t',['../structpert__t.html',1,'']]],
   ['perturbation_2ec_7',['perturbation.c',['../perturbation_8c.html',1,'']]],
   ['pmax_8',['PMAX',['../libcris_8h.html#a44c07e59a1dddb477c7989ad091bffc4',1,'libcris.h']]],
-  ['pt_9',['pt',['../structpert__t.html#a5383b3f46c5009370ccfce5719364a3c',1,'pert_t::pt()'],['../structwave__t.html#affaee96c5b7d75bca4da237ffe690486',1,'wave_t::pt()']]]
+  ['pt_9',['pt',['../structpert__t.html#a5383b3f46c5009370ccfce5719364a3c',1,'pert_t::pt'],['../structwave__t.html#affaee96c5b7d75bca4da237ffe690486',1,'wave_t::pt']]]
 ];

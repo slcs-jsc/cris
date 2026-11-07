@@ -1,4 +1,5 @@
 <map id="main" name="main">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,56,32"/>
-<area shape="rect" id="node2" href="$libcris_8c.html#a794f487716dcc65135ae502c786a1649" title="Read CrIS Level&#45;1 data." alt="" coords="104,5,196,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,55,31"/>
+<area shape="rect" id="Node000002" href="$libcris_8c.html#a794f487716dcc65135ae502c786a1649" title="Read CrIS Level&#45;1 data." alt="" coords="103,5,194,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="55,16,87,16,87,21,55,21"/>
 </map>

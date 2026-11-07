@@ -8,6 +8,8 @@ var searchData=
   ['read_5fretr_5',['read_retr',['../libcris_8c.html#a8ab49014709995c7496bf77fec6cb794',1,'read_retr(char *filename, retr_t *ret):&#160;libcris.c'],['../libcris_8h.html#a8ab49014709995c7496bf77fec6cb794',1,'read_retr(char *filename, retr_t *ret):&#160;libcris.c']]],
   ['read_5fretr_5fhelp_6',['read_retr_help',['../libcris_8c.html#a6024b0776c4bc2697536590877e26494',1,'read_retr_help(double *help, int nds, int np, double mat[NDS][NPG]):&#160;libcris.c'],['../libcris_8h.html#a6024b0776c4bc2697536590877e26494',1,'read_retr_help(double *help, int nds, int np, double mat[NDS][NPG]):&#160;libcris.c']]],
   ['read_5fwave_7',['read_wave',['../libcris_8c.html#ade45376f90251288d19be9899ac5d2c2',1,'read_wave(char *filename, wave_t *wave):&#160;libcris.c'],['../libcris_8h.html#ade45376f90251288d19be9899ac5d2c2',1,'read_wave(char *filename, wave_t *wave):&#160;libcris.c']]],
-  ['ret2wave_8',['ret2wave',['../libcris_8c.html#a69c29b01843aa0e3d102bd6ede518571',1,'ret2wave(retr_t *ret, wave_t *wave, int dataset, int ip):&#160;libcris.c'],['../libcris_8h.html#a69c29b01843aa0e3d102bd6ede518571',1,'ret2wave(retr_t *ret, wave_t *wave, int dataset, int ip):&#160;libcris.c']]],
-  ['retr_5ft_9',['retr_t',['../structretr__t.html',1,'']]]
+  ['related_20documentation_8',['Related Documentation',['../index.html#links',1,'']]],
+  ['repository_20layout_9',['Repository Layout',['../index.html#layout',1,'']]],
+  ['ret2wave_10',['ret2wave',['../libcris_8c.html#a69c29b01843aa0e3d102bd6ede518571',1,'ret2wave(retr_t *ret, wave_t *wave, int dataset, int ip):&#160;libcris.c'],['../libcris_8h.html#a69c29b01843aa0e3d102bd6ede518571',1,'ret2wave(retr_t *ret, wave_t *wave, int dataset, int ip):&#160;libcris.c']]],
+  ['retr_5ft_11',['retr_t',['../structretr__t.html',1,'']]]
 ];

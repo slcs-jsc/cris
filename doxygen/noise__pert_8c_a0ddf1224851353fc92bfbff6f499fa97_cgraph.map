@@ -1,5 +1,7 @@
 <map id="main" name="main">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,56,57"/>
-<area shape="rect" id="node2" href="$libcris_8c.html#a289f2a1caca359f5398a3ec87d573157" title="Estimate noise from perurbations." alt="" coords="104,5,187,32"/>
-<area shape="rect" id="node3" href="$libcris_8c.html#acaf6587894dca34db3b2aede00bc0cc6" title="Read radiance perturbation data." alt="" coords="107,56,183,83"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,55,56"/>
+<area shape="rect" id="Node000002" href="$libcris_8c.html#a289f2a1caca359f5398a3ec87d573157" title="Estimate noise from perurbations." alt="" coords="103,5,184,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="54,36,87,28,88,33,55,41"/>
+<area shape="rect" id="Node000003" href="$libcris_8c.html#acaf6587894dca34db3b2aede00bc0cc6" title="Read radiance perturbation data." alt="" coords="106,55,181,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="55,46,91,54,90,59,54,51"/>
 </map>
